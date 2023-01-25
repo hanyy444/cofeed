@@ -1,0 +1,7 @@
+@import "../../assets/sass/variables";
+.heading-4{
+    font-size: clamp(1rem,4vh,2.5rem);
+    font-weight: 500;
+    letter-spacing: .1rem;
+    color: $secondary;
+}

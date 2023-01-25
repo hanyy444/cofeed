@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`Test Logo component > Should render without crashing 1`] = `
+<div
+  class="logo"
+  data-testid="logo"
+  id="logo"
+>
+  <h1
+    class="logo__text"
+  >
+    Cofeed
+  </h1>
+</div>
+`;

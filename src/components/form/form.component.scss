@@ -1,0 +1,8 @@
+.form {
+    width: 100%;
+    padding: 4vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 25rem));
+    justify-content: center;
+    gap: 3vh;
+}

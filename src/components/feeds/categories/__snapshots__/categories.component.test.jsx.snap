@@ -1,0 +1,29 @@
+// Vitest Snapshot v1
+
+exports[`Test categories component > Should render without crashing 1`] = `
+<ul
+  class="categories"
+  data-testid="categories"
+>
+  <li
+    class=""
+  >
+    all
+  </li>
+  <li
+    class=""
+  >
+    following
+  </li>
+  <li
+    class=""
+  >
+    popular
+  </li>
+  <li
+    class=""
+  >
+    newest
+  </li>
+</ul>
+`;

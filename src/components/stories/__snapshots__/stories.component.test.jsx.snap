@@ -1,0 +1,44 @@
+// Vitest Snapshot v1
+
+exports[`Test stories component > Should render without crashing 1`] = `
+<div
+  class="stories"
+  data-testid="stories"
+  id="stories"
+>
+  <div
+    class="story "
+    data-testid="story"
+  >
+    <img
+      alt="story user image"
+      class="story__user-img"
+      src="http://localhost:3000/public/assets/undefined"
+    />
+    <div
+      class="paragraph undefined"
+      data-testid="paragraph"
+      id="paragraph"
+    >
+      You
+    </div>
+  </div>
+  <div
+    class="story "
+    data-testid="story"
+  >
+    <img
+      alt="story user image"
+      class="story__user-img"
+      src="http://localhost:3000/public/assets/undefined"
+    />
+    <div
+      class="paragraph undefined"
+      data-testid="paragraph"
+      id="paragraph"
+    >
+      fake-1
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,22 @@
+@import "../../assets/sass/variables";
+@import "../../assets/sass/mixins";
+
+.logo {
+    display: flex;
+    justify-content: center;
+    padding: 2vh;
+    margin-top: 3vh;
+    
+    background-image: linear-gradient(to bottom, $secondary 0%, $primary 100%);
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    &__text {
+ 
+        letter-spacing: .1rem;
+        font-size: clamp(1rem, 5vh, 3.5rem);
+        font-weight: 800;
+    }
+}

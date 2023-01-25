@@ -1,0 +1,39 @@
+@import "../../assets/sass/mixins";
+@import "../../assets/sass/variables";
+
+.profile {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: $grey-light-blue;
+
+    @include flexBetween;
+
+    &__section{
+        flex: 2;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: scroll;
+        gap: 2rem;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+
+    .posts {
+        .spinner {
+            margin-top: 5rem;
+        }
+        .post__info {
+            .user{
+                display: none;
+            }
+        }
+    }
+}

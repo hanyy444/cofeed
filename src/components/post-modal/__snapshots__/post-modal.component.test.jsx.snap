@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`Test post-modal component > Should render without crashing 1`] = `
+<div
+  class="post-modal"
+  data-testid="post-modal"
+  id="post-modal"
+>
+  <div
+    class="post-modal__content"
+  />
+</div>
+`;

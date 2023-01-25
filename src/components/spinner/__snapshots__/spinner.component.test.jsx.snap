@@ -1,0 +1,9 @@
+// Vitest Snapshot v1
+
+exports[`Test Spinner component > Should render without crashing 1`] = `
+<div
+  class="spinner"
+  data-testid="spinner"
+  id="spinner"
+/>
+`;

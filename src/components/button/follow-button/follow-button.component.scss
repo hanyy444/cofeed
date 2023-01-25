@@ -1,0 +1,27 @@
+@import "../../../assets/sass/variables";
+
+.follow-button{
+    border-radius: 1rem;
+
+    background-color: $primary-light;
+    color: white;
+    width: 10rem;
+
+    padding: .8rem 2.5rem;
+    letter-spacing: .05rem;
+
+    transition: all .1s;
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    &--friend {
+        background-color: $grey-dark;
+
+        &:hover {
+            background-color: $grey;
+        }
+    }
+
+}

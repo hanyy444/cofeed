@@ -1,0 +1,35 @@
+@import "../../assets/sass/variables";
+@import "../../assets/sass/mixins";
+
+.home {
+    font-size: 2rem;
+    
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: $grey-light-blue;
+
+    @include flexBetween;
+    
+    box-shadow: 0 10px 10px $grey;
+
+    .vl{
+        width: .01rem;
+        height: 96%;
+        border-left: thin solid $grey-dark;
+        opacity: .1;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: stretch;
+        flex: 1.75 0 0;
+        padding: 2rem;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+} 

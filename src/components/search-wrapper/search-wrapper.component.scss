@@ -1,0 +1,41 @@
+@import '../../assets/sass/variables';
+.search-wrapper {
+
+    width: 100%;
+    height: 100%;
+
+    border: 1px solid #f5f7ff;
+    background-color: #fff;
+    border-radius: 1rem;
+
+    box-shadow: 1px 0px 1px 0px #000000;
+    
+    overflow: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+
+    position: relative;
+
+    &__count{
+        margin: 2rem auto;
+        text-align: center;
+    }
+    &__data{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 1rem 0;
+        gap: 1rem;
+        
+        li {
+            width: 100%;
+            padding: 1rem;
+            &:hover{
+                background-color: #f5f7ff;
+            }
+        }
+    }
+}
+

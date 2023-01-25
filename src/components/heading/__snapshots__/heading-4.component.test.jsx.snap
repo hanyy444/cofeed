@@ -1,0 +1,10 @@
+// Vitest Snapshot v1
+
+exports[`Test heading-4 component > Should render without crashing 1`] = `
+<h4
+  class="heading-4"
+  data-testid="heading-4"
+>
+  test
+</h4>
+`;

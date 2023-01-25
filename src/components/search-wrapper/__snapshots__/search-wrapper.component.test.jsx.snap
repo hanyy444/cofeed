@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`Test search-wrapper component > Should render without crashing 1`] = `
+<div
+  class="search-wrapper"
+  data-testid="search-wrapper"
+  id="search-wrapper"
+>
+  <div
+    class="spinner"
+    data-testid="spinner"
+    id="spinner"
+  />
+</div>
+`;

@@ -1,0 +1,8 @@
+// Vitest Snapshot v1
+
+exports[`Test divider component > Should render without crashing 1`] = `
+<hr
+  class="solid"
+  data-testid="divider"
+/>
+`;

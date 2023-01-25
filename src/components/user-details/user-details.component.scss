@@ -1,0 +1,17 @@
+.user-details {
+    padding: 2rem;
+    font-size: 1.5rem;
+    width: 70%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    align-items: center;
+    justify-items: flex-start;
+    gap: 3rem 2rem;
+
+    .user {
+        margin-left: -2rem;
+        margin-bottom: 1rem;
+    }
+
+}

@@ -1,0 +1,36 @@
+// @import "@sass/mixins";
+// @import "@sass/variables";
+@import "../../../../assets/sass/variables";
+@import "../../../../assets/sass/mixins";
+.search-box {
+    @include flexBetween;
+    gap: 1rem;
+    border: thin solid $grey;
+    border-radius: 3rem;
+    height: 5rem;
+    padding: 0 1.5rem;
+    flex: .6;
+
+    &:focus-within,
+    &:hover {
+        border: thin solid $grey-dark;
+
+        svg {
+            color: $grey-dark;
+        }
+    }
+
+    svg {
+        color: $grey;
+        font-size: 2.5rem;
+    }
+
+    &__input {
+        width: 60%;
+        height: 100%;
+        border: none;
+        outline: none;
+        background-color: inherit;
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,19 @@
+@import "../../assets/sass/mixins";
+
+.feeds {
+    flex-grow: 1;
+    max-height: 100%;
+    padding: 2rem 0;
+    
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &__nav{
+        @include flexBetween;
+        padding: 0 1.2rem;
+        margin-bottom: 3rem;
+    }
+
+}

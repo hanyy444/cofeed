@@ -1,0 +1,15 @@
+@import "./variables";
+
+@mixin flexBetween {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin gradientText {
+    background-image: linear-gradient(to bottom, $secondary 0%, $primary 100%);
+    
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}

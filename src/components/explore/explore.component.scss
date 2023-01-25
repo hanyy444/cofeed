@@ -1,0 +1,42 @@
+@import "../../assets/sass/mixins";
+@import "../../assets/sass/variables";
+@import "../../assets/sass/utils";
+
+.explore {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    padding: 4rem 0;
+    flex: 0.75;
+
+    &__nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+
+
+
+    }
+
+    &__link {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: $primary;
+        &:hover{
+            color: $primary-light;
+        }
+    }
+    
+
+    hr.solid{
+        margin: 2.5rem auto;
+        width: 85%;
+        opacity: 0.3;
+    }
+
+
+}

@@ -1,0 +1,43 @@
+// @import "@sass/variables";
+@import "../../../../assets/sass/variables";
+.notifications {
+    cursor: pointer;
+    border: thin solid $grey;
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    &:hover {
+        border: thin solid $grey-dark;
+
+        svg {
+            color: $grey-dark;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 1.5rem;
+        right: 1.9rem;
+        background-color: red;
+        width: .4rem;
+        height: .4rem;
+        border-radius: 50%;
+    }
+
+    svg {
+        font-size: 2rem;
+        color: $grey;
+        position: relative;
+
+
+    }
+
+}

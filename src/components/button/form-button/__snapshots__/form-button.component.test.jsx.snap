@@ -1,0 +1,9 @@
+// Vitest Snapshot v1
+
+exports[`Test form-button component > Should render without crashing 1`] = `
+<button
+  class="form-button "
+  data-testid="form-button"
+  id="form-button"
+/>
+`;

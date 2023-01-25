@@ -1,0 +1,22 @@
+@import "../../../assets/sass/mixins";
+@import "../../../assets/sass/variables";
+
+.categories {
+    @include flexBetween;
+    gap: 0 2rem;
+
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    color: rgba($secondary, 0.3);
+
+    &>li {
+        cursor: pointer;
+        text-transform: uppercase;
+
+        &:hover,
+        &.active {
+            color: $primary;
+        }
+    }
+}

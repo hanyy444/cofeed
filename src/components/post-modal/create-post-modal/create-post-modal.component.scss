@@ -1,0 +1,30 @@
+@import "../../../assets/sass/variables";
+
+.create-post-modal {
+    padding: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+
+    height: 100%;
+    .form {
+        height: 100%;
+        grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+    }
+
+    .description__input{
+        width: 100%;
+    }
+    
+    .form-group{
+        grid-column: 1 / -1;
+    }
+
+    &__form{ 
+
+        &__btn{
+            grid-column: 1 / -1;
+        }
+    }
+}

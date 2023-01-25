@@ -1,0 +1,19 @@
+@import "../../assets/sass/variables";
+
+.user-detail {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+        color: $primary;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+}

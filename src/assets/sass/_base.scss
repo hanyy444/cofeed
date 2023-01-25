@@ -1,0 +1,37 @@
+@import "./mixins";
+@import url('https://fonts.googleapis.com/css2?family=Alkalami&family=Rubik:wght@400;500;700&display=swap');
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', Inter, Avenir, Helvetica, Arial, sans-serif;
+    background-color: $white;
+    color: $secondary;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+}

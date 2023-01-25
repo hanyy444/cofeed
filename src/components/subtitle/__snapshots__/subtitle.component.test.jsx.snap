@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`Test subtitle component > Should render without crashing 1`] = `
+<h4
+  class="subtitle"
+  data-testid="subtitle"
+  id="subtitle"
+>
+  text
+</h4>
+`;
