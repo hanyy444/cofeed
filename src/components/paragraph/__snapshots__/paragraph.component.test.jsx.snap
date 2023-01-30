@@ -1,8 +1,8 @@
 // Vitest Snapshot v1
 
 exports[`Test paragraph component > renders without crashing 1`] = `
-<div
-  class="paragraph undefined"
+<p
+  class="paragraph "
   data-testid="paragraph"
   id="paragraph"
 />

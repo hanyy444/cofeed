@@ -15,13 +15,13 @@ exports[`Test user component with useNavigate hook > Should renders without cras
   <div
     class="user-info"
   >
-    <div
-      class="paragraph undefined"
+    <p
+      class="paragraph "
       data-testid="paragraph"
       id="paragraph"
     >
       undefined 
-    </div>
+    </p>
     <p
       class="nickname"
     >

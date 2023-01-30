@@ -17,8 +17,18 @@ const userApi = ApiCore({
 })
 
 // CUSTOM
-userApi.search = userApi.createAsync({ resource, actionType: 'search', requestConfig: { method: 'GET' } })
-userApi.addRemoveFriend = userApi.createAsync({ resource, actionType: 'addRemoveFriend', requestConfig: { method: 'PATCH' } })
+
+userApi.search = userApi.createThunk({
+    resource,
+    actionType: 'search',
+    requestConfig: { method: 'GET' }
+})
+
+userApi.addRemoveFriend = userApi.createThunk({
+    resource,
+    actionType: 'addRemoveFriend',
+    requestConfig: { method: 'PATCH' }
+})
 
 
 export default userApi

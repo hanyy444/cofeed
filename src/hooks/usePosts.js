@@ -1,20 +1,38 @@
-import { useEffect, useState } from "react"
+import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-// import usePostsApi from "../api/post-api"
 import { postApi } from "../redux/slices/posts.slice"
 
 //// THIS HOOK IS A STATE ACCESSING, API METHOD INVOKER WRAPPER AROUND POST API
-const usePosts = ({ userId = '', url = '', query = '' }) => {
+const usePosts = ({ path = '', query = '' }) => {
 
     const dispatch = useDispatch()
-    const { token } = useSelector(state => state.auth)
-    const { data: posts, count, loading, error, page } = useSelector(state => state.posts.posts)
-    const getPosts = (url, query) => { dispatch(postApi.getAll({ token, url, query })) }
 
-    useEffect(() => {
-        getPosts(url, query)
+    const { token } = useSelector(state => state.auth)
+
+    const { data: posts,
+        count,
+        loading,
+        error,
+        page
+    } = useSelector(state => state.posts.posts)
+
+    const getPosts = React.useCallback(
+        function () {
+            dispatch(
+                postApi.getAll({
+                    token,
+                    path,
+                    query
+                })
+            )
+        },
+        [path, query]
+    )
+
+    React.useEffect(() => {
+        getPosts()
         return () => postApi.unRegister()
-    }, [url, query])
+    }, [path, query])
 
 
     return [

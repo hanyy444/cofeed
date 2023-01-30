@@ -1,11 +1,17 @@
 import './post.component.scss'
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // ICONS
 import { FaHeart, FaCommentDots } from 'react-icons/fa'
 
+// API
 import { postApi } from '../../redux/slices/posts.slice';
+
+// CUSTOM HOOKS
 import useToggle from '../../hooks/useToggle';
+
+// COMPONENTS
 import PostModal from '../post-modal/post-modal.component';
 import ViewPostModal from '../post-modal/view-post-modal/view-post-modal.component';
 import User from '../user/user.component';
@@ -31,14 +37,14 @@ const Post = ({
     
     const isLiked = Object.keys(likes).includes(currentUserId)
 
-    const handleLike = (postId) => {
-        dispatch(postApi.likePost({ token, url: `${postId}/like`}))
-    }
+    const handleLike = React.useCallback((postId) => {
+        dispatch(postApi.likePost({ token, path: `${postId}/like`}))
+    }, [token])
 
     return ( 
         <div className= "post" data-testid="post">
             {showModal && (<PostModal>
-                <ViewPostModal {...{_id: postId, toggleShowModal, showModal, handleLike}}/>
+                <ViewPostModal {...{_id: postId, toggleShowModal, showModal, handleLike, isLiked}}/>
             </PostModal>)}
             <img 
                 src={`${IMAGE_BASE_PATH}/${picturePath}`} 
@@ -58,7 +64,7 @@ const Post = ({
                         <FaHeart color={`${isLiked ? '#fd1d60': ''}`} onClick={()=>handleLike(postId)}/>
                         <span className='likes-count'>{Object.keys(likes).length}</span>
                     </div>
-                    <div className="post__comments">
+                    <div className="post__comments" onClick={()=>toggleShowModal(true)}>
                         <FaCommentDots/>
                         <span className="comments-count">{comments.length}</span>
                     </div>

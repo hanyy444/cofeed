@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { getUsers, getUser, } from "../redux/slices/users.slice"
+
+import { userApi } from '../redux/slices/users.slice'
 
 //// SEARCHING, FRIENDS
 const useUsers = ({ query }) => {
@@ -11,19 +12,12 @@ const useUsers = ({ query }) => {
 
     const { data: users, count, loading, error, page } = useSelector(state => state.users.users)
 
-    const fetchUsers = () => {
-        dispatch(getUsers({
-            method: 'get',
-            url: `/users/${query}`,
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-
-        }))
+    const getUsers = () => {
+        dispatch(userApi.getAll({ token, query }))
     }
 
     useEffect(() => {
-        fetchUsers()
+        getUsers()
     }, [query])
 
     return [users,

@@ -1,8 +1,19 @@
 import './posts.component.scss'
 import Post from '../post/post.component'
 import Spinner from '../spinner/spinner.component'
+import usePosts from '../../hooks/usePosts'
+import { useMemo } from 'react'
 
-const Posts = ({ posts, loading, error }) => {
+const Posts = ({ category, userId = '' }) => {
+
+    const categoryHttpPath = useMemo(() => {
+        if (category === 'user_posts') return `/${userId}/posts`
+        return `${category === 'all' ? '' : category}`
+    }, [category]) 
+
+
+    // NOTE: COMPONENT RE-RENDER
+    const [ posts, count, loading, error ] = usePosts({ path: `${categoryHttpPath}` })
 
     if (loading === 'pending') return (
         <div className= "posts" id="posts" data-testid="posts">

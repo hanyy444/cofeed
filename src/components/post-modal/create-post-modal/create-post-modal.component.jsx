@@ -104,6 +104,7 @@ const CreatePostModal = ({ showModal, toggleShowModal }) => {
                         type="text" 
                         value={post.description} 
                         name="description" 
+                        autoComplete='off'
                         placeholder='Description'
                         onChange={handleChange}
                         className='description__input'

@@ -3,7 +3,7 @@ import './profile.page.scss'
 // REACT HOOKS
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect} from 'react'
+import { useCallback, useEffect} from 'react'
 
 // API
 import { userApi } from '../../redux/slices/users.slice'
@@ -28,17 +28,16 @@ const ProfilePage = (props) => {
     
     const { id: userId } = useParams()
     const dispatch = useDispatch()
-
     const token = useSelector(state => state.auth.token)
+        
+    const [showModal, toggleShowModal] = useToggle(false)
     
     const { data: user, loading, error } = useSelector(state => state.users.user)
-    const [ posts, count, postsLoading, postsError ] = usePosts({ userId, url: `${userId}/posts` })
-
-
-    const [showModal, toggleShowModal] = useToggle(false)
-
+    const getUser = useCallback(() => dispatch( 
+        userApi.getSingle({ token, path: userId }) 
+    ), [token, userId])
     useEffect(()=>{
-        dispatch( userApi.getSingle({ token, url: `${userId}` }) )
+        getUser()
     }, [])
 
 
@@ -52,20 +51,16 @@ const ProfilePage = (props) => {
                     <CreatePostModal showModal={showModal} toggleShowModal={toggleShowModal}/>
                 </PostModal>
             )}
-            <Sidebar />
-            <section className="profile__section">
-                <UserDetails 
-                    userId={userId}
-                    imageHeight="90px"
-                    imageWidth="90px"
-                    {...user}
-                />
-                <Divider/>
-                {/* <button className="add-new-post__btn" onClick={() => toggleShowModal(true)}>Add New Post</button> */}
-                <FormButton onClick={()=>toggleShowModal(true)}>Add New Post</FormButton>
-                <Subtitle>Posts</Subtitle>
-                <Posts posts={posts} loading={postsLoading} error={postsError} />
-            </section>
+            <UserDetails 
+                userId={userId}
+                imageHeight="90px"
+                imageWidth="90px"
+                {...user}
+            />
+            <Divider/>
+            <FormButton onClick={()=>toggleShowModal(true)}>Add New Post</FormButton>
+            <Subtitle>Posts</Subtitle>
+            <Posts category='user_posts' userId={userId}/>
         </div>
     )
 }

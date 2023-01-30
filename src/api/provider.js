@@ -1,12 +1,32 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axiosInstance from "./axios-instance"
 
+const makeSendRequest = (base_url, requestConfig) => {
+    async function sendRequest(params) {
+        // SENT from dispatcher
+        const { token, path = '', query = '', data = {} } = params
 
-// EXPORTED AS 2 THINGS: A thunk for the store & A dispatcher for an API
+        const url = `${base_url}${path && `/${path}`}${query && `?${query}`}`
 
-export function catchAsync(asyncFunc) {
-    return async (params, thunkAPI) => {
-        return asyncFunc(params, thunkAPI)
+        if (!token) throw new Error('Authentication required.')
+
+        const response = await axiosInstance({
+            url,
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            ...requestConfig
+        })
+
+        return response.data
+    }
+    return sendRequest
+}
+
+const catchAsync = (sendRequest) => {
+    return async (params, thunkAPI) => { // CALLBACK to createAsyncThunk (redux-thunk)
+        return sendRequest(params)
             .catch(error => {
                 console.log(error.response.data)
                 return thunkAPI.rejectWithValue({
@@ -17,132 +37,89 @@ export function catchAsync(asyncFunc) {
     }
 }
 
-export const createAsync = ({ resource, actionType, requestConfig: { method } }) => {
+export const createThunk = ({ resource, actionType, requestConfig }) => {
+    if (!resource) throw new Error('Resource required.')
     return createAsyncThunk(
         `${resource}/${actionType}`,
-        catchAsync(async ({ url = '', token, data = {}, query = '' }, { rejectWithValue }) => {
-            const response = await axiosInstance({
-                method,
-                url: `${resource}/${url}?${query}`,
-                headers: { 'Authorization': `Bearer ${token}` },
-                data
-            })
-            return response.data
-        })
+        catchAsync(
+            makeSendRequest(
+                `${resource}`,
+                requestConfig
+            )
+        )
     )
 }
 
-const getAll = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
-    return createAsyncThunk(
-        `${resource}/getAll`,
-        catchAsync(async ({ token, url = '', query = '' }, thunkAPI) => {
-            const response = await axiosInstance({
-                method: 'GET',
-                url: `${resource}/${url}${query ? `?${query}` : ''}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-            return response.data
-        })
-    )
-}
-const getSingle = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
-    return createAsyncThunk(
-        `${resource}/getSingle`,
-        catchAsync(async ({ token, url }, thunkAPI) => {
-            if (!url || !token) throw new Error('Please provide required params.')
-            const response = await axiosInstance({
-                method: 'GET',
-                url: `${resource}/${url}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-            return response.data;
-        })
-    )
-}
+const getAllThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'getAll',
+        requestConfig: {
+            method: 'GET'
+        }
+    })
 
-const put = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
-    return createAsyncThunk(
-        `${resource}/put`,
-        catchAsync(async ({ token, url, data }, thunkAPI) => {
-            if (!url || !token || Object.keys(data).length === 0) throw new Error('Please provide required params.')
-            const response = await axiosInstance({
-                method: 'PUT',
-                url: `${resource}/${url}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                data
-            })
-            return response.data
-        })
-    )
-}
-const patch = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
-    return createAsyncThunk(
-        `${resource}/patch`,
-        catchAsync(async ({ token, url, data }) => {
-            if (!url || !token || Object.keys(data).length === 0) throw new Error('Please provide required params.')
-            const response = await axiosInstance({
-                method: 'PATCH',
-                url: `${resource}/${url}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                data
-            })
-            return response.data
-        })
-    )
-}
-const remove = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
+// query is disabled for following (single) crud handlers
 
-    return createAsyncThunk(
-        `${resource}/remove`,
-        catchAsync(async ({ token, url }) => {
-            if (!url || !token) throw new Error('Please provide required params.')
-            const response = await axiosInstance({
-                method: 'DELETE',
-                url: `${resource}/${url}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-            return response.data
-        })
-    )
-}
-const post = (resource) => {
-    if (!resource) throw new Error('Please provide resource argument')
-    return createAsyncThunk(
-        `${resource}/post`,
-        catchAsync(async ({ token, url = '', data }) => {
-            const response = await axiosInstance({
-                method: 'POST',
-                url: `${resource}/${url}`,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                data
-            })
-            return response.data
-        })
-    )
-}
-export const apiProvider = {
-    getAll,
-    getSingle,
-    post,
-    patch,
-    put,
-    remove,
-    createAsync
-}
+const getSingleThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'getSingle',
+        requestConfig: {
+            method: 'GET',
+            query: ''
+        }
+    })
+
+const putThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'put',
+        requestConfig: {
+            method: 'PUT',
+            query: '' //disable query
+        }
+    })
+
+const patchThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'patch',
+        requestConfig: {
+            method: 'PATCH',
+            query: ''
+        }
+    })
+
+const removeThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'remove',
+        requestConfig: {
+            method: 'DELETE',
+            query: '',
+            data: {}
+        }
+    })
+
+const postThunk = (resource) =>
+    createThunk({
+        resource,
+        actionType: 'post',
+        requestConfig: {
+            method: 'POST',
+            query: ''
+        }
+    })
+
+
+//// Each method is a thunk for the store & an action for the API
+export const apiProvider = Object.freeze({
+    getAllThunk,
+    getSingleThunk,
+    postThunk,
+    patchThunk,
+    putThunk,
+    removeThunk,
+    createThunk
+})

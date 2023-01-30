@@ -18,7 +18,6 @@ export const createBuilderCases = ({ builder, thunk, stateProp }) => {
         }
     })
     builder.addCase(thunk.rejected, (state, action) => {
-        console.log(action)
         state[stateProp] = {
             ...state[stateProp],
             loading: 'failure',

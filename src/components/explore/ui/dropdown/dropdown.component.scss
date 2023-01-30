@@ -1,8 +1,10 @@
 @import "../../../../assets/sass/variables";
+@import "../../../../assets/sass/mixins";
+
 
 .dropdown {
     cursor: pointer;
-
+    
     position: relative;
 
     &__img {

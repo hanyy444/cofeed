@@ -13,14 +13,14 @@ import Explore from '../../components/explore/explore.component'
 import './home.page.scss'
 import Spinner from '../../components/spinner/spinner.component'
 import { useErrorHandler } from 'react-error-boundary'
-
-
+import useMediaQuery from '../../hooks/useMediaQuery'
 
 const HomePage = ({ windowSize }) => {
     const handleError = useErrorHandler()
+    
+    const isTablet = useMediaQuery('(max-width: 75em)')
 
     const [data, loading, error, axiosGetUsers] = useAxiosFunction();
-
     const getUsers = () => {
         axiosGetUsers({
             axiosInstance,
@@ -28,7 +28,6 @@ const HomePage = ({ windowSize }) => {
             url: 'http://localhost:3000/api/v1/users'
         })
     }
-
     useEffect(() => {
         getUsers()
     }, [])
@@ -40,14 +39,13 @@ const HomePage = ({ windowSize }) => {
 
     return data?.users && !loading && ( 
         <div className="home" id="home" data-testid="home">
-            <Sidebar/>
             <main className= "main">
                 <Stories users={data?.users}/>
                 <Divider/>
                 <Feeds />
             </main>
             <div className='vl'/>
-            <Explore users={data?.users}/>
+            { <Explore users={data?.users}/>}
         </div>
     )
 }

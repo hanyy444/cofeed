@@ -9,9 +9,7 @@ const ProtectedRoute = ({ children }) => {
 
     const auth = !!(useSelector(state => state.auth.token))
 
-    useEffect(() => {
-        if (!auth) navigate('/login')
-    }, [auth])
+    useEffect(() => { if (!auth) navigate('/login') }, [auth])
 
     if (auth) return children
 

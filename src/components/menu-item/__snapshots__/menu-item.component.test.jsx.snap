@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`Test menu-item component > renders without crashing 1`] = `
+<li
+  class="menu-item "
+  data-testid="menu-item"
+  id="menu-item"
+>
+  <a />
+</li>
+`;

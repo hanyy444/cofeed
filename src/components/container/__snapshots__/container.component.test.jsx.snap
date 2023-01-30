@@ -1,0 +1,9 @@
+// Vitest Snapshot v1
+
+exports[`Test container component > renders without crashing 1`] = `
+<div
+  class="container"
+  data-testid="container"
+  id="container"
+/>
+`;

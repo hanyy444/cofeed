@@ -1,14 +1,23 @@
+    @import "../../../../assets/sass/mixins";
+    
     .suggestions {
         display: grid;
         grid-template-columns: repeat(2, auto);
         gap: 3rem 8rem;
         align-items: center;
         padding: 1rem;
+        width: 100%;
+        justify-items: center;
+
+        @include respond(tablet){
+            display: none;
+        }
 
         .suggestion {
             grid-column: 1 / -1;
+            width: 100%;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             padding: 0 .5rem;
             gap: .5rem

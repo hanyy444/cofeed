@@ -17,16 +17,16 @@ import { apiProvider } from "./provider"
 
 // COMPOSITION INSTEAD OF CLASSES
 export function ApiCore(options) {
-    const { getAll, getSingle, post, patch, put, remove, createAsync } = apiProvider
+    const { getAllThunk, getSingleThunk, postThunk, patchThunk, putThunk, removeThunk, createThunk } = apiProvider
     const resource = options.resource
     return {
         resource,
-        createAsync,
-        getAll: options.getAll && getAll(resource),
-        getSingle: options.getSingle && getSingle(resource),
-        post: options.post && post(resource),
-        patch: options.patch && patch(resource),
-        put: options.put && put(resource),
-        remove: options.remove && remove(resource),
+        createThunk,
+        getAll: options.getAll && getAllThunk(resource),
+        getSingle: options.getSingle && getSingleThunk(resource),
+        post: options.post && postThunk(resource),
+        patch: options.patch && patchThunk(resource),
+        put: options.put && putThunk(resource),
+        remove: options.remove && removeThunk(resource),
     }
 }

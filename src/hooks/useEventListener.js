@@ -21,11 +21,11 @@ const useEventListener = (
 
     useEffect(() => {
         console.log('EVENT LISTENER ATTACHED!')
-        element.addEventListener(eventType, handler, false)
+        element?.addEventListener(eventType, handler, false)
         return () => {
             // callback.current = undefined 
             console.log('EVENT LISTENER REMOVED!')
-            element.removeEventListener(eventType, handler)
+            element?.removeEventListener(eventType, handler)
         }
     }, [eventType, element])
 

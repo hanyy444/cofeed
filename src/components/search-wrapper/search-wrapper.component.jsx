@@ -11,7 +11,7 @@ const SearchWrapper = ({
     error
 }) => {
     if (data && loading === 'success') return ( 
-        <div className= "search-wrapper" id="search-wrapper" data-testid="search-wrapper">
+        <div className= "search-wrapper" data-testid="search-wrapper">
                 <>
                     <p className="search-wrapper__count">{count} results found</p> 
                     <ul className="search-wrapper__data">
@@ -20,7 +20,7 @@ const SearchWrapper = ({
                                 picturePath, 
                                 firstName, 
                                 lastName }, idx) => (
-                                    <li key={`search-${idx}-${_id}`}>
+                                    <li key={`search-${idx}-${_id}`} onClick={()=>console.log('clicked')}>
                                         <User
                                             userId={_id}
                                             picturePath={picturePath}

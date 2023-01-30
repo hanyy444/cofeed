@@ -19,7 +19,7 @@
     }
     
     &__user-img{
-        width: clamp(6rem, 100%, 10rem);
+        width: clamp(6rem, 10vw, 7rem);
         aspect-ratio: 1 / 1;
         border-radius: 50%;
         border: 2px solid $primary;

@@ -10,7 +10,7 @@ const Dropdown = ({picturePath,
                 onBlur={() => toggleDropdown(false)} onClick={toggleDropdown} 
             />
                 {showDropDown && <ul className="dropdown__list">
-                    {navItems.map(({handler, text}) => (<li onClick={handler}>{text}</li>))}
+                    {navItems.map(({handler, text}) => (<li key={`nav-dropdown-item-${text}`} onClick={handler}>{text}</li>))}
                 </ul>}
         </div>
     );

@@ -6,7 +6,7 @@
 
     border: 1px solid #f5f7ff;
     background-color: #fff;
-    border-radius: 1rem;
+    // border-radius: 1rem;
 
     box-shadow: 1px 0px 1px 0px #000000;
     
@@ -20,6 +20,7 @@
     &__count{
         margin: 2rem auto;
         text-align: center;
+        font-size: 1.6rem;
     }
     &__data{
         display: flex;

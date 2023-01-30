@@ -1,62 +1,43 @@
-import React, { useCallback } from 'react';
-import Subtitle from '../subtitle/subtitle.component';
-import { FaHouseUser, FaCommentDots, FaUser, FaBookmark, FaCog } from 'react-icons/fa'
 import './menu.component.scss'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useRef, useCallback  } from 'react';
+import Subtitle from '../subtitle/subtitle.component';
+import useMediaQuery from '../../hooks/useMediaQuery';
+import MenuItem from '../menu-item/menu-item.component';
+import { useEffect } from 'react';
 
-const Menu = ({ userId, navItems }) => {
+const Menu = ({ menuItems, isPhone }) => {
     const navigate = useNavigate()
     const {pathname} = useLocation()
 
-    // TODO: RETHINK LOGIC - SIDEBAR SHOULDN'T BE RE-RENDERED (SHOULD KEEP ITS STATE)
-    // SOLUTION: useRef instead
-    const [active, setActive] = useState(pathname.includes('profile') ? 'PROFILE' : 'HOME') // HOME | MESSAGES | PROFILE | SAVED | SETTINGS
-    // const active = useRef('HOME')
+    // useRef
+    const [active, setActive] = useState(pathname.includes('profile') ? 'Profile' : 'Home') // Home | Messages | Profile | Saved Posts | Settings --> useRef is better
 
-    // const go = (element, path)=>{
-    //     active.current = element
-    //     navigate(path)
-    // }
+    const navHandler = useCallback(({text, link})=>{
+        setActive(text)
+        navigate(link)
+    },[setActive, navigate])
 
-    const goHome = useCallback(()=>{
-        setActive('HOME')
-        // active.current = 'HOME'
-        navigate('/')
-    }, [])
+    useEffect(()=>{
+        setActive(pathname.includes('profile') ? 'Profile' : 'Home')
+    },[pathname])
 
-    const goProfile = useCallback(()=>{
-        setActive('PROFILE')
-
-        navigate(`/profile/${userId}`)
-    }, [userId])
-
-    // console.log(active.current)
     return ( 
         <div className= "menu" id="menu" data-testid="menu">
-            <Subtitle>Menu</Subtitle>
-            <ul className='menu__items'>
-                <li onClick={goHome} className={active === 'HOME'? 'active' : ''}>
-                    <FaHouseUser/>
-                    <a>Home</a>
-                </li>
-                <li onClick={()=>go('MESSAGES', '/messages')} className={active === 'MESSAGES'? 'active' : ''}>
-                    <FaCommentDots/>
-                    <a>Messages</a>
-                </li>
-                <li onClick={goProfile} className={active === 'PROFILE'? 'active' : ''}>
-                    <FaUser/>
-                    <a>Profile</a>
-                </li>
-                <li onClick={()=>go('SAVED POSTS', '/saved-posts')} className={active === 'SAVED'? 'active' : ''}>
-                    <FaBookmark/>
-                    <a>Saved Posts</a>
-                </li>
-                <li onClick={()=>go('SETTINGS', '/settings')} className={active === 'SETTINGS'? 'active' : ''}>
-                    <FaCog/>
-                    <a>Settings</a>
-                </li>
+            {!isPhone && <Subtitle>Menu</Subtitle>}
+            <ul className="menu__items">
+                {
+                    menuItems.map(({ icon, text, link }) => (
+                        <MenuItem 
+                            key={text}
+                            icon={icon}
+                            text={text}
+                            isActive={active === text}
+                            isPhone={isPhone}
+                            navHandler={() => navHandler({text, link})}
+                        />
+                    ))
+                }
             </ul>
         </div>
     )

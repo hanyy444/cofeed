@@ -10,12 +10,12 @@ exports[`Test story component > Should render without crashing 1`] = `
     class="story__user-img"
     src="test"
   />
-  <div
-    class="paragraph undefined"
+  <p
+    class="paragraph "
     data-testid="paragraph"
     id="paragraph"
   >
     test
-  </div>
+  </p>
 </div>
 `;

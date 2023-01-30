@@ -17,10 +17,15 @@ const postApi = ApiCore({
     single
 })
 
-// ATTACH CUSTOM METHODS TO THE API
-// postApi.deactivate = () => postApi.put
-
-postApi.likePost = postApi.createAsync({ resource, actionType: '/likePost', requestConfig: { method: 'PATCH' } })
+postApi.likePost = postApi.createThunk({
+    resource,
+    actionType: '/likePost',
+    requestConfig: {
+        method: 'PATCH',
+        query: '',
+        data: {}
+    }
+})
 
 postApi.unRegister = function () { console.log(`${this.resource} service unregistered.`) }
 

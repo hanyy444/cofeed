@@ -15,13 +15,13 @@ exports[`Test stories component > Should render without crashing 1`] = `
       class="story__user-img"
       src="http://localhost:3000/public/assets/undefined"
     />
-    <div
-      class="paragraph undefined"
+    <p
+      class="paragraph "
       data-testid="paragraph"
       id="paragraph"
     >
       You
-    </div>
+    </p>
   </div>
   <div
     class="story "
@@ -32,13 +32,13 @@ exports[`Test stories component > Should render without crashing 1`] = `
       class="story__user-img"
       src="http://localhost:3000/public/assets/undefined"
     />
-    <div
-      class="paragraph undefined"
+    <p
+      class="paragraph "
       data-testid="paragraph"
       id="paragraph"
     >
       fake-1
-    </div>
+    </p>
   </div>
 </div>
 `;

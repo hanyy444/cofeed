@@ -31,8 +31,10 @@ const postsSlice = createSlice({
     extraReducers: (builder) => {
 
         const { getAll, getSingle, post, put, patch, likePost } = postApi
+
         createBuilderCases({ builder, thunk: getAll, stateProp: 'posts' })
         createBuilderCases({ builder, thunk: getSingle, stateProp: 'post' })
+
         createBuilderCases({ builder, thunk: post, stateProp: 'posts' })
         createBuilderCases({ builder, thunk: put, stateProp: 'post' })
         createBuilderCases({ builder, thunk: patch, stateProp: 'post' })

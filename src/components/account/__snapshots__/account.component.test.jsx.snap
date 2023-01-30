@@ -47,13 +47,13 @@ exports[`Test account component > Should render displaying the user 1`] = `
       <div
         class="user-info"
       >
-        <div
-          class="paragraph undefined"
+        <p
+          class="paragraph "
           data-testid="paragraph"
           id="paragraph"
         >
           fake-name 
-        </div>
+        </p>
         <p
           class="nickname"
         >
@@ -112,13 +112,13 @@ exports[`Test account component > Should render hiding the user 1`] = `
       <div
         class="user-info"
       >
-        <div
-          class="paragraph undefined"
+        <p
+          class="paragraph "
           data-testid="paragraph"
           id="paragraph"
         >
           fake-name 
-        </div>
+        </p>
         <p
           class="nickname"
         >

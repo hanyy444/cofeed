@@ -3,13 +3,13 @@
 
 .login {
     background: linear-gradient(90deg, $secondary 0%, $primary 100%);
-    height: 100vh;
-    // height: 100%;
 
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    
     display: flex;
     justify-content: center;
     align-items: center;
-
     
     overflow: scroll;
     &::-webkit-scrollbar{
@@ -17,8 +17,7 @@
     }
 
     .form-box{
-        
-        padding: 8vh 0;
+        padding-bottom: 2rem;
         border-radius: .2rem;
         box-shadow: $grey-dark 0px 0px 0.25em, $grey-dark 0px 0.25em 1em;
         background-color: $white;
@@ -27,9 +26,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        gap: 1vh;
 
-        // width: clamp(10vh, 35rem, 60rem);
         .login-form {
             min-width: 35rem;
             grid-template-columns: min-content;
@@ -37,6 +34,7 @@
         
         form {
             min-width: 50vw;
+            height: 100%;
             .form-button {
                 grid-column: 1 / -1;
             }

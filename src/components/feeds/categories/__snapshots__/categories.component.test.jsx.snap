@@ -6,22 +6,22 @@ exports[`Test categories component > Should render without crashing 1`] = `
   data-testid="categories"
 >
   <li
-    class=""
+    class="category"
   >
     all
   </li>
   <li
-    class=""
+    class="category"
   >
     following
   </li>
   <li
-    class=""
+    class="category"
   >
     popular
   </li>
   <li
-    class=""
+    class="category"
   >
     newest
   </li>

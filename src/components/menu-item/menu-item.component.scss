@@ -1,0 +1,48 @@
+@import "../../assets/sass/mixins";
+@import "../../assets/sass/variables";
+
+.menu-item {
+    @include flexBetween;
+    cursor: pointer;
+    gap: 1.5rem;
+
+    width: 100%;
+
+    font-size: clamp(1rem, $default-font-size, 2vw);
+    font-weight: 500;
+
+    color: rgba($secondary, 0.6);
+
+    padding: 2rem 4vw 2rem 5rem;
+
+    transition: background-color .1s ease-in;
+
+    svg {
+        font-size: 1.8rem;
+    }
+
+    &:hover,
+    &.active {
+        background-color: $grey-light-blue;
+        color: rgba($secondary, 1);
+
+        svg {
+            color: $primary;
+        }
+    }
+
+    &>a {
+        flex: 4;
+        text-align: left;
+        @include respond(phone){
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+
+    @include respond(phone) {
+        padding: 2rem;
+        justify-content: center;
+        height: 100%;
+    }
+}

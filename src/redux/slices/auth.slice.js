@@ -22,6 +22,7 @@ const createAddRemoveFriendBuilder = (builder, thunk) => {
         state.loading = 'pending'
     })
     builder.addCase(thunk.fulfilled, (state, { payload }) => {
+        console.log(payload)
         state.loading = payload.status
         state.count = payload.count
         state.user.friends = payload.friends.map(friend => friend._id)

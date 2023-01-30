@@ -2,55 +2,26 @@
 @import "../../assets/sass/variables";
 
 .menu {
-
     width: 100%;
-    margin: 3rem 0;
-
     .subtitle{
         padding-left: 4rem;
+    }
+
+    @include respond(phone){
+        background-color: rgba(#FFF, .95);
     }
 
     &__items{
         display: flex;
         flex-direction: column;
         justify-content: center;
-
         padding: 2rem 0;
 
-        & > li {
-            cursor: pointer;
-            @include flexBetween;
-            gap: 1.5rem;
-            
-            width: 100%;
-
-            
-            font-size: $default-font-size;
-            font-weight: 500;
-            
-            color: rgba($secondary, 0.6);
-           
-            padding: 2rem 5rem;
-            
-            transition: background-color .1s ease-in;
-
-            svg{
-                font-size: 1.8rem;
-            }
-
-            &:hover, &.active {
-                background-color: $grey-light-blue;
-                color: rgba($secondary, 1);
-                svg {
-                    color: $primary;
-                }
-            }
-
-            & > a {
-                flex: 4;
-                text-align: left;
-            }
+        @include respond(phone) {
+            height: 100%;
+            padding: 0;
+            flex-direction: row;
+            align-items: center;
         }
-
     }
 }

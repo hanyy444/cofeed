@@ -1,8 +1,11 @@
 // SCSS
 import './explore.component.scss'
 
+// REACT
+import { useCallback } from 'react';
+
 // REDUX
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // HOOKS
 import useSearchQuery from '../../hooks/useSearchQuery'
@@ -14,16 +17,34 @@ import Suggestions from './ui/suggestions/suggestions.component';
 import SearchWrapper from '../search-wrapper/search-wrapper.component';
 import { useErrorHandler } from 'react-error-boundary';
 
+import { userApi, clearSearch } from '../../redux/slices/users.slice'
+
 // TODO: only send in users who are not friends with me!
 const Explore = ({ users }) => {
 
     const handleError = useErrorHandler()
-    const { _id: userId, picturePath} = useSelector(state => state.auth.user)
+
+    const dispatch = useDispatch()
+
+    const { token, user: { _id: userId, picturePath}} = useSelector(state => state.auth)
 
     const [showDropDown, toggleDropdown] = useToggle(false)
     const [showSearchWrapper, toggleSearchWrapper] = useToggle(false)
-    const [ searchData, count, page, loading, error, searchQuery, setSearchQuery] = useSearchQuery({ dataType: 'users' })
 
+    const { data, count, page, loading, error } = useSelector(state => state.users.search)
+
+    const searchUsers = useCallback((searchQuery) => {
+        dispatch(userApi.search({ token, query: `search=${searchQuery}` }))
+    }, [token])
+
+    const clearSearchQuery = useCallback(()=>{
+        dispatch(clearSearch())
+    },[clearSearch])
+
+    const [ searchQuery, setSearchQuery ] = useSearchQuery({ 
+        searchCallback: searchUsers,
+        clearSearch: clearSearchQuery 
+    })
 
     if (error) handleError(error)
 
@@ -40,7 +61,7 @@ const Explore = ({ users }) => {
             />
             { showSearchWrapper ? ( 
                 <SearchWrapper
-                    data={searchData}
+                    data={data}
                     count={count}
                     page={page}
                     loading={loading}

@@ -12,7 +12,7 @@ const FollowButton = ({ friendId }) => {
     const isMe = userId === friendId
 
     const handleFollow = useCallback((friendId) => {
-        dispatch(userApi.addRemoveFriend({ token, url: `${userId}/friends/${friendId}`}))
+        dispatch(userApi.addRemoveFriend({ token, path: `${userId}/friends/${friendId}`}))
     }, [token, friendId, userId])
 
     return !isMe && (
