@@ -43,8 +43,8 @@ A fully responsive single page with multiple routes social media web application
    5. useDebounce: debounces a callback function with a certain delay
    6. useSearchQuery: submits a debounced search request to the server
    7. and other application-related hooks…
-      iv. Use formik & yup packages to handle the application forms
-4. Vitest for unit testing
+4. Use formik & yup packages to handle the application forms
+5. Vitest for unit testing
 
 ## License
 
