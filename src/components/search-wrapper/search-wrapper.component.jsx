@@ -1,48 +1,42 @@
 import React from 'react';
 import './search-wrapper.component.scss'
-import Spinner from '../spinner/spinner.component';
-import User from '../user/user.component';
+import User from '../display/user/user.component';
+import WithStateHandler from 'utils/withStateHandler';
+import { useNavigate } from 'react-router-dom';
 
-const SearchWrapper = ({
+const SearchWrapper = (WithStateHandler) => ({
     data, 
     count, 
     page, 
     loading, 
     error
 }) => {
-    if (data && loading === 'success') return ( 
-        <div className= "search-wrapper" data-testid="search-wrapper">
-                <>
-                    <p className="search-wrapper__count">{count} results found</p> 
-                    <ul className="search-wrapper__data">
-                        {
-                            data?.map(({ _id, 
-                                picturePath, 
-                                firstName, 
-                                lastName }, idx) => (
-                                    <li key={`search-${idx}-${_id}`} onClick={()=>console.log('clicked')}>
-                                        <User
-                                            userId={_id}
-                                            picturePath={picturePath}
-                                            firstName={firstName}
-                                            lastName={lastName}
-                                            />
-                                    </li>
-                                )
-                            )
-                        }
-                    </ul>
-                </>
-            
-        </div>
-    )
-
+    const navigate = useNavigate()
     return (
-        <div className= "search-wrapper" id="search-wrapper" data-testid="search-wrapper">
-            <Spinner/>
+        <div className= "search-wrapper" data-testid="search-wrapper">
+            <WithStateHandler 
+                data={data} 
+                loading={loading} 
+                error={error}
+                fallback={<p className="search-wrapper__count">{count} results found</p>}
+            > 
+                <div className="search-wrapper__data">
+                    {
+                        data?.map(({ _id, ...user }) => (
+                                <User key={`search-${_id}`} 
+                                    userId={_id} 
+                                    imageUrl={user.image.url}
+                                    onClick={()=>navigate(`/profile/${_id}`)}
+                                    {...user} 
+                                />
+                            )
+                        )
+                    }
+                </div>
+            </WithStateHandler>
         </div>
-    )
+    )   
 }
 
-export default SearchWrapper;
+export default SearchWrapper(WithStateHandler);
 

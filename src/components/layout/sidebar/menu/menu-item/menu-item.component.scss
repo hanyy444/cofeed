@@ -1,0 +1,42 @@
+// @use "assets/sass/style";
+
+.menu-item {
+    display: flex;
+    justify-content: flex-start;
+    
+    cursor: pointer;
+    gap: 1.5rem;
+
+    font-size: clamp(1rem, $default-font-size, 2vw);
+    font-weight: 500;
+
+    color: rgba($secondary, 0.5);
+
+    padding: 2rem 2rem 2rem 4rem;
+
+    transition: background-color .1s ease-in;
+
+    svg {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    &:hover,
+    &.active {
+        background-color: $grey-light-blue;
+        color: rgba($secondary, 1);
+        svg { color: $primary; }
+    }
+
+    & > a {
+        text-align: left;
+        text-transform: capitalize;
+    }
+
+    @include respond(phone) {
+        padding: 2rem;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+}

@@ -13,18 +13,18 @@ const useEventListener = (
 
     const handler = useCallback(
         (event) => {
-            console.log('HANDLER RUN!')
+            // console.log('HANDLER RUN!')
             callbackRef.current(event)
         },
-        [event]
+        []
     )
 
     useEffect(() => {
-        console.log('EVENT LISTENER ATTACHED!')
+        // console.log('EVENT LISTENER ATTACHED!')
         element?.addEventListener(eventType, handler, false)
         return () => {
             // callback.current = undefined 
-            console.log('EVENT LISTENER REMOVED!')
+            // console.log('EVENT LISTENER REMOVED!')
             element?.removeEventListener(eventType, handler)
         }
     }, [eventType, element])

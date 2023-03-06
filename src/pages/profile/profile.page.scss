@@ -1,20 +1,11 @@
-@import "../../assets/sass/mixins";
-@import "../../assets/sass/variables";
+// @use "assets/sass/style";
 
 .profile {
-    height: 100%;
-    grid-column: page-start 1 / -1;
-    max-width: 100%;
-
-    overflow: scroll;
-    &::-webkit-scrollbar{
-        display: none;
-    }
-
-    @include respond(phone){
-        grid-row: 1 / 2;
-        grid-column: 1/-1;
-    }
+    padding-top: 4rem;
+    
+    @include page;
+    
+    @include scroll;
 
     display: flex;
     flex-direction: column;
@@ -26,9 +17,11 @@
         flex: 4;
     }
     
-    &::-webkit-scrollbar {
-        display: none;
+    .user{
+        cursor: auto;
+        text-decoration: none;
     }
+
     .posts {
         .spinner {
             margin-top: 5rem;

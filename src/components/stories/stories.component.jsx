@@ -1,24 +1,42 @@
 import './stories.component.scss'
 import { useSelector } from 'react-redux'
+import { selectAuth, userApi } from 'redux/slices/auth.slice';
+import { selectFriends } from 'redux/slices/users.slice';
+
 import Story from './story/story.component';
 
-const Stories = ({ users }) => {
+import useData from 'hooks/useData';
 
-    const { user: currentUser } = useSelector(state => state.auth)
+import WithStateHandler from 'utils/withStateHandler';
 
-    return users && currentUser && ( 
-        <div className= "stories" id="stories" data-testid="stories">
-            {
-                [currentUser, ...users.filter(user=>currentUser._id!==user._id)]
-                    .map(({ _id, firstName, picturePath }, idx) => (
-                        <Story 
-                            key={_id}
-                            userName={_id === currentUser._id ? 'You' : firstName} 
-                            userPicture={`http://localhost:3000/public/assets/${picturePath}`}
-                        />
-                    ))}
+const Stories = () => {
+
+    const { user } = useSelector(selectAuth)
+
+    const { data: friends, loading, error } = useData({
+        selector: selectFriends,
+        thunk: { 
+            action: userApi.getUserFriends, 
+            params: {
+                path: `${user._id}/friends`
+            } 
+        }
+    })
+
+    return <div className= "stories" data-testid="stories">
+            {/* <WithStateHandler data={friends} loading={loading} error={error}> */}
+                {
+                    [user, ...friends]
+                        .map(({ _id, firstName, image }) => (
+                            <Story 
+                                key={_id}
+                                userName={_id === user._id ? 'You' : firstName} 
+                                userImageUrl={image.url}
+                            />
+                        ))
+                }
+            {/* </WithStateHandler>  */}
         </div>
-    )
 }
 
 export default Stories;

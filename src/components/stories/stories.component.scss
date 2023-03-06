@@ -1,6 +1,8 @@
 .stories {
     display: flex;
     justify-content: stretch;
+    position: relative;
+    min-height: 10rem;
     align-items: center;   
     gap: 2rem;
 
@@ -8,7 +10,7 @@
 
     overflow: scroll;
 
-    flex: 1 0 1;
+    flex: 1 1 1;
     
     &::-webkit-scrollbar{
         display: none;

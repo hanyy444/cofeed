@@ -1,0 +1,24 @@
+.menu {
+    width: 100%;
+    .subtitle{
+        padding-left: 4rem;
+    }
+
+    @include respond(phone){
+        background-color: rgba(#FFF, .95);
+    }
+
+    &__items{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem 0;
+
+        @include respond(phone) {
+            height: 100%;
+            padding: 0;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}

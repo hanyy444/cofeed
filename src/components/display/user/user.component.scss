@@ -1,0 +1,33 @@
+// @use "assets/sass/style";
+
+.user {
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+
+    .user-img {
+        border-radius: 50%;
+        border: 2px solid #fff;
+        flex-shrink: 0;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+
+        .paragraph {
+            padding: 0;
+        }
+
+        .nickname {
+            color: $grey;
+            margin-top: .4rem;
+            font-size: 1rem;
+        }
+    }
+}

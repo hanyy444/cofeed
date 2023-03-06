@@ -8,10 +8,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './redux/store'
-import WithErrorBoundary from './utils/error-boundary/WithErrorBoundary'
+import WithErrorBoundary from './utils/error-boundary/withErrorBoundary'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
     <BrowserRouter>
       <WithErrorBoundary>
         <Provider store={store}>
@@ -21,5 +20,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Provider>
       </WithErrorBoundary>
     </BrowserRouter>
-  // </React.StrictMode>,
 )

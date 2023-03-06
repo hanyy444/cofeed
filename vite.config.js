@@ -1,14 +1,41 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import jsconfigPaths from 'vite-jsconfig-paths'
+// import path from 'path'
+// import dns from 'dns'
+
+// dns.setDefaultResultOrder('verbatim')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
+
+  plugins: [react(), jsconfigPaths()],
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, './src')
+  //   },
+  // },
+  // server: {
+  //   host: 'localhost',
+  //   port: 8000
+  // },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // added to every scss file
+        additionalData: `@import "./src/assets/sass/variables"; @import "./src/assets/sass/mixins"; `
+      }
     }
+  },
+  optimizeDeps: {
+    exclude: [
+      'firebase',
+      'firebase/app',
+      'firebase/auth',
+      'firebase/firestore',
+      'firebase/analytics',
+      'firebase/storage',
+    ],
   },
   test: {
     globals: true,

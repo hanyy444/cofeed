@@ -12,7 +12,7 @@ const SearchBox = ({
         <input 
             type="text" 
             value={searchQuery}
-            placeholder='Search' 
+            placeholder='Search users...' 
             className='search-box__input' 
             onBlur={onBlur}
             onChange={onChange}/>

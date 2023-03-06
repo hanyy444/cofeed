@@ -1,15 +1,10 @@
-@import "../../../assets/sass/mixins";
-@import "../../../assets/sass/variables";
-
-.story{
+.story {
     @include flexBetween;
     flex-direction: column;
-    flex: 1 0 6rem;
     gap: 2rem;
     cursor: pointer;
 
-    &:hover &__user-img,
-    &:hover &__user-name{
+    &:hover &__user-img{
         transform: scale(1.1);
         transition: all .1s ease-out;
     }
@@ -19,11 +14,11 @@
     }
     
     &__user-img{
-        width: clamp(6rem, 10vw, 7rem);
+        width: clamp(6rem, 10vw, 8rem);
         aspect-ratio: 1 / 1;
         border-radius: 50%;
-        border: 2px solid $primary;
-        padding: .2rem;
+        border: 2.5px solid $primary;
+        padding: .3rem;
         object-fit:cover;
     }
 

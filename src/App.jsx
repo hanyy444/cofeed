@@ -1,63 +1,74 @@
-import './App.css'
-import HomePage from "./pages/home/home.page"
-import LoginPage from './pages/login/login.page'
-import ProfilePage from './pages/profile/profile.page'
+import './App.scss'
 
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from "react-router-dom"
-import ProtectedRoute from "./auth.route"
-import { useLocation } from 'react-router-dom'
-import Container from './components/container/container.component'
-import Sidebar from './components/sidebar/sidebar.component'
-import Explore from './components/explore/explore.component'
-import { useSelector } from 'react-redux'
+import WithAuthentication from "utils/withAuthentication" 
+
+import Container from 'components/layout/container/container.component'
+import Sidebar from 'components/layout/sidebar/sidebar.component'
+import SettingsPage from 'pages/settings/settings.page';
+import Explore from 'components/explore/explore.component';
+
+const HomePage = lazy(() => import('pages/home/home.page'))
+const LoginPage = lazy(() => import('pages/login/login.page'))
+const ProfilePage = lazy(() => import('pages/profile/profile.page'))
+const MessagesPage = lazy(() => import('pages/messages/messages.page'))
+const SavedPostsPage = lazy(() => import('pages/saved-posts/saved-posts.page'))
+const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {
-  // useReduxStore?? useMobXStore?? .. then use the provider here inside the app and pass the used store to it (good practice)
-  
-  const { pathname } = useLocation()
-  const token = useSelector(state => state.auth.token)
-  const isLogin = pathname.includes('login') || !token
-
   return (
     <div className="app">
       <Container>
-        {!isLogin && <Sidebar/>}
-        <Routes>
-          {
-            ['/login', '/signup'].map((path, index) => (
-              <Route 
-              key={index}
-              exact 
-              path={path} 
-              element={<LoginPage/>} 
-              />
-            ))
-          }
-
-          {
-            ['/', '/home'].map((path, index) => (
-              <Route 
+          <Suspense>
+            <Routes>
+            {
+              ['/login', '/signup'].map((path, index) => (
+                <Route 
                 key={index}
                 exact 
-                path={path}
-                element={
-                    <ProtectedRoute>
-                        <HomePage/>
-                    </ProtectedRoute>
-                } 
-              />
-            ))
-          }
-          <Route
-            path='/profile/:id'
-            element={
-              <ProtectedRoute>
-                  <ProfilePage/>
-              </ProtectedRoute>
+                path={path} 
+                element={<LoginPage/>} 
+                />
+              ))
             }
-          />
+          </Routes>
+          </Suspense>
+          <WithAuthentication>
+              <Sidebar/>
+              <Suspense>
+                <Routes>
+                  {
+                    ['/login', '/signup'].map((path, index) => (
+                      <Route 
+                      key={index}
+                      exact 
+                      path={path} 
+                      element={<LoginPage/>} 
+                      />
+                    ))
+                  }
 
-        </Routes>
+                  {
+                    ['/', '/home'].map((path, index) => (
+                      <Route 
+                        key={index}
+                        exact 
+                        path={path}
+                        element={<HomePage/>} 
+                      />
+                    ))
+                  }
+                  <Route path='/profile/:id'element={<ProfilePage/>}/>
+                  <Route path='/messages' element={<MessagesPage/>}/>
+                  <Route path='/saved' element={<SavedPostsPage/>}/>
+                  <Route path='/settings' element={<SettingsPage/>}/>
+                  <Route path='/explore' element={<Explore/>}/>
+                  <Route path="/state" element={<AppState/>} />
+                </Routes>
+              </Suspense>
+          </WithAuthentication>
+        
       </Container>
     </div>
   )

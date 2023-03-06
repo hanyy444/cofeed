@@ -1,27 +1,27 @@
 import './follow-button.component.scss'
 import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { userApi } from '../../../redux/slices/auth.slice'
+import { selectAuth } from 'redux/slices/auth.slice'
+import { selectFriends, userApi} from 'redux/slices/users.slice'
 
-const FollowButton = ({ friendId }) => {
+const FollowButton = ({ userId }) => {
 
     const dispatch = useDispatch()
-    const { token, user: { _id: userId, friends } } = useSelector(state=>state.auth)
+    const { token, user: authUser } = useSelector(selectAuth)
+    const {data: friends} = useSelector(selectFriends)
+    const isFriend = !!(friends.find(({_id})=>_id===userId))
 
-    const isFriend = friends.includes(friendId)
-    const isMe = userId === friendId
+    const handleFollow = useCallback(() => {
+        dispatch(userApi.addRemoveFriend({ token, path: `${authUser._id}/friends/${userId}`}))
+    }, [token, userId, authUser._id])
 
-    const handleFollow = useCallback((friendId) => {
-        dispatch(userApi.addRemoveFriend({ token, path: `${userId}/friends/${friendId}`}))
-    }, [token, friendId, userId])
-
-    return !isMe && (
+    return (
         <button 
             type="button"
-            className={`follow-button ${ isFriend ? 'follow-button--friend' : ''}`}
-            onClick={() => handleFollow(friendId)}    
+            className={`follow-button ${!isFriend?'follow-button--friend':''}`}
+            onClick={handleFollow}
         >
-            {isFriend ? 'Unfollow' : 'Follow'}
+            {!isFriend ? 'Follow' : 'Unfollow'}
         </button>
     )
 }

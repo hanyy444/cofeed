@@ -1,7 +1,8 @@
-@import "../../../assets/sass/variables";
-@import "../../../assets/sass/mixins";
+// @use "assets/sass/style";
 
 .form-button {
+    
+    text-align: center;
     text-transform: uppercase;
     
     border-radius: .2rem;

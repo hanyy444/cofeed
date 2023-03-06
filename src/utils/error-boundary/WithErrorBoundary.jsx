@@ -11,9 +11,12 @@ const WithErrorBoundary = ({ children }) => {
     // 2. Internal
     // - use which slice? ..
     // 1. check every slice
+
     const resetBoundary = () => {
         setErrorState(null)
+        window.location.reload()
     }
+
     return (
         <ErrorBoundary
             onError={(error)=>setErrorState(error)}

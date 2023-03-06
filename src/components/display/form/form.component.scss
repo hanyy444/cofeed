@@ -1,0 +1,13 @@
+.form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    justify-content: center;
+    gap: 3vh;
+
+    min-width: 30vw;
+    height: 100%;
+    
+    .form-button {
+        grid-column: 1 / -1;
+    }
+}

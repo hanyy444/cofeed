@@ -1,0 +1,12 @@
+// @use "assets/sass/style";
+.friends-list {
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    display: flex;
+    flex-direction: column;
+
+}

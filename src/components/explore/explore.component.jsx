@@ -2,59 +2,51 @@
 import './explore.component.scss'
 
 // REACT
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+
+// HOOKS
+import useSearchQuery from 'hooks/useSearchQuery'
+import useToggle from 'hooks/useToggle';
+
+// COMPONENTS
+import ExploreNav from './ui/explore-nav.component';
+import Suggestions from './suggestions/suggestions.component';
+import SearchWrapper from '../search-wrapper/search-wrapper.component';
 
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
+import { selectAuth } from 'redux/slices/auth.slice';
+import { userApi, selectSearch, clearSearch} from 'redux/slices/users.slice'
+import useMediaQuery from 'hooks/useMediaQuery';
 
-// HOOKS
-import useSearchQuery from '../../hooks/useSearchQuery'
-import useToggle from '../../hooks/useToggle';
-
-// COMPONENTS
-import ExploreNav from './explore-nav.component';
-import Suggestions from './ui/suggestions/suggestions.component';
-import SearchWrapper from '../search-wrapper/search-wrapper.component';
-import { useErrorHandler } from 'react-error-boundary';
-
-import { userApi, clearSearch } from '../../redux/slices/users.slice'
-
-// TODO: only send in users who are not friends with me!
-const Explore = ({ users }) => {
-
-    const handleError = useErrorHandler()
-
-    const dispatch = useDispatch()
-
-    const { token, user: { _id: userId, picturePath}} = useSelector(state => state.auth)
-
-    const [showDropDown, toggleDropdown] = useToggle(false)
+const Explore = () => {
+    const isTablet = useMediaQuery('(max-width: 50em)')
     const [showSearchWrapper, toggleSearchWrapper] = useToggle(false)
+    
+    const dispatch = useDispatch()
+    const { token, user: { _id: userId, image }} = useSelector(selectAuth)
 
-    const { data, count, page, loading, error } = useSelector(state => state.users.search)
+    //// SEARCH
+    const { data, count, page, loading, error } = useSelector(selectSearch)
 
-    const searchUsers = useCallback((searchQuery) => {
-        dispatch(userApi.search({ token, query: `search=${searchQuery}` }))
-    }, [token])
+    const searchUsers = useCallback((searchQuery) => dispatch(
+        userApi.search({ token, query: `search=${searchQuery}` }))
+    , [token])
 
     const clearSearchQuery = useCallback(()=>{
         dispatch(clearSearch())
-    },[clearSearch])
+    },[])
 
     const [ searchQuery, setSearchQuery ] = useSearchQuery({ 
         searchCallback: searchUsers,
         clearSearch: clearSearchQuery 
     })
 
-    if (error) handleError(error)
-
-    return users && ( 
-        <div className= "explore" id="explore" data-testid="explore">
+    return ( 
+        <div className= "explore" data-testid="explore">
             <ExploreNav 
                 currentUserId={userId}
-                picturePath={picturePath}
-                showDropDown={showDropDown} 
-                toggleDropdown={toggleDropdown}
+                imageUrl={image.url}
                 searchQuery={searchQuery}
                 setSearchQuery={setSearchQuery}
                 toggleSearchWrapper={toggleSearchWrapper}
@@ -67,21 +59,8 @@ const Explore = ({ users }) => {
                     loading={loading}
                     error={error}
                 /> 
-            ) : (
-                <>
-                    <Suggestions users={users.filter(user => user._id !== userId)} />
-                    <hr className="solid" />
-                </>
-            )}
-            {/* <div className="latest-posts">
-                <Subtitle>Latest Post Activity </Subtitle>
-                <div className="latest-post">
-                    <div className="post">
-                        <img src="" alt="" className="post-img" />
-                    </div>
-                    <a className='explore__link'>See All Posts</a>
-                </div>
-            </div> */}
+            ) : ( <Suggestions /> )}
+            <hr className="solid" />
         </div>
     )
 }

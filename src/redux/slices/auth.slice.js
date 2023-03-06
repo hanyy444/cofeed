@@ -1,12 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk, createDraftSafeSelector } from "@reduxjs/toolkit"
+
 import { userApi } from "./users.slice"
+import { postApi } from "./posts.slice"
+import { objectDataState } from "../helper"
 
 const initialState = {
-    loading: 'idle', // 'idle' | 'loading' | 'sucess' | 'failure',
     token: null,
-    user: null,
-    error: null
+    user: objectDataState()
 }
+
+export const selectAuth = createDraftSafeSelector(state => state, state => ({
+    token: state.auth.token,
+    user: state.auth.user?.data
+}))
 
 export const logout = createAsyncThunk(
     "auth/logout",
@@ -16,31 +22,16 @@ export const logout = createAsyncThunk(
     }
 )
 
-
-const createAddRemoveFriendBuilder = (builder, thunk) => {
-    builder.addCase(thunk.pending, (state) => {
-        state.loading = 'pending'
-    })
-    builder.addCase(thunk.fulfilled, (state, { payload }) => {
-        console.log(payload)
-        state.loading = payload.status
-        state.count = payload.count
-        state.user.friends = payload.friends.map(friend => friend._id)
-    })
-    builder.addCase(thunk.rejected, (state, { error }) => {
-        state.loading = 'failure'
-        state.error = error
-    })
-}
-
+export const logoutFromFirebase = () => { }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setLogin: (state, { payload: { user, token } }) => {
-            state.loading = 'success'
-            state.user = user
+        setLogin: (state, { payload: { status, user, token } }) => {
+            state.user.error = null
+            state.user.loading = status
+            state.user.data = user
             state.token = token
         },
         setLogout: (state) => {
@@ -49,7 +40,25 @@ const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        createAddRemoveFriendBuilder(builder, userApi.addRemoveFriend)
+        // builder.addCase(userApi.googleSignIn.pending, (state) => {
+        //     state.loading = 'pending'
+        // })
+        // builder.addCase(userApi.googleSignIn.fulfilled, (state, { payload }) => {
+        //     console.log(payload)
+        //     state.loading = payload.status
+        //     state.user = payload.user
+        // })
+        // builder.addCase(userApi.googleSignIn.rejected, (state, { error }) => {
+        //     state.loading = 'failure'
+        //     state.error = error
+        // })
+
+        builder.addCase(postApi.savePost.fulfilled, (state, { payload }) => {
+            state.user = {
+                ...state.user,
+                data: payload.user,
+            }
+        })
     }
 })
 

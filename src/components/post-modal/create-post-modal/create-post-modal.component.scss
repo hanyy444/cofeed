@@ -1,7 +1,12 @@
-@import "../../../assets/sass/variables";
-@import "../../../assets/sass/mixins";
+// @use "assets/sass/style";
 
 .create-post-modal {
+    background-color: rgba($grey-light-blue, 1);
+
+    height: 100%;
+
+    position: relative;
+    z-index: 104;
     
     padding: 8rem;
 
@@ -16,6 +21,11 @@
         width: 100%;
         padding: 2rem;
     }
+
+    img{
+        width: 15rem;
+        height: 15rem;
+    }
     
     .form-group{
         grid-column: 1 / -1;
@@ -26,9 +36,4 @@
         // grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     }
 
-    &__form{ 
-        &__btn{
-            grid-column: 1 / -1;
-        }
-    }
 }

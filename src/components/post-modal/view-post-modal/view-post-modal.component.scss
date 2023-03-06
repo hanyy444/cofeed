@@ -1,15 +1,30 @@
-@import "../../../assets/sass/mixins";
-
 .view-post-modal {
+
+    background-color: rgba($grey-light-blue, 1);
+    
     height: 100%;
     
+    position: relative;
+    z-index: 104;
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, min-content) 1fr; 
+    grid-template-rows: min-content minmax(35rem, 1fr) min-content; 
 
-    overflow: scroll;
-    &::-webkit-scrollbar {
-        display: none;
+    .icon-button { 
+        svg.saved{
+            color: $primary;
+        }
+    }
+
+    @include respond(phone){
+        grid-template-rows: [user-start] 1fr [user-end image-start] 36rem [image-end 
+            info-start] minmax(21rem, 36rem) [info-end add-comment-start] min-content [add-comment-end];
+
+        overflow: scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     .user{
@@ -20,51 +35,61 @@
     }
 
     &__img {
-        display: block;
         grid-column: 1 / 2;
         grid-row: 1 / -1;
+
         width: 100%;
         height: 100%;
         object-fit:fill;
 
         @include respond(phone){
             grid-column: 1 / -1;
-            grid-row: 2 / 3;
+            grid-row: image-start / image-end;
             max-height: 40rem;
         }
     }
 
-    &__info{
+    &__info {
+        overflow: scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         @include respond(phone) {
             grid-column: 1 / -1;
-            grid-row: 3 / -1;
+            grid-row: info-start / info-end;
         }
-        svg {
-            cursor: pointer;
+        svg{
             height: 2rem;
             width: 2rem;
             margin-left: 2rem;
-            &:hover {
+        }
+        .like-icon {
+            cursor: pointer;
+            &:hover, &.liked {
                 color: #fd1d60;
             }
         }
         .description {
             display: flex;
-            align-items: center;
-            padding: 1rem 2rem;
-            .paragraph{
-                white-space: nowrap;
-                margin-right: 1rem;
+            align-items: flex-start;
+            padding: 2rem;
+            gap: 2rem;
+            .subtitle {
+                flex: 0;
+                color: rgba($secondary, .9)
+            }
+            p{
+                align-self: flex-end;
             }
         }
-        .likes-count{
-            margin: 2rem;
+        .count{
+            margin-left: .5rem;
+            font-size: 1.4rem;
+            color: rgba($secondary, .8)
         }
-        .comments{
-            padding: .5rem 2rem;
-            .comment{
-                margin: 2rem 0;
-            }
-        }
+
     }
+
+    
 }

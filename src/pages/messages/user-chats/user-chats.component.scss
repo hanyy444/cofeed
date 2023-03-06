@@ -1,0 +1,41 @@
+// @use "assets/sass/style";
+
+.user-chats {
+    grid-column: friends-start / friends-end;
+    grid-row: span 3;
+
+    @include scroll;
+
+    @include respond(phone){
+        grid-column: 1/-1;
+    }
+
+    .user-chat {
+        cursor: pointer;
+        .user { text-decoration: none; }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap:.2rem;
+
+        padding: 1rem;
+        border: 2px solid $grey-light-blue;
+
+        &:hover,
+        &.active {
+            background-color: $white;
+        }
+
+        .last-message {
+            color: $grey;
+            font-size: 1.4rem;
+            margin: auto;
+            text-overflow: ellipsis;
+            @include respond(phone){
+                margin: 0;
+                margin-left: 6rem;
+            }
+        }
+    }
+}

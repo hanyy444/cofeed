@@ -4,7 +4,7 @@ const resource = 'posts'
 const plural = 'posts'
 const single = 'post'
 
-// REGISTER TO PROVIDER SERVICE
+// REGISTER TO PROVIDER SERVICES
 const postApi = ApiCore({
     getAll: true,
     getSingle: true,
@@ -24,6 +24,24 @@ postApi.likePost = postApi.createThunk({
         method: 'PATCH',
         query: '',
         data: {}
+    }
+})
+
+postApi.addComment = postApi.createThunk({
+    resource,
+    actionType: '/addComment',
+    requestConfig: {
+        method: 'PATCH',
+        query: ''
+    }
+})
+
+postApi.savePost = postApi.createThunk({
+    resource,
+    actionType: '/savePost',
+    requestConfig: {
+        method: 'PATCH',
+        query: ''
     }
 })
 

@@ -1,66 +1,56 @@
+import React from 'react'
 import './profile.page.scss'
 
-// REACT HOOKS
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useEffect} from 'react'
 
 // API
-import { userApi } from '../../redux/slices/users.slice'
+import { selectFriends, selectUser, userApi } from 'redux/slices/users.slice'
 
-// CUSTOM HOOKS
-import usePosts from '../../hooks/usePosts'
-import useToggle from '../../hooks/useToggle'
+import useToggle from 'hooks/useToggle'
 
-// COMPONENTS
-import Subtitle from '../../components/subtitle/subtitle.component'
-import Sidebar from '../../components/sidebar/sidebar.component'
-import Spinner from '../../components/spinner/spinner.component'
-import Divider from '../../components/divider/divider.component'
-import Posts from '../../components/posts/posts.component'
-import FormButton from '../../components/button/form-button/form-button.component'
-import PostModal from '../../components/post-modal/post-modal.component'
-import CreatePostModal from '../../components/post-modal/create-post-modal/create-post-modal.component'
-import UserDetails from '../../components/user-details/user-details.component'
+import WithStateHandler from 'utils/withStateHandler'
 
+import Subtitle from 'components/typography/subtitle/subtitle.component'
+import Divider from 'components/display/divider/divider.component'
+import Posts from 'components/posts/posts.component'
+import FormButton from 'components/button/form-button/form-button.component'
+import PostModal from 'components/post-modal/post-modal.component'
+import User from 'components/display/user/user.component'
+import FollowButton from 'components/button/follow-button/follow-button.component'
+import UserDetails from './user-details/user-details.component'
+import useData from '../../hooks/useData'
+import { useSelector } from 'react-redux'
+import { selectAuth } from 'redux/slices/auth.slice'
 
 const ProfilePage = (props) => {
     
     const { id: userId } = useParams()
-    const dispatch = useDispatch()
-    const token = useSelector(state => state.auth.token)
-        
+    const { user: authUser } = useSelector(selectAuth)
+    const isMe = userId === authUser?._id
+    const {data: currentUser, loading, error} = useData({
+        selector: selectUser,
+        thunk: {
+            action: userApi.getSingle,
+            params: {
+                path: userId || ''
+            }
+        }
+    })
+    
     const [showModal, toggleShowModal] = useToggle(false)
-    
-    const { data: user, loading, error } = useSelector(state => state.users.user)
-    const getUser = useCallback(() => dispatch( 
-        userApi.getSingle({ token, path: userId }) 
-    ), [token, userId])
-    useEffect(()=>{
-        getUser()
-    }, [])
 
-
-    if (loading === 'pending') return <Spinner/>
-    if (error || !user) return <div>ERROR!</div>
-    
     return ( 
         <div className="profile" id="profile" data-testid="profile">
-            {showModal && (
-                <PostModal>
-                    <CreatePostModal showModal={showModal} toggleShowModal={toggleShowModal}/>
-                </PostModal>
-            )}
-            <UserDetails 
-                userId={userId}
-                imageHeight="90px"
-                imageWidth="90px"
-                {...user}
-            />
-            <Divider/>
-            <FormButton onClick={()=>toggleShowModal(true)}>Add New Post</FormButton>
-            <Subtitle>Posts</Subtitle>
-            <Posts category='user_posts' userId={userId}/>
+            <WithStateHandler data={currentUser} loading={loading} error={error}>
+                {showModal && (<PostModal type="create" showModal={showModal} toggleShowModal={toggleShowModal}/>)}
+                <User imageWidth="90px" imageHeight="90px" imageUrl={currentUser?.image.url} {...currentUser} />
+                {!isMe && <FollowButton userId={userId}/>}
+                <UserDetails {...currentUser} />
+                <Divider/>
+                <Subtitle>Posts</Subtitle>
+                {isMe && <FormButton onClick={()=>toggleShowModal(true)}>Add New Post</FormButton>}
+                <Posts category='user_posts' userId={userId} />    
+            </WithStateHandler>
         </div>
     )
 }

@@ -1,18 +1,9 @@
-@import "../../assets/sass/variables";
-@import "../../assets/sass/mixins";
+// @use "assets/sass/style";
 
 .home {
-    height: 100%;
-    // flex: 8 1 100%;
-    grid-column: page-start 1 / -1;
-    overflow: hidden;
-    max-width: 100%;
     @include flexBetween;
-
-    @include respond(phone){
-        grid-row: 1/2;
-        grid-column: 1/-1;
-    }
+    
+    @include page;
 
     .vl{
         width: .01rem;

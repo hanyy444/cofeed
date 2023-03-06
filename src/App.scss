@@ -1,0 +1,16 @@
+.app {
+    height: 100vh;
+    width: 100vw;
+}
+
+.default_message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    color: $secondary;
+    @include respond(phone) {
+        grid-row: 2/3;
+    }
+}

@@ -11,8 +11,8 @@ const useSearchQuery = ({ searchCallback, clearSearch }) => {
         searchCallback(searchQuery)
     }, [searchQuery])
 
-    // NOTE: whenever searchQuery changes, it resets the timeout
-    // If nothing changes for a half sec, timeout callback is run
+    // dep: whenever searchQuery changes, it resets the timeout
+    // If nothing changes for a half sec, timeout callback will run
     useDebounce(search, 500, [searchQuery])
 
     useEffect(() => {

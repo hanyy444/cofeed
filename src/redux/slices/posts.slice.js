@@ -1,45 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-import { createBuilderCases } from './helper'
+import { createBuilderCases } from '../helper'
 
-//// IMPORT all thunks from post API
-import postApi from "../../api/post/post-api"
+import { objectDataState, arrayDataState } from "../helper"
+
+import postApi from "api/post/post-api"
 
 const SLICE_NAME = postApi.resource
 
+export const selectPosts = state => state.posts.posts
+export const selectPost = state => state.posts.post
+
 const initialState = {
-    posts: {
-        data: [],
-        count: 0,
-        page: 0,
-        loading: 'idle',
-        error: null
-    },
-    post: {
-        data: null,
-        count: 1,
-        page: 1,
-        loading: 'idle',
-        error: null
-    }
+    posts: arrayDataState(),
+    post: objectDataState()
 }
 
 const postsSlice = createSlice({
     name: SLICE_NAME,
     initialState,
-    reducers: {},
+    reducers: {
+        setPost: (state, { payload }) => {
+            state.post.data = payload.post
+        },
+        clearPost: (state) => {
+            state.post = {
+                ...initialState.post
+            };
+        },
+        clearPosts: (state) => {
+            state.posts = {
+                ...initialState.posts
+            }
+        }
+    },
     extraReducers: (builder) => {
 
-        const { getAll, getSingle, post, put, patch, likePost } = postApi
+        const { getAll, getSingle, post, put, patch, likePost, addComment, savePost } = postApi
 
-        createBuilderCases({ builder, thunk: getAll, stateProp: 'posts' })
-        createBuilderCases({ builder, thunk: getSingle, stateProp: 'post' })
+        createBuilderCases({ builder, thunk: getAll, stateProp: 'posts', payloadProp: 'posts' })
+        createBuilderCases({ builder, thunk: post, stateProp: 'posts', payloadProp: 'posts' })
 
-        createBuilderCases({ builder, thunk: post, stateProp: 'posts' })
-        createBuilderCases({ builder, thunk: put, stateProp: 'post' })
-        createBuilderCases({ builder, thunk: patch, stateProp: 'post' })
+        createBuilderCases({ builder, thunk: getSingle, stateProp: 'post', payloadProp: 'post' })
+        createBuilderCases({ builder, thunk: put, stateProp: 'post', payloadProp: 'post' })
+        createBuilderCases({ builder, thunk: patch, stateProp: 'post', payloadProp: 'post' })
 
-        // Like post
         builder.addCase(likePost.fulfilled, (state, { payload }) => {
             state.posts.data =
                 state.posts.data.map(post => {
@@ -48,9 +53,18 @@ const postsSlice = createSlice({
                 })
         })
 
+        builder.addCase(addComment.fulfilled, (state, { payload }) => {
+            state.posts.data =
+                state.posts.data.map(post => {
+                    if (post._id === payload.post._id) return payload.post
+                    return post
+                })
+        })
     }
 })
 
 export { postApi };
+
+export const { setPost, clearPost, clearPosts } = postsSlice.actions
 
 export default postsSlice.reducer;

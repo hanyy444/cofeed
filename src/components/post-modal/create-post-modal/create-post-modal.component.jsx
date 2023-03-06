@@ -1,53 +1,75 @@
 import './create-post-modal.component.scss'
 
 // REACT HOOKS
-import { useRef, useCallback, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-// CUSTOM HOOKS
-import useClickOutside from '../../../hooks/useClickOutside';
-// import { createPost } from '../../../redux/slices/posts.slice';
 
 // COMPONENTS
-import FormButton from '../../button/form-button/form-button.component';
-import UploadImageInput from '../../form/upload-image-input/upload-image-input.component';
-import FormGroup from '../../form/form-group/form-group.component';
-import Form from '../../form/form.component';
-import HeadingFour from '../../heading/heading-4.component';
+import FormButton from 'components/button/form-button/form-button.component'
+import UploadImageInput from 'components/display/form/upload-image-input/upload-image-input.component'
+import FormGroup from 'components/display/form/form-group/form-group.component'
+import Form from 'components/display/form/form.component'
+import HeadingFour from 'components/typography/heading/heading-4.component'
 
 // API
-import postApi from '../../../api/post/post-api';
+import postApi from 'api/post/post-api'
+import { selectAuth } from 'redux/slices/auth.slice'
+import { FaEye } from 'react-icons/fa'
+import IconButton from 'components/post-modal/icon-button/icon-button.component'
 
-const CreatePostModal = ({ showModal, toggleShowModal }) => {
+const initialState = {
+    description: '',
+    image: null
+}
+
+const getTypeInfo = (type) => {
+    if (type === 'create'){
+        return {
+            initialState,
+            heading: 'Create New Post',
+            buttonText: 'Create'
+        }
+    }
+
+    if (type === 'edit') {
+        return {
+            initialState,
+            heading: 'Edit Post',
+            buttonText: 'Edit'
+        }
+    }
+
+    return {
+        initialState,
+        heading: 'Please provide valid type parameter to the component.'
+    }
+}
+
+
+const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) => {
     const dispatch = useDispatch()
-    const { token, user } = useSelector(state => state.auth)
+
+    const { token } = useSelector(selectAuth)
     
-    const modalRef = useRef()
-    const setModalOff = useCallback(() => {
-        if(showModal) toggleShowModal(false)
-    }, [showModal])
-    useClickOutside(modalRef, setModalOff)
-
-    // FIX: extra re-render to achieve click outide functionality (EVENT LISTENER HANDLER BUG)
-    const [dummy, setDummy] = useState(false)
-    useEffect(()=>{
-        setDummy(true)
-    },[])
-
-    const [post, setPost] = useState({
-        description: '',
-        pictureFile: null
-    })
+    const [currentPost, setCurrentPost] = useState(
+        post 
+            ? { 
+                ...post, 
+                image: { name: post.image.originalName, url: post.image.url } 
+            } 
+            : initialState
+    )
     const [errors, setErrors] = useState({})
 
     const validate = () => {
         let errors = {}
-        if (!post.pictureFile) errors.pictureFile = 'You must upload an image'
+        if (!currentPost.image) errors.image = 'You must upload an image'
         return errors;
     }
 
     const handleChange = (e) => {
-        setPost(prev => {
+        setCurrentPost(prev => {
             return {
                 ...prev,
                 description: e.target.value
@@ -58,10 +80,10 @@ const CreatePostModal = ({ showModal, toggleShowModal }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
-        setPost(prev => {
+        setCurrentPost(prev => {
             return {
                 ...prev,
-                pictureFile: {
+                image: {
                     url: URL.createObjectURL(file),
                     name: file.name,
                     file
@@ -74,7 +96,7 @@ const CreatePostModal = ({ showModal, toggleShowModal }) => {
     const submitPost = (event) => {
         event.preventDefault()
 
-        const { description, pictureFile } = post
+        const { description, image } = currentPost
 
         const errors = validate()
         const hasError = Object.keys(errors).length !== 0
@@ -85,24 +107,42 @@ const CreatePostModal = ({ showModal, toggleShowModal }) => {
         }
 
         setErrors({})
-        dispatch(postApi.post({ 
+
+        const data = image.file ? { image: image.file, description } : { description }
+        const actionParams = {
             token, 
-            data: { 
-                picturePath: pictureFile.name, 
-                description }
-            }
-        ))
+            data,
+            path: currentPost?._id,
+            headers: { "Content-Type":"multipart/form-data" }
+        }
+
+        const action = type === 'create' ? postApi.post(actionParams) : postApi.patch(actionParams)
+        dispatch(action)
+
         toggleShowModal(false)
     }
 
-    return dummy && ( 
-        <div className= "create-post-modal" id="create-post-modal" data-testid="create-post-modal" ref={modalRef}>
-            <HeadingFour>Create New Post</HeadingFour>
+    const onClickView = (event) => {
+        event.stopPropagation()
+        setModalType("view")
+    }
+
+    return (
+        <div className= "create-post-modal" data-testid="create-post-modal" aria-label='create post modal'>
+            {
+                type === 'edit' && 
+                <IconButton 
+                    title="View Post"
+                    onClick={onClickView}>
+                    <FaEye/>
+                </IconButton>
+            }
+            <HeadingFour>{getTypeInfo(type).heading}</HeadingFour>
             <Form onSubmit={submitPost}>
                 <FormGroup>
                     <input 
                         type="text" 
-                        value={post.description} 
+                        value={currentPost.description} 
                         name="description" 
                         autoComplete='off'
                         placeholder='Description'
@@ -111,11 +151,13 @@ const CreatePostModal = ({ showModal, toggleShowModal }) => {
                     />
                 </FormGroup>
                 <UploadImageInput 
-                    pictureFile={post.pictureFile}
-                    pictureError={errors.pictureFile}
+                    image={currentPost.image}
+                    imageError={errors.image}
                     handleChange={handleFileChange}
-                />
-                <FormButton type="submit" classes='create-post-modal__form__btn'>Create</FormButton>
+                    />
+                <FormButton type="submit" classes='create-post-modal__form__btn'>
+                    {getTypeInfo(type).buttonText}
+                </FormButton>
             </Form>
         </div>
     )

@@ -1,11 +1,10 @@
-import { useEffect } from 'react'
 import './fallback.component.scss'
 
 
 function errorController(error){
     switch (error?.response?.status){
         case 400: case 500: case 404:
-            const { message, status } = error.response.data
+            const { message, status } = error.response.data || error.response.data.error
             return { message, status }
         default:
             return { message: error.message, status: 'failure' }

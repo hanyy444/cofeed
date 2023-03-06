@@ -1,0 +1,48 @@
+// @use "assets/sass/style";
+
+.form-group{
+    background-color: $white;
+    border-radius: .2rem;
+    padding: 0 1vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+
+    outline: thin solid $primary;
+
+    &.error {
+        outline: thin solid #eb330f;
+    }
+
+    .error-icon {
+        cursor: pointer;
+        color: #eb330f !important;
+    }
+
+    // RESOLVE AUTOCOMPLETE BACKGROUND-COLOR
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    }
+
+    input {
+        padding: 2vh 6vh 2vh 0;
+        color: $secondary;
+        border: none;
+        outline: none;
+        font-size: 1.2rem;
+        height: 100%;
+    }
+
+    svg {
+        color: $primary;
+        font-size: 1.3rem;
+    }
+
+    &:has(.upload-image-label){
+        outline: none;
+        background-color: transparent;
+        grid-column: 1 / -1;
+    }
+}

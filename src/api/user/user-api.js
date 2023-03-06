@@ -1,3 +1,5 @@
+import { createAsyncThunk } from "@reduxjs/toolkit"
+import { signInWithGoogle } from "firebase"
 import { ApiCore } from "../core"
 
 const resource = 'users'
@@ -24,11 +26,36 @@ userApi.search = userApi.createThunk({
     requestConfig: { method: 'GET' }
 })
 
+userApi.getSuggestions = userApi.createThunk({
+    resource,
+    actionType: 'getSuggestions',
+    requestConfig: { method: 'GET' }
+})
+
+userApi.getUserFriends = userApi.createThunk({
+    resource,
+    actionType: 'getUserFriends',
+    requestConfig: { method: 'GET' }
+})
 userApi.addRemoveFriend = userApi.createThunk({
     resource,
     actionType: 'addRemoveFriend',
     requestConfig: { method: 'PATCH' }
 })
 
+userApi.signInWithGoogle = signInWithGoogle
+
+// userApi.googleSignIn = createAsyncThunk(
+//     'auth/googleSignIn',
+//     async (_payload, { rejectWithValue }) => {
+//         try {
+//             const user = await signInWithGoogle()
+//             console.log(user)
+//             return user
+//         } catch (error) {
+//             rejectWithValue(error)
+//         }
+//     }
+// )
 
 export default userApi

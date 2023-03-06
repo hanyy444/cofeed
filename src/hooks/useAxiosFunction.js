@@ -1,56 +1,42 @@
 import { useEffect, useState } from 'react'
-import { useErrorHandler } from 'react-error-boundary'
 import { useSelector } from 'react-redux'
+import { selectAuth } from 'redux/slices/auth.slice'
 
 const useAxiosFunction = () => {
-    const handleError = useErrorHandler()
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [controller, setController] = useState(null)
 
     //// AUTHENTICATION
-    const token = useSelector(state => state.auth.token)
+    const { token } = useSelector(selectAuth)
     const isAuth = !!token
 
     const axiosFetch = async (configObj) => {
-        const { axiosInstance, method, url, requestConfig } = configObj
-        // console.log(isAuth)
+        const { axiosInstance, method, url, headers, requestConfig } = configObj
         try {
-
             setLoading(true)
-
             const ctrl = new AbortController()
             setController(ctrl)
-
             const axiosConfig = {
                 url,
                 method: method.toUpperCase(),
                 signal: ctrl.signal,
-                headers: { "Authorization": isAuth ? `Bearer ${token}` : undefined, },
+                headers: { "Authorization": isAuth ? `Bearer ${token}` : undefined, ...headers },
                 ...requestConfig
             }
-
             const res = await axiosInstance(axiosConfig)
-            // axiosInstance[method.toLowerCase()](url, {
-            //     ...requestConfig,
-            //     data: requestConfig.data,
-            //     "Authorization": isAuth ? `Bearer ${token}` : undefined,
-            //     signal: ctrl.signal
-            // })
+            if (res.statusText !== 'OK') setError(res)
             setResponse(res.data)
         } catch (err) {
-            handleError(err)
+            setError(err)
         } finally {
             setLoading(false)
         }
     }
 
-
     useEffect(() => {
-
         return () => controller && controller.abort()
-
     }, [controller])
 
     return [response, loading, error, axiosFetch]

@@ -1,0 +1,41 @@
+// @use "assets/sass/style";
+
+.messages {
+    @include page;
+
+    display: grid;
+    grid-template-columns: [friends-start] minmax(15rem, 20rem) [friends-end messages-start] 1fr [messages-end];
+    grid-template-rows: 1fr 5rem;
+
+    @include respond(phone) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 6.5rem 1fr 8rem;
+        padding: 1rem 1rem 1.5rem 1rem;
+        &>.user {
+            grid-column: 1 / -1;
+            grid-row: 1/2;
+            border-bottom: 1px solid $grey-light-blue;
+            justify-content: center;
+            background-color: $white;
+    
+            .user-info {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+        &>svg {
+            color: $secondary;
+            grid-row: 1/2;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            position: absolute;
+            top: 2.5rem;
+            left: 3rem;
+    
+            &:hover {
+                color: $grey;
+            }
+        }
+    }
+}

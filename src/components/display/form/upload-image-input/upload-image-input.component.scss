@@ -1,0 +1,28 @@
+.upload-image-label {
+    cursor: pointer;
+    justify-self: flex-start;
+    font-size: 1.3rem;
+    color: $secondary;
+    background-color: $grey-light;
+    padding: 1vh;
+    box-shadow: $grey-dark 0.025rem 0.025rem 0.25em;
+    
+    svg {
+        color: $secondary;
+    }
+
+    &:hover {
+        background-color: $secondary;
+        color: $grey;
+        svg{
+            color: $grey;
+        }
+    }
+}
+
+.upload-img {
+    height: 10vh;
+    width: 10vh;
+    margin-left: 3vh;
+}
+    

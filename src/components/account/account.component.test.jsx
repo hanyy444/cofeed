@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import Account from './account.component'
-import User from '../user/user.component'
+import User from '../display/user/user.component'
 
 beforeEach(()=>{
     vi  

@@ -1,4 +1,4 @@
-@import "../../../assets/sass/variables";
+// @use "assets/sass/style";
 
 .follow-button{
     border-radius: 1rem;
@@ -6,7 +6,7 @@
     background-color: $primary-light;
     color: white;
     text-align: center;
-    padding: .8rem 2.5vw;
+    padding: 1rem 4vw;
     letter-spacing: .05rem;
 
     transition: all .1s;

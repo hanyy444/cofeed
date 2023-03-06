@@ -1,0 +1,8 @@
+// @use "assets/sass/style";
+.user-details {
+    padding: 1rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 4rem;
+}

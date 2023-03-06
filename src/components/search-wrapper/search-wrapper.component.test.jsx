@@ -2,8 +2,8 @@ import { MemoryRouter } from "react-router-dom";
 import * as router from 'react-router'
 import { render, screen } from "@testing-library/react";
 import SearchWrapper from "./search-wrapper.component";
-import User from "../user/user.component";
-import Spinner from "../spinner/spinner.component";
+import User from "../display/user/user.component";
+import Spinner from "../display/spinner/spinner.component";
 
 // beforeEach(()=>{
 //     vi

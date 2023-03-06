@@ -1,23 +1,21 @@
-@import "../../assets/sass/mixins";
-@import "../../assets/sass/variables";
-@import "../../assets/sass/utils";
+// @use "assets/sass/style";
 
 .explore {
-    height: 100%;
+
+    @include page;
+    @include scroll;
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     
-    padding: 4rem 0;
+    padding: 4rem;
     
-    flex: 3;
-
     @include respond(tablet){
         flex: 1;
         padding: 2rem .1rem;
-        display: none;
+        // display: none;
     }
 
     &__nav{
@@ -28,9 +26,6 @@
         margin-bottom: 3rem;
         width: 100%;
 
-        @include respond(tablet){
-            flex-direction: column;
-        }
     }
 
     &__link {

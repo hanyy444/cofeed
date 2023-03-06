@@ -1,9 +1,9 @@
 import './story.component.scss'
 
-import  React, { useState } from 'react'
-import Paragraph from '../../paragraph/paragraph.component'
+import  React from 'react'
+import Paragraph from 'components/typography/paragraph/paragraph.component'
 
-const Story = ({ userName, userPicture }) => {
+const Story = ({ userName, userImageUrl }) => {
 
     const [seen, setSeen] = React.useState(false)
 
@@ -13,7 +13,7 @@ const Story = ({ userName, userPicture }) => {
             data-testid="story" 
             onClick={() => setSeen(true)}
         >
-            <img src={userPicture} alt="story user image" className='story__user-img'/>
+            <img src={userImageUrl} alt="story user image" className='story__user-img'/>
             <Paragraph>{userName}</Paragraph>
         </div>
     )

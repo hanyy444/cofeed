@@ -16,6 +16,7 @@ plop-templates
 plopFile.js
 notes.txt
 progress.txt
+.env
 
 # Editor directories and files
 .vscode/*

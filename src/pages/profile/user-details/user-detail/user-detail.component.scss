@@ -1,0 +1,17 @@
+// @use "assets/sass/style";
+
+.user-detail {
+    font-size: 1.2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+        color: $primary;
+    }
+    
+}

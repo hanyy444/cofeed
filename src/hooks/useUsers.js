@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
-import { userApi } from '../redux/slices/users.slice'
+import { selectFriends, userApi } from '../redux/slices/users.slice'
 
 //// SEARCHING, FRIENDS
 const useUsers = ({ query }) => {
@@ -10,7 +10,7 @@ const useUsers = ({ query }) => {
 
     const { token } = useSelector(state => state.auth)
 
-    const { data: users, count, loading, error, page } = useSelector(state => state.users.users)
+    const { data: users, count, loading, error, page } = useSelector(selectFriends)
 
     const getUsers = () => {
         dispatch(userApi.getAll({ token, query }))

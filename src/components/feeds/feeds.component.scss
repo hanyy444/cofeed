@@ -1,14 +1,11 @@
-@import "../../assets/sass/mixins";
+// @use "assets/sass/style";
 
 .feeds {
     flex: 4;
     padding: 2rem 0;
     position: relative;
     
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    @include scroll;
 
     &__nav{
         @include flexBetween;

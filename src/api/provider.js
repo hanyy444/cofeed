@@ -1,37 +1,40 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axiosInstance from "./axios-instance"
 
+const callAxios = async (requestData) => {
+    const response = await axiosInstance(requestData)
+    return response
+}
+
 const makeSendRequest = (base_url, requestConfig) => {
     async function sendRequest(params) {
-        // SENT from dispatcher
-        const { token, path = '', query = '', data = {} } = params
+        const { token, path = '', headers = {}, query = '', data = {} } = params
 
         const url = `${base_url}${path && `/${path}`}${query && `?${query}`}`
 
         if (!token) throw new Error('Authentication required.')
 
-        const response = await axiosInstance({
+        const response = await callAxios({
             url,
             data,
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                ...headers
             },
             ...requestConfig
         })
-
         return response.data
     }
     return sendRequest
 }
 
-const catchAsync = (sendRequest) => {
+export const catchAsyncThunk = (sendRequest) => {
     return async (params, thunkAPI) => { // CALLBACK to createAsyncThunk (redux-thunk)
         return sendRequest(params)
             .catch(error => {
-                console.log(error.response.data)
                 return thunkAPI.rejectWithValue({
-                    message: error.response.data.message,
-                    status: error.response.status
+                    message: error?.response?.data?.message || error.message,
+                    status: error?.response?.status
                 })
             })
     }
@@ -41,7 +44,7 @@ export const createThunk = ({ resource, actionType, requestConfig }) => {
     if (!resource) throw new Error('Resource required.')
     return createAsyncThunk(
         `${resource}/${actionType}`,
-        catchAsync(
+        catchAsyncThunk(
             makeSendRequest(
                 `${resource}`,
                 requestConfig
