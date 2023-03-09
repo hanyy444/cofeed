@@ -2,14 +2,14 @@ import './user-details.component.scss'
 import UserDetail from './user-detail/user-detail.component'  
 import { FaBriefcase, FaUserFriends, FaThumbsUp, FaMapMarker, FaEye, FaBookmark } from 'react-icons/fa'
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { selectPosts } from 'redux/slices/posts.slice'
+import {  useSelector } from 'react-redux'
+import { selectPostsCount } from 'redux/slices/posts.slice'
 
 const UserDetails = ({ occupation, impressions, friends,
     location, viewedProfile}) => {
 
-    const { count: postsCount } = useSelector(selectPosts)
-
+    const postsCount = useSelector(selectPostsCount)
+        console.log(postsCount)
     const details = useMemo(() => [
         { icon: <FaBriefcase/>, text: occupation},
         { icon: <FaUserFriends/>, text: `${friends?.length} friends`},

@@ -49,12 +49,12 @@ const MessagesForm = ({ sender }) => {
     }, [text, sender])
 
     return ( 
-        <Form onSubmit={sendMessage} classes="messages__form" data-testid="messages-form">
+        <form onSubmit={sendMessage} className="messages__form" data-testid="messages-form">
             <input type="text" placeholder='Type something here...' value={text} onChange={changeText}/>
             <FormButton type='submit' disabled={loading}>
                 {!loading ? <FaPaperPlane/> : <Spinner />}
             </FormButton>
-        </Form> 
+        </form> 
     )
 }
 

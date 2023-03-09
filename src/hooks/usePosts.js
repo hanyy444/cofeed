@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { selectAuth } from "redux/slices/auth.slice"
 import { postApi, selectPosts } from "redux/slices/posts.slice"
 
@@ -7,9 +7,10 @@ const usePosts = ({ path = '', query = '' }) => {
 
     const dispatch = useDispatch()
 
-    const { token } = useSelector(selectAuth)
+    const { token } = useSelector(selectAuth, shallowEqual)
 
-    const { data: posts,
+    const {
+        data: posts,
         count,
         loading,
         error,

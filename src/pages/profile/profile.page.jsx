@@ -19,13 +19,13 @@ import User from 'components/display/user/user.component'
 import FollowButton from 'components/button/follow-button/follow-button.component'
 import UserDetails from './user-details/user-details.component'
 import useData from '../../hooks/useData'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { selectAuth } from 'redux/slices/auth.slice'
 
 const ProfilePage = (props) => {
     
     const { id: userId } = useParams()
-    const { user: authUser } = useSelector(selectAuth)
+    const { user: authUser } = useSelector(selectAuth, shallowEqual)
     const isMe = userId === authUser?._id
     const {data: currentUser, loading, error} = useData({
         selector: selectUser,
@@ -36,7 +36,6 @@ const ProfilePage = (props) => {
             }
         }
     })
-    
     const [showModal, toggleShowModal] = useToggle(false)
 
     return ( 

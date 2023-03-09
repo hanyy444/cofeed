@@ -26,14 +26,14 @@ const Suggestions =  () => {
 
     return (
         <div className="suggestions" data-testid="suggestions">
+            <Subtitle>Suggestions For You</Subtitle>
+            <button 
+                type="button" 
+                className='explore__link' 
+                onClick={handleSuggestionsLimit}>
+                    See { limit === 3 ? 'All':'Less'}
+            </button>
             <WithStateHandler data={suggestions} loading={loading} error={error}>
-                <Subtitle>Suggestions For You</Subtitle>
-                <button 
-                    type="button" 
-                    className='explore__link' 
-                    onClick={handleSuggestionsLimit}>
-                        See { limit === 3 ? 'All':'Less'}
-                </button>
                 {
                     suggestions.map(({ _id: userId, 
                         firstName, 

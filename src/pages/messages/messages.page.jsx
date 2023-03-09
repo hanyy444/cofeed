@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectAuth } from 'redux/slices/auth.slice'
 import { selectFriends } from 'redux/slices/users.slice'
-import { clearChat } from 'redux/slices/user-chats.slice'
+import { clearChat, selectChat } from 'redux/slices/user-chats.slice'
 
 import useMediaQuery from 'hooks/useMediaQuery'
 
@@ -19,17 +19,29 @@ import WithStateHandler from 'utils/withStateHandler'
 import { useNavigate } from 'react-router-dom'
 import Paragraph from 'components/typography/paragraph/paragraph.component'
 
+import { shallowEqual } from "react-redux"
+
+
 const MessagesPage = (props) => {
     const navigate = useNavigate()
     const isPhone = useMediaQuery('(max-width: 43.75em)')
     const dispatch = useDispatch()
-    const { token, user: sender } = useSelector(selectAuth)
+    const { token, user: sender } = useSelector(selectAuth, shallowEqual)
 
     const {data: friends, loading, error} = useSelector(selectFriends)
-
-    const [receiver, setReceiever] = React.useState(null)   
-    const [isChat, toggleIsChat] = useToggle(false)
-
+    
+    const { data: chat } = useSelector(selectChat)
+    const [isChat, toggleIsChat] = useToggle(chat?true:false)
+    console.log(chat)
+    const [receiver, setReceiever] = React.useState(chat?
+        {
+            _id: chat.recieverId,
+            chatId: chat.chatId,
+            ...friends.find(({_id}) => _id === chat.recieverId)
+        }
+        :null
+    )  
+    console.log(receiver)
     useEffect(()=>{
         dispatch(userApi.getUserFriends({
             token,
@@ -37,13 +49,13 @@ const MessagesPage = (props) => {
         }))
     },[])
 
-    const handleReturn = useCallback((event)=>{
+    const handleReturn = useCallback(()=>{
         toggleIsChat(false)
         setReceiever(null)
         dispatch(clearChat())
     },[])
 
-    const onClickUser = useCallback((event)=> {
+    const onClickUser = useCallback(()=> {
         navigate(`/profile/${receiver?._id}`)
     },[receiver?._id])
 
@@ -59,45 +71,45 @@ const MessagesPage = (props) => {
                     </Paragraph>
                 }
             >
-            {
-                ((isPhone && !isChat) || (!isPhone)) && 
-                <UserChatsList 
-                    sender={sender} 
-                    receiver={receiver} 
-                    setReceiever={setReceiever} 
-                    toggleIsChat={toggleIsChat}
-                    friends={friends}
-                />
-            }
-            {
-                isPhone && isChat &&
-                <FaArrowLeft onClick={handleReturn}/>
-            }
-            {
-                isPhone && receiver && isChat && 
-                <User 
-                    imageHeight="35px"
-                    imageWidth="35px"
-                    imageUrl={receiver.image.url}
-                    onClick={onClickUser}
-                    {...receiver}
-                />
-            }
-            {   
-                receiver && isChat && 
-                <MessagesList 
-                    sender={sender}
-                    receiver={receiver}
-                />
-            }
-            {   
-                isChat && 
-                <MessagesForm 
-                    sender={sender} 
-                    receiverId={receiver?._id}
-                    chatId={receiver?.chatId}
-                />
-            }
+                {
+                    ((isPhone && !isChat) || (!isPhone)) && 
+                    <UserChatsList 
+                        sender={sender} 
+                        receiver={receiver} 
+                        setReceiever={setReceiever} 
+                        toggleIsChat={toggleIsChat}
+                        friends={friends}
+                    />
+                }
+                {
+                    isPhone && isChat &&
+                    <FaArrowLeft onClick={handleReturn}/>
+                }
+                {
+                    isPhone && receiver && isChat && 
+                    <User 
+                        imageHeight="35px"
+                        imageWidth="35px"
+                        imageUrl={receiver?.image?.url}
+                        onClick={onClickUser}
+                        {...receiver}
+                    />
+                }
+                {   
+                    receiver && isChat && 
+                    <MessagesList 
+                        sender={sender}
+                        receiver={receiver}
+                    />
+                }
+                {   
+                    isChat && 
+                    <MessagesForm 
+                        sender={sender} 
+                        receiverId={receiver?._id}
+                        chatId={receiver?.chatId}
+                    />
+                }
             </WithStateHandler>
         </div>
 

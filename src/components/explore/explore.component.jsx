@@ -20,7 +20,7 @@ import { userApi, selectSearch, clearSearch} from 'redux/slices/users.slice'
 import useMediaQuery from 'hooks/useMediaQuery';
 
 const Explore = () => {
-    const isTablet = useMediaQuery('(max-width: 50em)')
+    const isTablet = useMediaQuery('(max-width: 43.75em)')
     const [showSearchWrapper, toggleSearchWrapper] = useToggle(false)
     
     const dispatch = useDispatch()

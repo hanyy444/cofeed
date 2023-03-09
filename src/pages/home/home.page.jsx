@@ -8,7 +8,7 @@ import Explore from 'components/explore/explore.component'
 import './home.page.scss'
 
 const HomePage = () => {
-    const isTablet = useMediaQuery('(max-width: 50em)')
+    const isTablet = useMediaQuery('(max-width: 43.75em)')
     return  <div className="home" data-testid="home">
         <main className= "main">
             <Stories/>

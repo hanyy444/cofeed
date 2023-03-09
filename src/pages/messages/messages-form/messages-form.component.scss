@@ -1,9 +1,12 @@
 // @use "assets/sass/style";
 
 .messages__form {
-    display: flex;
     grid-column: messages-start / messages-end;
     grid-row: 3 / -1;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 1rem;
 
     padding: 1rem;
@@ -13,8 +16,7 @@
     }
     
     input {
-        flex: 2;
-        align-self: center;
+        flex: 9;
         height: 100%;
         padding: .5rem 2rem;
         border: none;
@@ -23,25 +25,15 @@
     }
 
     button {
-        align-self: center;
+        flex: 1;
         position: relative;
+        align-self: center;
         box-shadow: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
+        border-radius: 4rem;
         svg {
-            height: 2rem;
-            width: 2rem;
+            height: 1.5rem;
+            width: 1.5rem;
         }
 
-        .spinner{
-            left: 0;
-        }
-    
-        .spinner::before{
-            width: .5rem;
-            height: .5rem;
-        }
     }
 }

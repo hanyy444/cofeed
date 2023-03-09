@@ -8,13 +8,15 @@ const JSONData = () => {
     const style = {
         padding: '4rem',
         overflow: 'scroll',
-        width: '100%',
-        height: '100%',
+        width: '100vh',
+        height: '100vh',
         gridColumn: '1/-1',
-        fontSize: '1.5rem'
+        fontSize: '1.5rem',
+        zIndex: '200',
+        gridRow: '1/-1',
     }
     const filteredState = React.useMemo(() => {
-        return currentState.auth
+        return currentState.userChats
     }, [currentState])
 
     return (

@@ -1,6 +1,6 @@
 import './App.scss'
 
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { Route, Routes } from "react-router-dom"
 import WithAuthentication from "utils/withAuthentication" 
 
@@ -35,20 +35,9 @@ function App(props) {
           </Routes>
           </Suspense>
           <WithAuthentication>
-              <Sidebar/>
+              {<Sidebar/>}
               <Suspense>
                 <Routes>
-                  {
-                    ['/login', '/signup'].map((path, index) => (
-                      <Route 
-                      key={index}
-                      exact 
-                      path={path} 
-                      element={<LoginPage/>} 
-                      />
-                    ))
-                  }
-
                   {
                     ['/', '/home'].map((path, index) => (
                       <Route 

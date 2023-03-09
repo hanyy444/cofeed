@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { selectAuth } from "redux/slices/auth.slice"
 
 
@@ -9,16 +9,17 @@ const useData = ({ selector, thunk: { action, params = {} }, extraDeps = [] }) =
 
     const dispatch = useDispatch()
 
-    const { token } = useSelector(selectAuth)
+    const { token } = useSelector(selectAuth, shallowEqual)
 
     const { data, loading, error } = useSelector(selector)
 
-    const useData = useCallback(() => action && (dispatch(
-        action({
-            token,
-            ...params
-        })
-    )), [token, ...Object.values(params)])
+    const useData = useCallback(() =>
+        action && (dispatch(
+            action({
+                token,
+                ...params
+            })
+        )), [token, ...Object.values(params)])
 
     useEffect(() => {
         useData()

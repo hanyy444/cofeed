@@ -13,7 +13,7 @@ Built with:
 
 # Description
 
-A fully responsive single page with multiple routes social media web application that provides its users with the ability to post images, like and comment on others’ posts, send real-time messages and follow each other.
+A fully responsive social media web application that helps users post images, like and comment on others’ posts, send real-time messages and follow each other.
 
     This project was developed solely for the purpose of learning, practicing and demonstrating my frontend development skills. It has no commercial use.
 

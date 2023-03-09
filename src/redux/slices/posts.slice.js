@@ -10,6 +10,7 @@ const SLICE_NAME = postApi.resource
 
 export const selectPosts = state => state.posts.posts
 export const selectPost = state => state.posts.post
+export const selectPostsCount = state => state.posts.posts.count
 
 const initialState = {
     posts: arrayDataState(),

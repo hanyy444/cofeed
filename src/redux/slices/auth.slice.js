@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, createDraftSafeSelector } from "@reduxjs/toolkit"
-
 import { userApi } from "./users.slice"
 import { postApi } from "./posts.slice"
 import { objectDataState } from "../helper"
@@ -9,10 +8,15 @@ const initialState = {
     user: objectDataState()
 }
 
-export const selectAuth = createDraftSafeSelector(state => state, state => ({
+// export const selectAuth = createDraftSafeSelector(state => state, state => ({
+//     token: state.auth.token,
+//     user: state.auth.user?.data
+// }))
+
+export const selectAuth = state => ({
     token: state.auth.token,
     user: state.auth.user?.data
-}))
+})
 
 export const logout = createAsyncThunk(
     "auth/logout",
