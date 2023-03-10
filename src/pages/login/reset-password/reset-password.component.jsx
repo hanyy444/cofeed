@@ -24,7 +24,7 @@ const ResetPassword = ({ setActive }) => {
         await submitAxios({
             axiosInstance,
             method: 'patch',
-            url: `http://localhost:3000/api/v1/users/resetPassword/${resetToken}`,
+            url: `users/resetPassword/${resetToken}`,
             requestConfig: {
                 data: {
                     password, 

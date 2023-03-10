@@ -68,7 +68,7 @@ const SignUp = ({ setActive }) => {
         submitAxios({
             axiosInstance,
             method: 'post',
-            url: 'http://localhost:3000/api/v1/users/signup',
+            url: 'users/signup',
             headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
             requestConfig: { data: formData }
         })

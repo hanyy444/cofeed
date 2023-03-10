@@ -12,7 +12,7 @@ const ForgotPassword = ({ email, setActive }) => {
         await submitAxios({
             axiosInstance,
             method: 'post',
-            url: 'http://localhost:3000/api/v1/users/forgotPassword',
+            url: 'users/forgotPassword',
             requestConfig: {
                 data: {
                     email

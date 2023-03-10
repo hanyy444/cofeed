@@ -32,7 +32,7 @@ const Login = ({ setActive, setEmail }) => {
             await submitAxios({
                 axiosInstance,
                 method: 'post',
-                url: 'http://localhost:3000/api/v1/users/signInWithGoogle',
+                url: 'users/signInWithGoogle',
                 requestConfig: {
                     data: {
                         accessToken: user.accessToken
@@ -48,7 +48,7 @@ const Login = ({ setActive, setEmail }) => {
         await submitAxios({
             axiosInstance,
             method: 'post',
-            url: 'http://localhost:3000/api/v1/users/login',
+            url: 'users/login',
             requestConfig: {
                 data: {
                     email,
