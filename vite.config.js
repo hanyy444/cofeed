@@ -10,6 +10,9 @@ import jsconfigPaths from 'vite-jsconfig-paths'
 export default defineConfig({
 
   plugins: [react(), jsconfigPaths()],
+  build: {
+    outDir: './build'
+  },
   // resolve: {
   //   alias: {
   //     '@': path.resolve(__dirname, './src')
