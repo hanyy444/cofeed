@@ -3,7 +3,7 @@
 .login-form {
     padding: 4vh;
     min-width: 35rem;
-    grid-template-columns: min-content;
+    grid-template-columns: min-content !important;
     .extras {
         @include flexBetween;
         gap: .5vh;
