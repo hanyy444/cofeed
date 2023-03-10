@@ -16,10 +16,7 @@ const useLogin = () => {
     let data = userFromAxios || user    
 
     React.useEffect(()=>{
-        if (
-            data?.status === 'success' &&
-            data?.token
-        ) { 
+        if ( data?.status === 'success' && data?.token ) { 
             const { user, token } = data 
             
             //// SET GLOBAL AUTH

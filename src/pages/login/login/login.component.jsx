@@ -61,11 +61,10 @@ const Login = ({ setActive, setEmail }) => {
     }
 
     return (
-        // <WithStateHandler
-        //     data={[initialState]}
-        //     loading={loading?'pending':''}
-        //     error={error}
-        // >
+        <WithStateHandler
+            data={[initialState]}
+            loading={loading?'pending':''}
+        >
             <Formik 
                 onSubmit={submit}
                 initialValues={initialState}
@@ -131,6 +130,7 @@ const Login = ({ setActive, setEmail }) => {
                     </>
                 )}
             </Formik>
+        </WithStateHandler>
     )
 }
 
