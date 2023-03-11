@@ -1,8 +1,6 @@
-// @use "assets/sass/style";
-
 .follow-button{
     border-radius: 1rem;
-
+    min-height: 1.5rem;
     background-color: $primary-light;
     color: white;
     text-align: center;
@@ -10,6 +8,17 @@
     letter-spacing: .05rem;
 
     transition: all .1s;
+
+    position: relative;
+    .spinner {
+        position: absolute;
+        width: 0;
+        height: 0;
+        &::before{
+            width: 1rem;
+            height: 1rem;
+        }
+    }
 
     &:hover {
         background-color: $primary;

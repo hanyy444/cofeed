@@ -16,7 +16,7 @@ const JSONData = () => {
         gridRow: '1/-1',
     }
     const filteredState = React.useMemo(() => {
-        return currentState.userChats
+        return currentState.users
     }, [currentState])
 
     return (

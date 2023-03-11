@@ -32,7 +32,6 @@ const MessagesPage = (props) => {
     
     const { data: chat } = useSelector(selectChat)
     const [isChat, toggleIsChat] = useToggle(chat?true:false)
-    console.log(chat)
     const [receiver, setReceiever] = React.useState(chat?
         {
             _id: chat.recieverId,
@@ -41,7 +40,7 @@ const MessagesPage = (props) => {
         }
         :null
     )  
-    console.log(receiver)
+    
     useEffect(()=>{
         dispatch(userApi.getUserFriends({
             token,

@@ -45,7 +45,7 @@ postApi.savePost = postApi.createThunk({
     }
 })
 
-postApi.unRegister = function () { console.log(`${this.resource} service unregistered.`) }
+postApi.unRegister = function () { }
 
 
 export default postApi

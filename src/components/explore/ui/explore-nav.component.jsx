@@ -35,9 +35,9 @@ const ExploreNav = ({ currentUserId,
     }, [setSearchQuery, toggleSearchWrapper])
 
     const onSearchChange = useCallback((e)=>{
-        const value = e.target.value.trim()
+        const value = e.target.value
         setSearchQuery(value)
-        toggleSearchWrapper(!(value===''))
+        toggleSearchWrapper(!(value.trim()===''))
     }, [setSearchQuery, toggleSearchWrapper])
 
     return (

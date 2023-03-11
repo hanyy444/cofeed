@@ -34,7 +34,8 @@ const ProfilePage = (props) => {
             params: {
                 path: userId || ''
             }
-        }
+        },
+        extraDeps: [isMe]
     })
     const [showModal, toggleShowModal] = useToggle(false)
 

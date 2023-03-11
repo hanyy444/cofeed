@@ -23,8 +23,6 @@ const useData = ({ selector, thunk: { action, params = {} }, extraDeps = [] }) =
 
     useEffect(() => {
         useData()
-        return () =>
-            console.log('useData is successfully unmounted! A controller abort method should be used here!!')
     }, [...extraDeps])
 
     return {

@@ -7,7 +7,7 @@ const useSearchQuery = ({ searchCallback, clearSearch }) => {
     const [searchQuery, setSearchQuery] = useState('')
 
     const search = useCallback(() => {
-        if (searchQuery === '') return
+        if (searchQuery.trim() === '') return
         searchCallback(searchQuery)
     }, [searchQuery])
 
