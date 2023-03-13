@@ -7,7 +7,7 @@ import usePost from './usePost';
 import useToggle from 'hooks/useToggle';
 
 import User from 'components/display/user/user.component';
-const PostModal = lazy(()=>import('components/post-modal/post-modal.component'))
+const PostModal = React.lazy(()=>import('components/post-modal/post-modal.component'))
 
 const Post = ({ post }) => {
     
