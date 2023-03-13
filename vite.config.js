@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import jsconfigPaths from 'vite-jsconfig-paths'
+import autoprefixer from 'autoprefixer'
 // import path from 'path'
 // import dns from 'dns'
 
@@ -28,6 +29,9 @@ export default defineConfig({
         // added to every scss file
         additionalData: `@import "./src/assets/sass/variables"; @import "./src/assets/sass/mixins"; `
       }
+    },
+    postcss: {
+      plugins: [autoprefixer]
     }
   },
   optimizeDeps: {

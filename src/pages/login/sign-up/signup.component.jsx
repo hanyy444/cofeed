@@ -1,4 +1,5 @@
 import React from 'react'
+import './signup.component.scss'
 
 import Form from 'components/display/form/form.component'
 import FormGroup from 'components/display/form/form-group/form-group.component'
@@ -10,6 +11,7 @@ import * as yup from 'yup'
 import axiosInstance from 'api/axios-instance'
 import useLogin from '../useLogin'
 import WithStateHandler from 'utils/withStateHandler'
+import ErrorMessage from '../error-message'
 
 
 const initialState = {
@@ -28,7 +30,14 @@ const validationSchema = yup.object().shape({
     lastName: yup.string().min(2).required('required'),
     email: yup.string().email('Invalid Email').required('required'),
     password: yup.string().min(8).required('required'),
-    confirmPassword: yup.string().min(8).required('required'),
+    confirmPassword: yup.string()
+    .min(8)
+    .required('required.')
+    .test('passwords-match', 'Passwords must match', 
+        function (value) {       
+            return this.parent.password === value     
+        }
+    ),
     location: yup.string().required('required'),
     occupation: yup.string().required('required'),
     image: yup.object().required('required'),
@@ -166,9 +175,9 @@ const SignUp = ({ setActive }) => {
                                 imageError={touched.image && (errors.image)}
                                 handleChange={(e) => handleImageInput(e, setFieldValue)}
                             />
-                            {error && <span>{error?.response?.data?.message}</span>}
                             <FormButton type="submit">Sign up</FormButton>
                         </Form>
+                        <ErrorMessage error={error}/>
                         <p>Already have an account? <a onClick={()=>setActive('login')}>Login</a></p>
                     </>
                 )}

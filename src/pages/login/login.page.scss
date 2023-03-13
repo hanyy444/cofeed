@@ -3,7 +3,7 @@
     // background: rgb(231, 245, 251);
     // background: radial-gradient(circle, $grey-light-blue 0%, $primary 50%);
     background: rgb(231, 245, 251);
-        background: radial-gradient(circle, rgba(231, 245, 251, 1) 2%, rgba(32, 42, 72, 1) 7%, rgba(166, 86, 225, 1) 100%);
+    background: radial-gradient(circle, rgba(231, 245, 251, 1) 2%, rgba(32, 42, 72, 1) 7%, rgba(166, 86, 225, 1) 100%);
 
     grid-column: 1/-1;
     grid-row: 1/-1;
@@ -11,12 +11,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
+    // height: 100%;
     @include scroll;
 
     .form-box{
+        margin: 2rem auto;
+
         padding-bottom: 2rem;
-        border-radius: .2rem;
+        border-radius: .5rem;
         box-shadow: $grey-dark 0px 0px 0.25em, $grey-dark 0px 0.25em 1em;
         background-color: $white;
         
@@ -25,18 +28,9 @@
         justify-content: flex-start;
         align-items: center;
 
-        .sign-up-form{
-            padding: 4vh;
-        }
+        .spinner { margin-top: 15rem; }
 
-        .spinner{
-            // top: 65%;
-            top: -350%;
-        }
-
-        p { 
-            font-size: clamp(1.3rem, 1.3rem, 2rem);
-        }
+        p { font-size: clamp(1.3rem, 1.3rem, 2rem); }
         
         a {
             color: $primary;

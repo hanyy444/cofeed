@@ -17,6 +17,10 @@ plopFile.js
 notes.txt
 progress.txt
 .env
+.firebase
+.github
+.firebaserc
+firestore.rules
 
 # Editor directories and files
 .vscode/*

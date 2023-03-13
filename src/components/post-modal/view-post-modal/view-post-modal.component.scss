@@ -50,10 +50,7 @@
     }
 
     &__info {
-        overflow: scroll;
-        &::-webkit-scrollbar {
-            display: none;
-        }
+        @include scroll;
 
         @include respond(phone) {
             grid-column: 1 / -1;

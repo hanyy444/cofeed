@@ -1,13 +1,13 @@
 // @use "assets/sass/style";
 
 .login-form {
-    padding: 4vh;
+    padding: 4rem;
     min-width: 35rem;
     grid-template-columns: min-content !important;
     .extras {
         @include flexBetween;
-        gap: .5vh;
-        margin-bottom: 1.5vh;
+        gap: .5rem;
+        margin-bottom: 1.5rem;
     }
     
     .forgot-password__switcher {
@@ -28,7 +28,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: .4vh;
+        gap: .4rem;
 
         input {
             accent-color: $primary;
@@ -38,13 +38,13 @@
 
 .social-media {
     @include flexBetween;
-    gap: 2vh;
-    margin: 1.5vh 0 2.5vh 0;
+    gap: 2rem;
+    margin: 1.5rem 0 2.5rem 0;
 
     svg {
         cursor: pointer;
-        width: clamp(2rem, 2vh, 2.5rem);
-        height: clamp(2rem, 2vh, 2.5rem);
+        width: clamp(2rem, 2rem, 2.5rem);
+        height: clamp(2rem, 2rem, 2.5rem);
         border-radius: 50%;
         transform: translate(0);
         transition: all .2s;

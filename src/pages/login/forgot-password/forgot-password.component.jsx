@@ -14,9 +14,7 @@ const ForgotPassword = ({ email, setActive }) => {
             method: 'post',
             url: 'users/forgotPassword',
             requestConfig: {
-                data: {
-                    email
-                }
+                data: { email }
             }
         })
     }
@@ -28,8 +26,8 @@ const ForgotPassword = ({ email, setActive }) => {
             <WithStateHandler 
                 data={data} 
                 loading={loading ? 'pending' : 'success'} 
-                error={error}
-                fallback={
+                error={error || (!email && (new Error('Please provide email address.')))}
+                fallback = {
                     <>
                         <p className='forgot-password__message'>
                             Are you sure you want to send reset token to this email?

@@ -14,7 +14,7 @@ import Suggestions from './suggestions/suggestions.component';
 import SearchWrapper from '../search-wrapper/search-wrapper.component';
 
 // REDUX
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { selectAuth } from 'redux/slices/auth.slice';
 import { userApi, selectSearch, clearSearch} from 'redux/slices/users.slice'
 import useMediaQuery from 'hooks/useMediaQuery';
@@ -24,7 +24,7 @@ const Explore = () => {
     const [showSearchWrapper, toggleSearchWrapper] = useToggle(false)
     
     const dispatch = useDispatch()
-    const { token, user: { _id: userId, image }} = useSelector(selectAuth)
+    const { token, user: { _id: userId, image }} = useSelector(selectAuth, shallowEqual)
 
     //// SEARCH
     const { data, count, page, loading, error } = useSelector(selectSearch)

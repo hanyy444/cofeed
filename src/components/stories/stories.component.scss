@@ -8,11 +8,8 @@
 
     padding: 1rem;
 
-    overflow: scroll;
-
+    
     flex: 1 1 1;
     
-    &::-webkit-scrollbar{
-        display: none;
-    }
+    @include scroll;
 }

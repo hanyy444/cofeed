@@ -3,12 +3,12 @@
 .form-group{
     background-color: $white;
     border-radius: .2rem;
-    padding: 0 1vh;
+    padding: 0 1rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1vh;
+    gap: 1rem;
 
     outline: thin solid $primary;
 
@@ -27,7 +27,7 @@
     }
 
     input {
-        padding: 2vh 6vh 2vh 0;
+        padding: 1.5rem 0;
         color: $secondary;
         border: none;
         outline: none;

@@ -1,9 +1,6 @@
-// @use "assets/sass/style";
-// @use "assets/sass/style"
-
 .container {
-    height: 100%;
     max-width: 100%;
+    min-height: 100%;
 
     background-color: $grey-light-blue;
 
@@ -11,7 +8,7 @@
 
     display: grid;
     grid-template-columns: [sidebar-start] minmax(10rem, 20rem) [sidebar-end page-start] 1fr [page-end];
-    
+
     @include respond(phone){
         grid-template-rows: 1fr 5rem;
     }

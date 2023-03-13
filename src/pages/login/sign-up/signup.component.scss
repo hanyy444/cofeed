@@ -1,0 +1,15 @@
+.sign-up-form {
+    padding: 3rem;
+    @include respond(phone){
+        // grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)) !important;
+    }
+    @include scroll;
+    input{
+        @include respond(phone) {
+            padding: 1rem;
+            width: 100%;
+            font-size: 1rem;
+        }
+    }
+    .form-group{ padding: 0; }
+}

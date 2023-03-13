@@ -6,14 +6,14 @@ import WithAuthentication from "utils/withAuthentication"
 
 import Container from 'components/layout/container/container.component'
 import Sidebar from 'components/layout/sidebar/sidebar.component'
-import SettingsPage from 'pages/settings/settings.page';
-import Explore from 'components/explore/explore.component';
 
 const HomePage = lazy(() => import('pages/home/home.page'))
 const LoginPage = lazy(() => import('pages/login/login.page'))
 const ProfilePage = lazy(() => import('pages/profile/profile.page'))
 const MessagesPage = lazy(() => import('pages/messages/messages.page'))
 const SavedPostsPage = lazy(() => import('pages/saved-posts/saved-posts.page'))
+const Explore = lazy(()=>import('components/explore/explore.component'))
+const SettingsPage = lazy(()=>import('pages/settings/settings.page'))
 const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {

@@ -10,6 +10,7 @@ import { Field, Formik } from 'formik'
 import * as yup from 'yup'
 import WithStateHandler from 'utils/withStateHandler'
 import useLogin from '../useLogin'
+import ErrorMessage from '../error-message'
 
 const initialState = {
     email: '',
@@ -79,7 +80,6 @@ const Login = ({ setActive, setEmail }) => {
                 }) => (
                     <>
                         <Form onSubmit={ handleSubmit } classes="login-form">
-                            <span style={{ color: 'red' }}>{error?.response?.data?.message}</span>
                             <FormGroup error={touched.email && (errors.email)}>
                                 <FaUser/>
                                 <input 
@@ -119,6 +119,7 @@ const Login = ({ setActive, setEmail }) => {
                                     Forgot Password?
                                 </button>
                             </div>
+                            <ErrorMessage error={error} />
                             <FormButton type="submit">Login</FormButton>
                         </Form>
                         {/* <span>OR</span>
