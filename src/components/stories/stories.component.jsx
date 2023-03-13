@@ -1,5 +1,5 @@
 import './stories.component.scss'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { selectAuth, userApi } from 'redux/slices/auth.slice';
 import { selectFriends } from 'redux/slices/users.slice';
 
@@ -11,7 +11,7 @@ import WithStateHandler from 'utils/withStateHandler';
 
 const Stories = () => {
 
-    const { user } = useSelector(selectAuth)
+    const { user } = useSelector(selectAuth, shallowEqual)
 
     const { data: friends, loading, error } = useData({
         selector: selectFriends,

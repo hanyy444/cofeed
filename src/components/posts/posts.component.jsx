@@ -6,7 +6,7 @@ import usePosts from 'hooks/usePosts'
 import WithStateHandler from 'utils/withStateHandler'
 
 
-const Posts = ({ category, userId = '', fallback = <></> }) => {
+const Posts = ({ category, userId = '', fallback = null }) => {
     const categoryHttpPath = React.useMemo(() => {
         if (category === 'user_posts') return `/${userId}/posts`
         if (category === 'saved') return `/${userId}/savedPosts`
@@ -14,7 +14,7 @@ const Posts = ({ category, userId = '', fallback = <></> }) => {
         return `${category === 'all' ? '' : category}`
     }, [category]) 
     
-    const [ posts, count, loading, error ] = usePosts({ path: `${categoryHttpPath}` })
+    const [ posts, _, loading, error ] = usePosts({ path: `${categoryHttpPath}` })
 
     return <div className= "posts" data-testid="posts">
         <WithStateHandler data={posts} loading={loading} error={error} 

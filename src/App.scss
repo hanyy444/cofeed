@@ -1,6 +1,26 @@
+@import "assets/sass/base";
+
 .app {
     height: 100vh;
+    @include respond(phone) {
+        height: 100vh;
+        min-height: -webkit-fill-available;
+    }
     width: 100vw;
+
+    background-color: $grey-light-blue;
+
+    overflow: hidden;
+
+    position: relative;
+
+    display: grid;
+    grid-template-columns: [sidebar-start] minmax(10rem, 20rem) [sidebar-end page-start] 1fr [page-end];
+    grid-template-rows: 1fr;
+
+    @include respond(phone) {
+        grid-template-rows: 1fr 5rem;
+    }
 }
 
 .default_message {

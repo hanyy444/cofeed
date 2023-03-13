@@ -4,7 +4,6 @@ import { lazy, Suspense, useMemo } from 'react';
 import { Route, Routes } from "react-router-dom"
 import WithAuthentication from "utils/withAuthentication" 
 
-import Container from 'components/layout/container/container.component'
 import Sidebar from 'components/layout/sidebar/sidebar.component'
 
 const HomePage = lazy(() => import('pages/home/home.page'))
@@ -19,16 +18,16 @@ const AppState = lazy(() => import('stateJSON' ))
 function App(props) {
   return (
     <div className="app">
-      <Container>
+      {/* <Container> */}
           <Suspense>
             <Routes>
             {
               ['/login', '/signup'].map((path, index) => (
                 <Route 
-                key={index}
-                exact 
-                path={path} 
-                element={<LoginPage/>} 
+                  key={index}
+                  exact 
+                  path={path} 
+                  element={<LoginPage/>} 
                 />
               ))
             }
@@ -58,7 +57,7 @@ function App(props) {
               </Suspense>
           </WithAuthentication>
         
-      </Container>
+      {/* </Container> */}
     </div>
   )
 }

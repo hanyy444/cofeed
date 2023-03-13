@@ -13,7 +13,7 @@ const Story = ({ userName, userImageUrl }) => {
             data-testid="story" 
             onClick={() => setSeen(true)}
         >
-            <img src={userImageUrl} alt="story user image" className='story__user-img'/>
+            <img src={userImageUrl} alt="story user image" className='story__user-img' loading='lazy'/>
             <Paragraph>{userName}</Paragraph>
         </div>
     )

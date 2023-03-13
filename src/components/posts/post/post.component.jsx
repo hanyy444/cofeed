@@ -7,19 +7,33 @@ import usePost from './usePost';
 import useToggle from 'hooks/useToggle';
 
 import User from 'components/display/user/user.component';
-import PostModal from 'components/post-modal/post-modal.component';
+const PostModal = lazy(()=>import('components/post-modal/post-modal.component'))
 
 const Post = ({ post }) => {
     
-    const { isLiked, handleLike, onClickUser } = usePost({ post })
-    
+    const { isLiked, handleLike, onClickUser, isMine, isSaved, onClickSave } = usePost({ postId: post?._id, postUserId: post?.userId, likes: post?.likes })
+
     const [showModal, toggleShowModal] = useToggle(false)
 
     const openModal = React.useCallback(()=>toggleShowModal(true), [])
 
+    const modalProps = {
+        isLiked,
+        handleLike,
+        onClickUser,
+        isMine,
+        isSaved,
+        onClickSave
+    }
+
     return post && (
         <>      
-            {showModal && <PostModal post={post} showModal={showModal} toggleShowModal={toggleShowModal}/>}
+            {
+                showModal && <PostModal post={post} 
+                    showModal={showModal} 
+                    toggleShowModal={toggleShowModal} 
+                    extraModalProps={modalProps}/>
+            }
             <div className="post" data-testid="post">
                 <img 
                     src={post.image.url} 
@@ -53,5 +67,5 @@ const Post = ({ post }) => {
     )
 }
 
-export default Post;
+export default React.memo(Post);
 

@@ -1,20 +1,23 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "redux/slices/auth.slice"
 import postApi from "api/post/post-api"
 
-const usePost = ({ post = {} }) => {
+
+// props: postId, postUserId, likes, 
+const usePost = ({ postId, postUserId, likes = {} }) => {
+
+    // RE-rendered on new objects?? test
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { token, user: { _id: authUserId, savedPosts } } = useSelector(selectAuth)
+
+    const { token, user: { _id: authUserId, savedPosts } } = useSelector(selectAuth, shallowEqual)
 
     // PROPS
-    const postId = post?._id
-    const postUserId = post?.userId
-    const isLiked = Object.keys(post?.likes || {}).includes(authUserId)
     const isMine = authUserId === postUserId
-    const isSaved = savedPosts.includes(postId)
+    const isLiked = Object.keys(likes).includes(authUserId)
+    const isSaved = React.useMemo(() => savedPosts.includes(postId), [postId])
 
     // METHODS
     const handleLike = React.useCallback(() => {
@@ -27,7 +30,7 @@ const usePost = ({ post = {} }) => {
             token,
             path: `${postId}/save`
         }))
-    }, [])
+    }, [postId])
 
     return {
         isLiked,

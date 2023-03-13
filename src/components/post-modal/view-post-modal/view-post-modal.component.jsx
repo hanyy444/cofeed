@@ -8,14 +8,10 @@ import User from "components/display/user/user.component"
 import IconButton from 'components/post-modal/icon-button/icon-button.component'
 import Divider from 'components/display/divider/divider.component'
 
-import usePost from 'components/posts/post/usePost'
 import Comments from './comments/comments.component'
 import AddCommentForm from './add-comment-form/add-comment-form.component'
 
-const ViewPostModal = ({ post, setModalType }) => {
-    
-    const { isLiked, handleLike, isMine, isSaved, onClickUser, onClickSave } = usePost({ post })
-
+const ViewPostModal = ({ post, setModalType, isLiked, handleLike, isMine, isSaved, onClickUser, onClickSave }) => {
     const onClickEdit = React.useCallback((event) => {
         event.stopPropagation()
         if(!isMine) return

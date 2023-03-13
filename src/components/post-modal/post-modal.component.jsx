@@ -1,14 +1,15 @@
 import './post-modal.component.scss'
-import { useCallback, useRef, useState, useEffect } from 'react'
+import { useCallback, useRef, useState, useEffect, lazy } from 'react'
 import { useDispatch } from 'react-redux'
 import {clearPost} from 'redux/slices/posts.slice'
 import Overlay from '../display/overlay/overlay.component'
 import useClickOutside from 'hooks/useClickOutside'
-import ViewPostModal from './view-post-modal/view-post-modal.component'
-import CreatePostModal from './create-post-modal/create-post-modal.component'
+
+const ViewPostModal = lazy(()=>import('./view-post-modal/view-post-modal.component'))
+const CreatePostModal = lazy(()=>import('./create-post-modal/create-post-modal.component'))
 
 // COMPONENT: VIEW POST / CREATE POST
-const PostModal = ({ type = "view", post = null, showModal, toggleShowModal }) => {
+const PostModal = ({ type = "view", post = null, showModal, toggleShowModal, extraModalProps = {} }) => {
     const dispatch = useDispatch()
     
     const modalRef = useRef()
@@ -25,11 +26,14 @@ const PostModal = ({ type = "view", post = null, showModal, toggleShowModal }) =
         setDummy(true)
         return () => dispatch(clearPost())
     },[])
+    
+    const extraProps = type === 'view' ? extraModalProps : {}
 
     const modalProps = {
         setModalType,
         toggleShowModal, 
-        showModal  
+        showModal,
+        ...extraProps
     }
 
     return dummy && ( 
