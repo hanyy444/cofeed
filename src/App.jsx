@@ -17,7 +17,7 @@ const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {
   return (
-    <div className="app">
+    <div className="app" style={{ maxHeight: window.innerHeight }}>
       {/* <Container> */}
           <Suspense>
             <Routes>

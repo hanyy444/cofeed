@@ -4,7 +4,7 @@ import './profile.page.scss'
 import { useParams } from 'react-router-dom'
 
 // API
-import { selectFriends, selectUser, userApi } from 'redux/slices/users.slice'
+import { selectUser, userApi } from 'redux/slices/users.slice'
 
 import useToggle from 'hooks/useToggle'
 
@@ -18,7 +18,7 @@ import PostModal from 'components/post-modal/post-modal.component'
 import User from 'components/display/user/user.component'
 import FollowButton from 'components/button/follow-button/follow-button.component'
 import UserDetails from './user-details/user-details.component'
-import useData from '../../hooks/useData'
+import useData from 'hooks/useData'
 import { shallowEqual, useSelector } from 'react-redux'
 import { selectAuth } from 'redux/slices/auth.slice'
 

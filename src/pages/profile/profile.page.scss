@@ -1,5 +1,3 @@
-// @use "assets/sass/style";
-
 .profile {
     padding-top: 4rem;
     
@@ -23,11 +21,12 @@
     }
 
     .posts {
+        flex: 1 0 auto;
         .spinner {
             margin-top: 5rem;
         }
         .post__info {
-            .user{
+            .user {
                 display: none;
             }
         }
