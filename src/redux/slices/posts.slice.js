@@ -14,7 +14,7 @@ export const selectPostsCount = state => state.posts.posts.count
 
 const initialState = {
     posts: arrayDataState(),
-    post: objectDataState()
+    post: objectDataState(),
 }
 
 const postsSlice = createSlice({
@@ -37,10 +37,16 @@ const postsSlice = createSlice({
     },
     extraReducers: (builder) => {
 
-        const { getAll, getSingle, post, put, patch, likePost, addComment, savePost } = postApi
+        const { getAll, getSingle, post, put, patch, likePost, addComment } = postApi
 
         createBuilderCases({ builder, thunk: getAll, stateProp: 'posts', payloadProp: 'posts' })
-        createBuilderCases({ builder, thunk: post, stateProp: 'posts', payloadProp: 'posts' })
+        createBuilderCases({ builder, thunk: post, stateProp: 'posts' })
+
+        builder.addCase(post.fulfilled, (state, { payload }) => {
+            state.posts.data.unshift(payload.post)
+            state.posts.loading = payload.status
+            state.posts.error = null
+        })
 
         createBuilderCases({ builder, thunk: getSingle, stateProp: 'post', payloadProp: 'post' })
         createBuilderCases({ builder, thunk: put, stateProp: 'post', payloadProp: 'post' })

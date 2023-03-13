@@ -15,7 +15,7 @@ const usePosts = ({ path = '', query = '' }) => {
         loading,
         error,
         page
-    } = useSelector(selectPosts)
+    } = useSelector(selectPosts, shallowEqual)
 
     const getPosts = React.useCallback(() =>
         dispatch(

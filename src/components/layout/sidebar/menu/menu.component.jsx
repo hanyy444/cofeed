@@ -31,14 +31,14 @@ const Menu = ({ isPhone }) => {
     const navHandler = useCallback(({text, link})=>{
         if (text === active) {
             let selector;
-            if (text === 'home' || text === '') (selector = document.querySelector('.feeds'))
+            if (text === 'home' || text === '') (selector = document.querySelector('.posts'))
+            else if (text === 'saved') (selector = document.querySelector('.posts'))
             else if (text === 'profile'){
-                selector = document.querySelector('.profile')
-                navigate(`/profile/${authUserId}`)
+                document.querySelector('.posts-section').scrollTop = 0
+                !isMe && navigate(`/profile/${authUserId}`)
                 return
             }
             else if (text === 'messages') (selector = document.querySelector('.user-chats'))
-            else if (text === 'saved') (selector = document.querySelector('.saved-posts'))
             selector && (selector.scrollTop = 0)
         }
         navigate(link)

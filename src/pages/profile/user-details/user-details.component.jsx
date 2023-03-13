@@ -4,7 +4,6 @@ import { FaBriefcase, FaUserFriends, FaThumbsUp, FaMapMarker, FaEye, FaBookmark 
 import { useMemo } from 'react'
 import {  useSelector } from 'react-redux'
 import { selectPostsCount } from 'redux/slices/posts.slice'
-import { selectFriends } from 'redux/slices/users.slice'
 
 const UserDetails = ({ occupation, impressions, 
     friends, location, viewedProfile}) => {

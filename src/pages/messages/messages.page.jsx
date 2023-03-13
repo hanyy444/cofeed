@@ -36,11 +36,12 @@ const MessagesPage = (props) => {
         {
             _id: chat.recieverId,
             chatId: chat.chatId,
+            receiverId: chat.receiverId,
             ...friends.find(({_id}) => _id === chat.recieverId)
         }
         :null
     )  
-    
+
     useEffect(()=>{
         dispatch(userApi.getUserFriends({
             token,

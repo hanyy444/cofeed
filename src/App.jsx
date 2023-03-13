@@ -1,10 +1,11 @@
 import './App.scss'
 
-import { lazy, Suspense, useMemo } from 'react';
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from "react-router-dom"
 import WithAuthentication from "utils/withAuthentication" 
 
 import Sidebar from 'components/layout/sidebar/sidebar.component'
+import useWindowSize from 'hooks/useWindowSize';
 
 const HomePage = lazy(() => import('pages/home/home.page'))
 const LoginPage = lazy(() => import('pages/login/login.page'))
@@ -16,10 +17,10 @@ const SettingsPage = lazy(()=>import('pages/settings/settings.page'))
 const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {
+  const windowSize = useWindowSize()
   return (
-    <div className="app" style={{ maxHeight: window.innerHeight }}>
-      {/* <Container> */}
-          <Suspense>
+    <div className="app" style={{ maxHeight: windowSize.height, maxWidth: windowSize.width }}>
+        <Suspense>
             <Routes>
             {
               ['/login', '/signup'].map((path, index) => (
@@ -32,10 +33,8 @@ function App(props) {
               ))
             }
           </Routes>
-          </Suspense>
           <WithAuthentication>
               {<Sidebar/>}
-              <Suspense>
                 <Routes>
                   {
                     ['/', '/home'].map((path, index) => (
@@ -54,10 +53,8 @@ function App(props) {
                   <Route path='/explore' element={<Explore/>}/>
                   <Route path="/state" element={<AppState/>} />
                 </Routes>
-              </Suspense>
           </WithAuthentication>
-        
-      {/* </Container> */}
+        </Suspense>
     </div>
   )
 }

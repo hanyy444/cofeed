@@ -11,7 +11,7 @@ const useData = ({ selector, thunk: { action, params = {} }, extraDeps = [] }) =
 
     const { token } = useSelector(selectAuth, shallowEqual)
 
-    const { data, loading, error } = useSelector(selector)
+    const { data, loading, error } = useSelector(selector, shallowEqual)
 
     const useData = useCallback(() =>
         action && (dispatch(

@@ -2,8 +2,8 @@
 
 .user-chats {
     grid-column: friends-start / friends-end;
-    grid-row: span 3;
-
+    grid-row: 1 / -1;
+    
     @include scroll;
 
     @include respond(phone){
