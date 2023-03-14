@@ -7,7 +7,7 @@ export const createBuilderCases = ({ builder, thunk, stateProp, payloadProp }) =
             loading: 'pending'
         }
     })
-    builder.addCase(thunk.fulfilled, (state, { payload }) => {
+    payloadProp && (builder.addCase(thunk.fulfilled, (state, { payload }) => {
         state[stateProp] = {
             ...state[stateProp],
             error: null,
@@ -16,7 +16,7 @@ export const createBuilderCases = ({ builder, thunk, stateProp, payloadProp }) =
             count: payload.count,
             page: payload.page
         }
-    })
+    }))
     builder.addCase(thunk.rejected, (state, action) => {
         state[stateProp] = {
             ...state[stateProp],
