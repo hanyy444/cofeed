@@ -11,12 +11,12 @@ import WithErrorBoundary from 'utils/error-boundary/withErrorBoundary'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
-      <WithErrorBoundary>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </WithErrorBoundary>
+      <Provider store={store}>
+        <WithErrorBoundary>
+            <PersistGate loading={null} persistor={persistor}>
+              <App />
+            </PersistGate>
+        </WithErrorBoundary>
+      </Provider>
     </BrowserRouter>
 )

@@ -1,8 +1,9 @@
 import Spinner from "components/display/spinner/spinner.component"
 import { useErrorHandler } from "react-error-boundary"
+import React from "react"
 
 const WithStateHandler = ({children, data, loading, error, fallback = <></>}) => {
-        
+    // if (error?.message === 'Network Error') console.log(error)
     if (error) useErrorHandler()(error)
 
     if (loading === 'pending') return <Spinner/>
@@ -14,4 +15,4 @@ const WithStateHandler = ({children, data, loading, error, fallback = <></>}) =>
 
 }
 
-export default WithStateHandler
+export default React.memo(WithStateHandler)

@@ -9,7 +9,7 @@ import { selectPost } from 'redux/slices/posts.slice'
 import { useCallback, useEffect, useState } from 'react'
 import Spinner from 'components/display/spinner/spinner.component'
 
-const PostsSection = ({ userId, isMe}) => {
+const PostsSection = ({ userId, isMe }) => {
     const [showModal, toggleShowModal] = useToggle(false)
     const [showFeedback, toggleShowFeedback] = useToggle(false)
     

@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import { configureStore, combineReducers, createAction } from "@reduxjs/toolkit"
 import storage from "redux-persist/lib/storage"
 import {
     persistStore,
@@ -10,6 +10,7 @@ import {
     PURGE,
     REGISTER
 } from "redux-persist"
+import logger from "redux-logger"
 
 import authReducer from "./slices/auth.slice"
 import usersReducer from './slices/users.slice'
@@ -29,7 +30,12 @@ const appReducer = combineReducers({
     userChats: userChatsReducer
 })
 
+export const clearError = createAction('CLEAR_ERROR')
+
 const rootReducer = (state, action) => {
+    if (action.type === 'CLEAR_ERROR')
+        return appReducer({}, action)
+
     if (action.type === 'LOGOUT') {
         return appReducer({}, action)
     }
@@ -42,11 +48,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = configureStore({
     reducer: persistedReducer,
     // devTools: process.env.NODE_ENV !== 'production',
-    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware({
-        serializableCheck: {
-            ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-        }
-    })]
+    middleware: (getDefaultMiddleware) => [
+        // process.env.NODE_ENV !== 'production' ? logger : undefined,
+        ...getDefaultMiddleware({
+            serializableCheck: {
+                ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+            }
+        })]
 })
 
 export const persistor = persistStore(store)

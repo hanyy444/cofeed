@@ -1,4 +1,26 @@
+import axiosInstance from "./axios-instance"
 import { apiProvider } from "./provider"
+
+// COMPOSITION INSTEAD OF CLASSES
+export function ApiCore(options) {
+    const { getAllThunk, getSingleThunk, postThunk, patchThunk, putThunk, removeThunk, createThunk } = apiProvider
+    const resource = options.resource
+    return {
+        resource,
+        createThunk,
+        getAll: options.getAll && getAllThunk(resource),
+        getSingle: options.getSingle && getSingleThunk(resource),
+        post: options.post && postThunk(resource),
+        patch: options.patch && patchThunk(resource),
+        put: options.put && putThunk(resource),
+        remove: options.remove && removeThunk(resource),
+        keepServerRunning: async () => {
+            return (await axiosInstance({
+                url: '/'
+            }))
+        }
+    }
+}
 
 //// AN API RUNNER
 // EACH PROPERTY IS A THUNK
@@ -15,18 +37,3 @@ import { apiProvider } from "./provider"
 //     }
 // }
 
-// COMPOSITION INSTEAD OF CLASSES
-export function ApiCore(options) {
-    const { getAllThunk, getSingleThunk, postThunk, patchThunk, putThunk, removeThunk, createThunk } = apiProvider
-    const resource = options.resource
-    return {
-        resource,
-        createThunk,
-        getAll: options.getAll && getAllThunk(resource),
-        getSingle: options.getSingle && getSingleThunk(resource),
-        post: options.post && postThunk(resource),
-        patch: options.patch && patchThunk(resource),
-        put: options.put && putThunk(resource),
-        remove: options.remove && removeThunk(resource),
-    }
-}

@@ -1,19 +1,16 @@
 import { ErrorBoundary } from "react-error-boundary"
 import Fallback from "./fallback/fallback.component"
 import { useState } from "react"
+import { clearError } from "redux/store"
+import { useDispatch } from "react-redux"
 
 const WithErrorBoundary = ({ children }) => {
-
-    // TODO: STATE FOR ERROR
     const [errorState, setErrorState] = useState(null)
-
-    // OPTIONS: 1. Use redux directly (for what? .. knowing the error state) 
-    // 2. Internal
-    // - use which slice? ..
-    // 1. check every slice
-
+    const dispatch = useDispatch()
+    
     const resetBoundary = () => {
         setErrorState(null)
+        dispatch(clearError())
         window.location.reload()
     }
 
@@ -21,7 +18,7 @@ const WithErrorBoundary = ({ children }) => {
         <ErrorBoundary
             onError={(error)=>setErrorState(error)}
             FallbackComponent={Fallback}
-            onReset={resetBoundary} //This will be called immediately before the ErrorBoundary resets it's internal state
+            onReset={resetBoundary}
         >
             {!errorState && children}
         </ErrorBoundary>

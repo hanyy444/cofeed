@@ -34,7 +34,7 @@ export const catchAsyncThunk = (sendRequest) => {
             .then(response => response.data)
             .catch(error => {
                 return thunkAPI.rejectWithValue({
-                    message: error?.response?.data?.message || error.message,
+                    message: error?.response?.data?.message || 'Something went wrong!',
                     status: error?.response?.status
                 })
             })
