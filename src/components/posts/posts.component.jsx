@@ -1,7 +1,7 @@
 import './posts.component.scss'
 import React from 'react'
 
-import Post from './post/post.component'
+import MemoizedPost from './post/post.component'
 import usePosts from 'hooks/usePosts'
 import WithStateHandler from 'utils/withStateHandler'
 
@@ -19,9 +19,9 @@ const Posts = ({ category, userId = '', fallback = null }) => {
     return <div className= "posts" data-testid="posts">
         <WithStateHandler data={posts} loading={loading} error={error} 
             fallback={fallback}>
-            {posts.map(post => <Post key={post?._id} post={post}  /> )}
+            {posts.map(post => <MemoizedPost key={post?._id} post={post}  /> )}
         </WithStateHandler> 
     </div>
 }
 
-export default Posts;
+export default React.memo(Posts);

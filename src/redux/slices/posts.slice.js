@@ -25,9 +25,8 @@ const postsSlice = createSlice({
             state.post.data = payload.post
         },
         clearPost: (state) => {
-            state.post = {
-                ...initialState.post
-            };
+            state.post.data = null
+            state.post.error = null
         },
         clearPosts: (state) => {
             state.posts = {
@@ -40,12 +39,13 @@ const postsSlice = createSlice({
         const { getAll, getSingle, post, put, patch, likePost, addComment } = postApi
 
         createBuilderCases({ builder, thunk: getAll, stateProp: 'posts', payloadProp: 'posts' })
-        createBuilderCases({ builder, thunk: post, stateProp: 'posts' })
+        createBuilderCases({ builder, thunk: post, stateProp: 'post' })
 
         builder.addCase(post.fulfilled, (state, { payload }) => {
             state.posts.data.unshift(payload.post)
-            state.posts.loading = payload.status
-            state.posts.error = null
+            state.post.data = payload.post
+            state.post.loading = payload.status
+            state.post.error = null
         })
 
         createBuilderCases({ builder, thunk: getSingle, stateProp: 'post', payloadProp: 'post' })

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './feeds.component.scss'
 
 import Subtitle from '../typography/subtitle/subtitle.component';
-import Posts from '../posts/posts.component';
+import MemoizedPosts from '../posts/posts.component';
 
 import Categories from './categories/categories.component';
 
@@ -16,7 +16,7 @@ const Feeds = (props) => {
                 <Subtitle>Feeds</Subtitle>
                 <Categories category={category} setCategory={setCategory}/>
             </div>
-            <Posts category={category} /> 
+            <MemoizedPosts category={category} /> 
         </section>
     )
 }

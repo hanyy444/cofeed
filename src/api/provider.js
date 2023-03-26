@@ -7,7 +7,7 @@ const callAxios = async (requestData) => {
 }
 
 const makeSendRequest = (base_url, requestConfig) => {
-    async function sendRequest(params) {
+    return async function sendRequest(params) {
         const { token, path = '', headers = {}, query = '', data = {} } = params
 
         const url = `${base_url}${path && `/${path}`}${query && `?${query}`}`
@@ -23,14 +23,15 @@ const makeSendRequest = (base_url, requestConfig) => {
             },
             ...requestConfig
         })
-        return response.data
+
+        return response
     }
-    return sendRequest
 }
 
 export const catchAsyncThunk = (sendRequest) => {
     return async (params, thunkAPI) => { // CALLBACK to createAsyncThunk (redux-thunk)
         return sendRequest(params)
+            .then(response => response.data)
             .catch(error => {
                 return thunkAPI.rejectWithValue({
                     message: error?.response?.data?.message || error.message,
@@ -80,7 +81,7 @@ const putThunk = (resource) =>
         actionType: 'put',
         requestConfig: {
             method: 'PUT',
-            query: '' //disable query
+            query: ''
         }
     })
 

@@ -34,7 +34,7 @@ const Menu = ({ isPhone }) => {
             if (text === 'home' || text === '') (selector = document.querySelector('.posts'))
             else if (text === 'saved') (selector = document.querySelector('.posts'))
             else if (text === 'profile'){
-                document.querySelector('.posts-section').scrollTop = 0
+                document.querySelector('.profile').scrollTop = 0
                 !isMe && navigate(`/profile/${authUserId}`)
                 return
             }

@@ -15,6 +15,17 @@
     transition: all .4s;
 
     position: relative;
+        
+    .spinner {
+        position: absolute;
+        width: 0;
+        height: 0;
+
+        &::before {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
     z-index: 2;
     
     // overflow: hidden;
