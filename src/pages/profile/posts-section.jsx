@@ -29,7 +29,7 @@ const PostsSection = ({ userId, isMe}) => {
 
     return (
         <div className='posts-section'>
-            {showFeedback && <Feedback message={'Something went wrong!'}/>}
+            {showFeedback && <Feedback message={error.message}/>}
             {showModal && <PostModal type='create' showModal={showModal} toggleShowModal={toggleShowModal}/>}
             <Subtitle>Posts</Subtitle>
             {isMe && 
