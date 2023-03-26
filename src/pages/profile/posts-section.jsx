@@ -30,7 +30,7 @@ const PostsSection = ({ userId, isMe}) => {
     return (
         <div className='posts-section'>
             {showFeedback && <Feedback message={'Something went wrong!'}/>}
-            {showModal && <PostModal showModal={showModal} toggleShowModal={toggleShowModal}/>}
+            {showModal && <PostModal type='create' showModal={showModal} toggleShowModal={toggleShowModal}/>}
             <Subtitle>Posts</Subtitle>
             {isMe && 
                 <FormButton onClick={onShowModal} disabled={loading==='pending'}>
