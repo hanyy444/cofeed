@@ -13,7 +13,7 @@ const PostsSection = ({ userId, isMe}) => {
     const [showModal, toggleShowModal] = useToggle(false)
     const [showFeedback, toggleShowFeedback] = useToggle(false)
     
-    const { data: post, loading, error } = useSelector(selectPost, shallowEqual)
+    const { loading, error } = useSelector(selectPost, shallowEqual)
 
     let timeout; 
     useEffect(()=>{
@@ -22,7 +22,7 @@ const PostsSection = ({ userId, isMe}) => {
             timeout = setTimeout(()=>toggleShowFeedback(false), 2000)
         }
         return () => clearTimeout(timeout)
-    }, [post])
+    }, [error])
 
 
     const onShowModal = useCallback(() => toggleShowModal(true), [])
@@ -30,7 +30,7 @@ const PostsSection = ({ userId, isMe}) => {
     return (
         <div className='posts-section'>
             {showFeedback && <Feedback message={'Something went wrong!'}/>}
-            {showModal && <PostModal post={post} type={modalType} showModal={showModal} toggleShowModal={toggleShowModal}/>}
+            {showModal && <PostModal showModal={showModal} toggleShowModal={toggleShowModal}/>}
             <Subtitle>Posts</Subtitle>
             {isMe && 
                 <FormButton onClick={onShowModal} disabled={loading==='pending'}>
