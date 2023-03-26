@@ -120,6 +120,8 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
         dispatch(action)
 
         toggleShowModal(false)
+
+        window.location.reload()
     }
 
     const onClickView = (event) => {

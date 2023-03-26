@@ -43,7 +43,7 @@ const postsSlice = createSlice({
 
         builder.addCase(post.fulfilled, (state, { payload }) => {
             state.posts.data.unshift(payload.post)
-            state.post.data = payload.post
+            // state.post.data = payload.post
             state.post.loading = payload.status
             state.post.error = null
         })
