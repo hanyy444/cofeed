@@ -121,7 +121,7 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
 
         toggleShowModal(false)
 
-        window.location.reload()
+        // window.location.reload()
     }
 
     const onClickView = (event) => {

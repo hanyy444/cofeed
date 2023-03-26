@@ -18,6 +18,7 @@ const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {
   const windowSize = useWindowSize()
+  
   return (
     <div className="app" style={{ maxHeight: windowSize.height, maxWidth: windowSize.width }}>
         <Suspense>
@@ -34,25 +35,25 @@ function App(props) {
             }
           </Routes>
           <WithAuthentication>
-              {<Sidebar/>}
-                <Routes>
-                  {
-                    ['/', '/home'].map((path, index) => (
-                      <Route 
-                        key={index}
-                        exact 
-                        path={path}
-                        element={<HomePage/>} 
-                      />
-                    ))
-                  }
-                  <Route path='/profile/:id'element={<ProfilePage/>}/>
-                  <Route path='/messages' element={<MessagesPage/>}/>
-                  <Route path='/saved' element={<SavedPostsPage/>}/>
-                  <Route path='/settings' element={<SettingsPage/>}/>
-                  <Route path='/explore' element={<Explore/>}/>
-                  <Route path="/state" element={<AppState/>} />
-                </Routes>
+              <Sidebar/>
+              <Routes>
+                {
+                  ['/', '/home'].map((path, index) => (
+                    <Route 
+                      key={index}
+                      exact 
+                      path={path}
+                      element={<HomePage/>} 
+                    />
+                  ))
+                }
+                <Route path='/profile/:id'element={<ProfilePage/>}/>
+                <Route path='/messages' element={<MessagesPage/>}/>
+                <Route path='/saved' element={<SavedPostsPage/>}/>
+                <Route path='/settings' element={<SettingsPage/>}/>
+                <Route path='/explore' element={<Explore/>}/>
+                <Route path="/state" element={<AppState/>} />
+              </Routes>
           </WithAuthentication>
         </Suspense>
     </div>
