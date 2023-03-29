@@ -113,10 +113,15 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
             token, 
             data,
             path: currentPost?._id,
-            headers: { "Content-Type":"multipart/form-data" }
+            headers: {  
+                "Content-Type": image.file ? 
+                    "multipart/form-data" :
+                    "application/json"
+            }
         }
 
         const action = type === 'create' ? postApi.post(actionParams) : postApi.patch(actionParams)
+
         dispatch(action)
 
         toggleShowModal(false)

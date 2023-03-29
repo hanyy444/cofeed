@@ -4,7 +4,7 @@ import './profile.page.scss'
 import { useParams } from 'react-router-dom'
 
 // API
-import { selectUser, userApi } from 'redux/slices/users.slice'
+import { selectFriends, selectUser, userApi } from 'redux/slices/users.slice'
 
 
 import WithStateHandler from 'utils/withStateHandler'
@@ -18,11 +18,14 @@ import useData from 'hooks/useData'
 import { shallowEqual, useSelector } from 'react-redux'
 import { selectAuth } from 'redux/slices/auth.slice'
 import PostsSection from './posts-section'
+import { selectPost } from 'redux/slices/posts.slice'
 
 const ProfilePage = (props) => {
     
     const { id: userId } = useParams()
     const { user: authUser } = useSelector(selectAuth, shallowEqual)
+    const { loading: newPostLoading } = useSelector(selectPost, shallowEqual)
+    const { loading: friendsLoading } = useSelector(selectFriends, shallowEqual)
     const isMe = userId === authUser?._id
     const {data: currentUser, loading, error} = useData({
         selector: selectUser,
@@ -32,7 +35,7 @@ const ProfilePage = (props) => {
                 path: userId || ''
             }
         },
-        extraDeps: [isMe]
+        extraDeps: [isMe, newPostLoading, friendsLoading]
     })
 
     return ( 

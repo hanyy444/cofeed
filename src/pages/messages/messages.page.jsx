@@ -1,5 +1,5 @@
 import './messages.page.scss'
-import React, { useCallback, useEffect } from 'react'
+import React, { lazy, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectAuth } from 'redux/slices/auth.slice'
 import { selectFriends } from 'redux/slices/users.slice'
@@ -8,8 +8,9 @@ import { clearChat, selectChat } from 'redux/slices/user-chats.slice'
 import useMediaQuery from 'hooks/useMediaQuery'
 
 import User from 'components/display/user/user.component'
-import MessagesList from './messages-list/messages-list.component'
-import MessagesForm from './messages-form/messages-form.component'
+
+const MessagesList = lazy(()=>import('./messages-list/messages-list.component'))
+const MessagesForm = lazy(()=>import('./messages-form/messages-form.component'))
 
 import userApi from 'api/user/user-api'
 import UserChatsList from './user-chats/user-chats.component'

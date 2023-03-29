@@ -1,13 +1,14 @@
 import Subtitle from 'components/typography/subtitle/subtitle.component'
 import MemoizedPosts from 'components/posts/posts.component'
 import FormButton from 'components/button/form-button/form-button.component'
-import PostModal from 'components/post-modal/post-modal.component'
 import Feedback from 'components/display/feedback/feedback.component'
 import useToggle from 'hooks/useToggle'
 import { shallowEqual, useSelector } from 'react-redux'
 import { selectPost } from 'redux/slices/posts.slice'
-import { useCallback, useEffect, useState } from 'react'
+import { lazy, useCallback, useEffect, useState } from 'react'
 import Spinner from 'components/display/spinner/spinner.component'
+
+const PostModal = lazy(()=>import('components/post-modal/post-modal.component'))
 
 const PostsSection = ({ userId, isMe }) => {
     const [showModal, toggleShowModal] = useToggle(false)
