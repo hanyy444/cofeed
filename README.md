@@ -15,7 +15,10 @@ Built with:
 
 A fully responsive social media web application that helps users post images, like and comment on others’ posts, send real-time messages and follow each other.
 
-    This project was developed solely for the purpose of learning, practicing and demonstrating my frontend development skills. It has no commercial use.
+    This project was developed solely for the purpose of learning, practicing and demonstrating my frontend development skills.
+    
+# Please note that if the app is taking too long to load data it's because the server is hosted on a free provider which shuts down the server when no requests are sent for a while. Please bare with it and refresh after some time. 
+
 
 # Features
 
