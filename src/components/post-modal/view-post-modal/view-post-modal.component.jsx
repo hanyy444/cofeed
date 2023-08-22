@@ -28,10 +28,11 @@ const ViewPostModal = ({ post, setModalType, isLiked, handleLike, isMine, isSave
                     <FaBookmark className={isSaved?'saved':''}/>
                 </IconButton>
             }
-            <img src={post.image.url} 
-                alt="Post image"
-                className="view-post-modal__img"
-            />
+            <div className="image-box">
+                <img src={post.image.url} 
+                    alt="Post image"
+                    />
+            </div>
             <User firstName={post.firstName}
                 lastName={post.lastName}
                 imageUrl={post.userImageUrl}

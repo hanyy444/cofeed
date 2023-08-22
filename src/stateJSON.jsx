@@ -8,7 +8,7 @@ const JSONData = () => {
     const style = {
         padding: '4rem',
         overflow: 'scroll',
-        width: '100vh',
+        width: '100vw',
         height: '100vh',
         gridColumn: '1/-1',
         fontSize: '1.5rem',

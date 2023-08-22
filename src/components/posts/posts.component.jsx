@@ -1,27 +1,47 @@
 import './posts.component.scss'
-import React from 'react'
+import { useMemo, memo } from 'react'
 
 import MemoizedPost from './post/post.component'
-import usePosts from 'hooks/usePosts'
 import WithStateHandler from 'utils/withStateHandler'
+import useQuery from 'hooks/useQuery'
+import postApi from 'api/post/post-api'
+import { query } from 'firebase/firestore'
+import { selectPostsStatus, selectPosts } from 'redux/slices/posts.slice'
+import { useSelector } from 'react-redux'
+import Spinner from 'components/display/spinner/spinner.component'
 
-
-const Posts = ({ category, userId = '', fallback = null }) => {
-    const categoryHttpPath = React.useMemo(() => {
-        if (category === 'user_posts') return `/${userId}/posts`
-        if (category === 'saved') return `/${userId}/savedPosts`
-        if (category === 'liked') return `/${userId}/likedPosts`
-        return `${category === 'all' ? '' : category}`
+const Posts = ({ category, userId = '' }) => {
+    const categoryHttpPath = useMemo(() => {
+        if (category === 'all') return ''
+        if (category === 'user_posts') return `${userId}/posts`
+        if (category === 'saved') return `${userId}/savedPosts`
+        if (category === 'liked') return `${userId}/likedPosts`
+        return category
     }, [category]) 
-    
-    const [ posts, _, loading, error ] = usePosts({ path: `${categoryHttpPath}` })
 
-    return <div className= "posts" data-testid="posts">
-        <WithStateHandler data={posts} loading={loading} error={error} 
-            fallback={fallback}>
-            {posts.map(post => <MemoizedPost key={post?._id} post={post}  /> )}
-        </WithStateHandler> 
-    </div>
+    const postsStatus = useSelector(selectPostsStatus)
+    
+    const posts = useQuery({
+        selector: selectPosts,
+        thunk: { action: postApi.getAll, params: { path: `${categoryHttpPath}` } },
+        extraDeps: [categoryHttpPath]
+    })
+    
+    const renderedPosts = posts.map(post => <MemoizedPost key={post?._id} post={post} /> )
+
+    let content; 
+
+    if (postsStatus === 'pending') {
+        content = <Spinner />
+    } else {
+        content = renderedPosts
+    }
+
+    return (
+        <ul className= "posts" data-testid="posts">
+            {content}
+        </ul>
+    )
 }
 
-export default React.memo(Posts);
+export default memo(Posts);

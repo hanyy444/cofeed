@@ -4,36 +4,28 @@
     padding: 4rem;
     min-width: 35rem;
     grid-template-columns: min-content !important;
+
     .extras {
         @include flexBetween;
         gap: .5rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .forgot-password__switcher {
-        cursor: pointer;
         color: $primary;
+        font-size: 1rem;
         font-weight: 500;
-        font-size: clamp(.6rem, 1.6vh, .9rem);
-
-        &:hover {
-            color: $primary-dark;
+        .keep-logged-in {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: .4rem;
+            
+            input { cursor: pointer; accent-color: $primary; }
+        }
+        
+        .forgot-password__switcher {
+            &:hover { color: $primary-dark; }
         }
     }
     
-    .keep-logged-in {
-        color: $primary;
-        font-weight: 500;
-        font-size: clamp(.6rem, 1.6vh, .9rem);
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: .4rem;
-
-        input {
-            accent-color: $primary;
-        }
-    }
+    
 }
 
 .social-media {
@@ -43,19 +35,15 @@
 
     svg {
         cursor: pointer;
-        width: clamp(2rem, 2rem, 2.5rem);
-        height: clamp(2rem, 2rem, 2.5rem);
+        width: 2rem;
+        height: 2rem;
         border-radius: 50%;
         transform: translate(0);
         transition: all .2s;
 
 
-        &:hover {
-            transform: translateY(-3px) scale(1.1);
-        }
+        &:hover { transform: translateY(-3px) scale(1.1); }
 
-        &:active {
-            transform: translateY(0);
-        }
+        &:active {  transform: translateY(0); }
     }
 }

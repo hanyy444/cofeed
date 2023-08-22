@@ -2,15 +2,15 @@ import React from 'react';
 import User from 'components/display/user/user.component';
 import './comments.component.scss'
 
-const Comments = ({ comments, onClickUser }) => {
+const Comments = ({ comments = [], onClickUser }) => {
     return ( 
         <ul className="comments">
             {
-                comments?.map((comment, idx) => (
+                comments.map((comment, idx) => (
                     <li key={`comment-${idx}`} className="comment">
                         <User 
-                            imageHeight='35px' 
-                            imageWidth='35px' 
+                            imageHeight='30px' 
+                            imageWidth='30px' 
                             imageUrl={comment.userImageUrl} 
                             onClick={onClickUser}
                             {...comment}

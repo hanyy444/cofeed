@@ -1,9 +1,15 @@
 import './dropdown.component.scss'
-import useToggle from '../../../../hooks/useToggle';
+import useToggle from 'hooks/useToggle';
 
 const Dropdown = ({imageUrl, navItems}) => {
     
     const [showDropDown, toggleDropdown] = useToggle(false)
+
+    const renderedNavList = navItems.map(({handler, text}) => (
+        <li key={`nav-dropdown-item-${text}`} onClick={handler}>
+            {text}
+        </li>
+    ))
 
     return (
         <div className="dropdown" data-testid="dropdown">
@@ -16,14 +22,7 @@ const Dropdown = ({imageUrl, navItems}) => {
                 onClick={toggleDropdown} 
             />
                 {showDropDown && <ul className="dropdown__list">
-                    {navItems.map(({handler, text}) => (
-                        <li 
-                            key={`nav-dropdown-item-${text}`} 
-                            onClick={handler}
-                        >
-                            {text}
-                        </li>
-                    ))}
+                    {renderedNavList}
                 </ul>}
         </div>
     );

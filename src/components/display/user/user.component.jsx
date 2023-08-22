@@ -1,5 +1,4 @@
 import './user.component.scss'
-import Paragraph from 'components/typography/paragraph/paragraph.component';
 import HeadingTwo from 'components/typography/heading/heading-2/heading-2.component';
 
 const User = ({ imageUrl, 
@@ -12,14 +11,14 @@ const User = ({ imageUrl,
 }) => ( 
     <a className= {`user ${extraClasses}`} data-testid="user" onClick={onClick}>
         <img 
-            className="user-img" 
+            className="user-img"
+            alt="user-image" 
             src={imageUrl}
             width={imageWidth}
             height={imageHeight}
         />
         <div className="user-info">
             <HeadingTwo>{`${firstName} ${lastName}`}</HeadingTwo>
-            {/* <p className='nickname'>@nickname</p> */}
         </div>
     </a>
 )

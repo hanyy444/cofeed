@@ -2,10 +2,13 @@
 
 .messages {
     @include page;
-
+    
+    height: 100%;
     display: grid;
     grid-template-columns: [friends-start] minmax(15rem, 20rem) [friends-end messages-start] 1fr [messages-end];
     grid-template-rows: 1fr min-content;
+    // align-items: center;
+    justify-content: center;
 
     @include respond(phone) {
         grid-template-columns: 1fr;

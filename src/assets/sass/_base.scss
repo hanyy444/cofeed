@@ -8,17 +8,21 @@
     margin: 0;
     padding: 0;
     box-sizing: inherit;
-    user-select: none;
-    -webkit-user-select: none;
-    
+}
+
+#root,
+html,
+body{
+    height: 100%;
+    width: 100%;
 }
 
 
 html {
     font-size: 62.5%;
     box-sizing: border-box;
-    @include scroll;
     // overflow: hidden;
+    @include scroll;
     @include respond(phone){
         font-size: 50%;
     }
@@ -31,22 +35,12 @@ body {
 }
 
 ol,
-ul {
-    list-style: none;
-}
+ul { list-style: none; }
 
-span, p {
-    user-select: none;
-    pointer-events: none;
-    cursor: default;
-}
+a { cursor: pointer; text-decoration: none; }
 
-a {
-    text-decoration: none;
-    cursor: pointer;
-}
-
-button{
-    all:unset;
-    cursor: pointer;
+button { 
+    all: unset; 
+    cursor: pointer; 
+    text-align: center;
 }

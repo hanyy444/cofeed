@@ -1,20 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit"
-
 import { createBuilderCases } from '../helper'
-
-import { objectDataState, arrayDataState } from "../helper"
-
 import postApi from "api/post/post-api"
 
 const SLICE_NAME = postApi.resource
 
-export const selectPosts = state => state.posts.posts
-export const selectPost = state => state.posts.post
+export const selectPosts = state => state.posts.posts.data
+export const selectPostsError = state => state.posts.posts.error
 export const selectPostsCount = state => state.posts.posts.count
+export const selectPostsStatus = state => state.posts.posts.status
+export const selectPostsPage = state => state.posts.posts.page
+
+export const selectPost = state => state.posts.post.data
+export const selectPostStatus = state => state.posts.post.status
+export const selectPostError = state => state.posts.post.error
 
 const initialState = {
-    posts: arrayDataState(),
-    post: objectDataState(),
+    posts: {
+        data: [],
+        count: 0,
+        page: 0,
+        status: 'idle', // 'idle' | 'loading' | 'sucess' | 'failure',
+        error: null
+    },
+    post: {
+        data: {},
+        status: 'idle',
+        error: null
+    },
 }
 
 const postsSlice = createSlice({
@@ -36,15 +48,16 @@ const postsSlice = createSlice({
     },
     extraReducers: (builder) => {
 
+        // REFACTOR: builder class for crud operations
         const { getAll, getSingle, post, put, patch, likePost, addComment } = postApi
 
+        // Application??
         createBuilderCases({ builder, thunk: getAll, stateProp: 'posts', payloadProp: 'posts' })
         createBuilderCases({ builder, thunk: post, stateProp: 'post' })
 
         builder.addCase(post.fulfilled, (state, { payload }) => {
             state.posts.data.unshift(payload.post)
-            // state.post.data = payload.post
-            state.post.loading = payload.status
+            state.post.status = payload.status
             state.post.error = null
         })
 
@@ -52,6 +65,7 @@ const postsSlice = createSlice({
         createBuilderCases({ builder, thunk: put, stateProp: 'post', payloadProp: 'post' })
         createBuilderCases({ builder, thunk: patch, stateProp: 'post', payloadProp: 'post' })
 
+        // Business??
         builder.addCase(likePost.fulfilled, (state, { payload }) => {
             state.posts.data =
                 state.posts.data.map(post => {

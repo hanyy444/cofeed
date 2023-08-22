@@ -1,26 +1,23 @@
 export const createBuilderCases = ({ builder, thunk, stateProp, payloadProp }) => {
     if (!stateProp) return;
 
-    builder.addCase(thunk.pending, (state) => {
-        state[stateProp] = {
-            ...state[stateProp],
-            loading: 'pending'
-        }
-    })
-    payloadProp && (builder.addCase(thunk.fulfilled, (state, { payload }) => {
+    builder.addCase(thunk.pending, (state) => { state[stateProp].status = 'pending' })
+
+    payloadProp && builder.addCase(thunk.fulfilled, (state, { payload }) => {
         state[stateProp] = {
             ...state[stateProp],
             error: null,
             data: payload[payloadProp],
-            loading: payload.status,
+            status: 'idle',
             count: payload.count,
             page: payload.page
         }
-    }))
+    })
+
     builder.addCase(thunk.rejected, (state, action) => {
         state[stateProp] = {
             ...state[stateProp],
-            loading: 'failure',
+            status: 'failure',
             error: {
                 message: action.payload?.message,
                 status: action.payload?.status

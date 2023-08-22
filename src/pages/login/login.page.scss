@@ -1,7 +1,6 @@
 .login {
-    // background: linear-gradient(90deg, $primary-light 0%, $grey-light-blue 100%);
-    // background: rgb(231, 245, 251);
-    // background: radial-gradient(circle, $grey-light-blue 0%, $primary 50%);
+
+    height: 100%;
     background: rgb(231, 245, 251);
     background: radial-gradient(circle, rgba(231, 245, 251, 1) 2%, rgba(32, 42, 72, 1) 7%, rgba(166, 86, 225, 1) 100%);
 
@@ -33,10 +32,9 @@
         p { font-size: clamp(1.3rem, 1.3rem, 2rem); }
         
         a {
+            cursor: pointer;
             color: $primary;
-            &:hover{
-                color: $primary-dark
-            }
+            &:hover{ color: $primary-dark }
         }
     }
 }

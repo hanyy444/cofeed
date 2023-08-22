@@ -1,10 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { createNewChat } from 'api/user-chats/user-chats-api'
-import { arrayDataState, objectDataState } from "../helper"
 
 const initialState = {
-    chats: arrayDataState(),
-    chat: objectDataState()
+    chats: {
+        data: [],
+        count: 0,
+        page: 0,
+        status: 'idle', // 'idle' | 'loading' | 'sucess' | 'failure',
+        error: null
+    },
+    chat: {
+        data: {},
+        status: 'idle',
+        error: null
+    }
 }
 
 export const selectUserChats = state => state.userChats.chats
@@ -15,9 +24,7 @@ const userChatsSlice = createSlice({
     initialState,
     reducers: {
         clearChat: (state) => {
-            state.chat = {
-                ...initialState.chat
-            }
+            state.chat = initialState.chat
         },
         setChat: (state, { payload }) => {
             const { chatId, lastMessage, recieverId } = payload

@@ -4,14 +4,14 @@ import { useState, useCallback, useEffect, useMemo  } from 'react';
 import Subtitle from 'components/typography/subtitle/subtitle.component';
 import MenuItem from './menu-item/menu-item.component';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectAuth } from 'redux/slices/auth.slice';
+import { selectAuthUser } from 'redux/slices/auth.slice';
 import { FaHouseUser, FaCommentDots, FaUser, FaBookmark, FaCog, FaSearch } from 'react-icons/fa'
 
 const Menu = ({ isPhone }) => {
     const navigate = useNavigate()
     const { pathname } = useLocation()
 
-    const { user: { _id: authUserId } } = useSelector(selectAuth, shallowEqual)
+    const { _id: authUserId } = useSelector(selectAuthUser, shallowEqual)
 
     const menuItems = useMemo(()=>[
         { Icon: FaHouseUser, text: 'home', link: '/home' },

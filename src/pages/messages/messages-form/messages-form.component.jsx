@@ -1,5 +1,5 @@
-import React from 'react';
 import './messages-form.component.scss'
+import { useState, useCallback } from 'react';
 
 import FormButton from 'components/button/form-button/form-button.component';
 import Form from 'components/display/form/form.component';
@@ -15,18 +15,20 @@ import { selectChat } from 'redux/slices/user-chats.slice';
 const MessagesForm = ({ sender }) => {
     const dispatch = useDispatch()
 
-    const [loading, setLoading] = React.useState(false)
-    const [text, setText] = React.useState('')
-    const changeText = React.useCallback((e)=>{
+    const [loading, setLoading] = useState(false)
+    const [text, setText] = useState('')
+    const changeText = useCallback((e)=>{
         setText(e.target.value)
     },[])
 
     const {data: currentChat} = useSelector(selectChat)
     
-    const sendMessage = React.useCallback(async (e) => {
+    const sendMessage = useCallback(async (e) => {
         // setLoading(true)
         e.preventDefault()
+
         if (text.trim() === '') return
+
         setText('')
         if(!currentChat?.chatId){
             dispatch(createNewChat({

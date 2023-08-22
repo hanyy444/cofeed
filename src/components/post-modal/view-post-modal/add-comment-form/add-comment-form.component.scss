@@ -1,13 +1,15 @@
 .add-comment-form {
+
     grid-column: 2/3;
-    grid-row: 3/-1;
+    grid-row: 3/4;
+    // max-width: 100%;
     @include respond(phone) {
         grid-column: 1/-1;
         grid-row: add-comment-start/add-comment-end;
     }
+
     .form-group{
-        // background-color: $grey-light-blue;
-        // margin: 1rem;
+        // width: 100%;
         outline: none;
         input{
             width: 100%;

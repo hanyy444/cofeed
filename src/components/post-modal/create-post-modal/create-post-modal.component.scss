@@ -8,32 +8,25 @@
     position: relative;
     z-index: 104;
     
-    padding: 8rem;
-
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 4rem;
 
-    height: 100%;
-
     .description__input{
         width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        resize: none;
         padding: 2rem;
     }
 
-    img{
+    img {
         width: 15rem;
         height: 15rem;
     }
     
-    .form-group{
-        grid-column: 1 / -1;
-    }
-
-    .form{
-        gap: 2rem;
-        // grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-    }
-
+    .form-group{ grid-column: 1 / -1;}
 }

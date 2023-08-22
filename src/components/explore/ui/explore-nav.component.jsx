@@ -37,7 +37,7 @@ const ExploreNav = ({ currentUserId,
     const onSearchChange = useCallback((e)=>{
         const value = e.target.value
         setSearchQuery(value)
-        toggleSearchWrapper(!(value.trim()===''))
+        toggleSearchWrapper(!!(value.trim()))
     }, [setSearchQuery, toggleSearchWrapper])
 
     return (
@@ -48,10 +48,7 @@ const ExploreNav = ({ currentUserId,
                 onChange={onSearchChange}
             />
             {/* <Notifications /> */}
-            <Dropdown 
-                imageUrl={imageUrl}
-                navItems={navItems}
-            />
+            <Dropdown  imageUrl={imageUrl} navItems={navItems}/>
         </div>
     )
 }

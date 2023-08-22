@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk, createDraftSafeSelector } from "@reduxjs/toolkit"
 import { userApi } from "./users.slice"
 import { postApi } from "./posts.slice"
-import { objectDataState } from "../helper"
+import { createBuilderCases, objectDataState } from "../helper"
 
 const initialState = {
     token: null,
-    user: objectDataState()
+    user: {
+        data: {},
+        status: 'idle',
+        error: null
+    }
 }
 
 // export const selectAuth = createDraftSafeSelector(state => state, state => ({
@@ -13,10 +17,13 @@ const initialState = {
 //     user: state.auth.user?.data
 // }))
 
-export const selectAuth = state => ({
-    token: state.auth.token,
-    user: state.auth.user?.data
-})
+// export const selectAuth = state => ({
+//     token: state.auth.token,
+//     user: state.auth.user?.data
+// })
+
+export const selectAuthToken = state => state.auth.token
+export const selectAuthUser = state => state.auth.user.data
 
 export const logout = createAsyncThunk(
     "auth/logout",
@@ -58,11 +65,9 @@ const authSlice = createSlice({
         // })
 
         builder.addCase(postApi.savePost.fulfilled, (state, { payload }) => {
-            state.user = {
-                ...state.user,
-                data: payload.user,
-            }
+            state.user.data = payload.user
         })
+
     }
 })
 

@@ -1,50 +1,57 @@
 import './forgot-password.component.scss'
+import { useCallback, useEffect } from 'react'
 import useAxiosFunction from "hooks/useAxiosFunction"
 import axiosInstance from "api/axios-instance"
 import WithStateHandler from "utils/withStateHandler"
-import FormButton from "components/button/form-button/form-button.component"
+import Button from 'components/button'
+import ErrorMessage from '../error-message'
+import toast, { Toaster } from 'react-hot-toast';
 
 const ForgotPassword = ({ email, setActive }) => {
 
-    const [data, loading, error, submitAxios] = useAxiosFunction()
+    const { data, loading, error, axiosFetch: submitAxios } = useAxiosFunction()
     
-    const submit = async () => {
+    const forgetPassword = useCallback(async () => {
         await submitAxios({
             axiosInstance,
             method: 'post',
             url: 'users/forgotPassword',
-            requestConfig: {
-                data: { email }
-            }
+            requestConfig: { data: { email } }
         })
-    }
+    }, [email])
     const cancel = () => setActive('login')
     const reset = () => setActive('reset')
 
-    return (
-        <div className="forgot-password">
-            <WithStateHandler 
-                data={data} 
-                loading={loading ? 'pending' : 'success'} 
-                error={error || (!email && (new Error('Please provide email address.')))}
-                fallback = {
-                    <>
-                        <p className='forgot-password__message'>
-                            Are you sure you want to send reset token to this email?
-                            <span>{email}</span>
-                        </p>
-                        <div className="forgot-password__options">
-                            <FormButton type="button" onClick={cancel}>Cancel</FormButton>
-                            <FormButton type="submit" onClick={submit}>Confirm</FormButton>
-                        </div>
-                    </>
-                }
-            >
+    let content;
+    if (!data) {
+        content = (
+            <>
+                <p className='forgot-password__message'>
+                    Are you sure you want to send reset token to this email?
+                    <span>{email}</span>
+                </p>
+                <ErrorMessage error={error}/>
+                <div className="forgot-password__options">
+                    <Button type="button" onClick={cancel}>Cancel</Button>
+                    <Button type="submit" onClick={forgetPassword}>Confirm</Button>
+                </div>
+            </>
+        )
+    } else { 
+        content = (
+            <>
                 <p className='forgot-password__message'>
                     { data?.message }
                 </p>
-                <FormButton type="button" onClick={reset}>Reset</FormButton>
-            </WithStateHandler>
+                <ErrorMessage error={error}/>
+                <Button type="button" onClick={reset}>Reset</Button>
+            </>
+        )   
+    }
+
+    return (
+        <div className="forgot-password">
+            {content}
         </div>
     )
 }

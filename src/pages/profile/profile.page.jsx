@@ -1,52 +1,41 @@
-import React from 'react'
 import './profile.page.scss'
 
 import { useParams } from 'react-router-dom'
-
-// API
+import { shallowEqual, useSelector } from 'react-redux'
+import { selectAuthUser } from 'redux/slices/auth.slice'
+import { selectPost, selectPostStatus } from 'redux/slices/posts.slice'
 import { selectFriends, selectUser, userApi } from 'redux/slices/users.slice'
-
-
-import WithStateHandler from 'utils/withStateHandler'
-
 
 import Divider from 'components/display/divider/divider.component'
 import User from 'components/display/user/user.component'
 import FollowButton from 'components/button/follow-button/follow-button.component'
 import UserDetails from './user-details/user-details.component'
-import useData from 'hooks/useData'
-import { shallowEqual, useSelector } from 'react-redux'
-import { selectAuth } from 'redux/slices/auth.slice'
 import PostsSection from './posts-section'
-import { selectPost } from 'redux/slices/posts.slice'
+
+import useQuery from 'hooks/useQuery'
+import WithStateHandler from 'utils/withStateHandler'
 
 const ProfilePage = (props) => {
     
     const { id: userId } = useParams()
-    const { user: authUser } = useSelector(selectAuth, shallowEqual)
-    const { loading: newPostLoading } = useSelector(selectPost, shallowEqual)
-    const { loading: friendsLoading } = useSelector(selectFriends, shallowEqual)
+    const authUser = useSelector(selectAuthUser)
     const isMe = userId === authUser?._id
-    const {data: currentUser, loading, error} = useData({
+    const newPostStatus = useSelector(selectPostStatus)
+    const friendsStatus = useSelector(selectFriends)
+    const currentUser = useQuery({
         selector: selectUser,
-        thunk: {
-            action: userApi.getSingle,
-            params: {
-                path: userId || ''
-            }
-        },
-        extraDeps: [isMe, newPostLoading, friendsLoading]
+        thunk: { action: userApi.getSingle, params: { path: userId || '' } },
+        extraDeps: [isMe, friendsStatus]
     })
-
     return ( 
         <div className="profile" data-testid="profile">
-            <WithStateHandler data={currentUser} loading={loading} error={error}>
-                <User imageWidth="90px" imageHeight="90px" imageUrl={currentUser?.image.url} {...currentUser} />
+            {/* <WithStateHandler data={currentUser} loading={loading} error={error}> */}
+                <User imageWidth="90px" imageHeight="90px" imageUrl={currentUser?.image?.url} {...currentUser} />
                 {!isMe && <FollowButton userId={userId}/>}
                 <UserDetails {...currentUser} />
                 <Divider/>
                 <PostsSection userId={userId} isMe={isMe} />
-            </WithStateHandler>
+            {/* </WithStateHandler> */}
         </div>
     )
 }

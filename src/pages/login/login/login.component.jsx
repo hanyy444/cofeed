@@ -1,16 +1,21 @@
 import './login.component.scss'
-import React from 'react'
-import Form from 'components/display/form/form.component'
-import FormButton from 'components/button/form-button/form-button.component'
-import FormGroup from 'components/display/form/form-group/form-group.component'
-import { FaUser, FaLock, FaFacebook, FaGoogle} from 'react-icons/fa'
+import { useCallback, useState } from 'react'
+
 import axiosInstance from 'api/axios-instance'
 import userApi from 'api/user/user-api'
-import { Field, Formik } from 'formik'
-import * as yup from 'yup'
-import WithStateHandler from 'utils/withStateHandler'
+
+import Form from 'components/display/form/form.component'
+import Button from 'components/button'
+import FormGroup from 'components/display/form/form-group/form-group.component'
+
+import { FaUser, FaLock, FaFacebook, FaGoogle} from 'react-icons/fa'
+
 import useLogin from '../useLogin'
 import ErrorMessage from '../error-message'
+import WithStateHandler from 'utils/withStateHandler'
+
+import { Field, Formik } from 'formik'
+import * as yup from 'yup'
 
 const initialState = {
     email: '',
@@ -25,9 +30,11 @@ const validationSchema = yup.object().shape({
 
 const Login = ({ setActive, setEmail }) => {
 
-    const {loading, error, submitAxios} = useLogin()
+    const { loading, error: loginError, submitAxios, controller } = useLogin()
 
-    const signInWithGoogle = React.useCallback(async ()=>{
+    const [error, setError] = useState(loginError)
+
+    const signInWithGoogle = useCallback(async ()=>{
         try {
             const user = await userApi.signInWithGoogle()
             await submitAxios({
@@ -45,29 +52,33 @@ const Login = ({ setActive, setEmail }) => {
         }
     },[])
 
-    const submit = async ({ email, password, keepMeLoggedIn }) => {         
+    const loginUser = useCallback(async ({ email, password, keepMeLoggedIn }) => {         
         await submitAxios({
             axiosInstance,
             method: 'post',
             url: 'users/login',
-            requestConfig: {
-                data: {
-                    email,
-                    password,
-                    keepMeLoggedIn
-                }
-            }
+            requestConfig: { data: { email, password, keepMeLoggedIn } }
         })
+    }, [submitAxios]);
 
-    }
+    // console.log(error)
+    const forgetPassword = useCallback((email) => {
+        if (!email) { 
+            setError('Please provide email address.')
+            return;
+        } else {
+            setActive('forgot');
+            setEmail(email);
+        }
+    })
 
     return (
         <WithStateHandler
             data={[initialState]}
             loading={loading?'pending':''}
-        >
+        >   
             <Formik 
-                onSubmit={submit}
+                onSubmit={loginUser}
                 initialValues={initialState}
                 validationSchema={validationSchema}
             >
@@ -79,8 +90,8 @@ const Login = ({ setActive, setEmail }) => {
                     handleSubmit
                 }) => (
                     <>
-                        <Form onSubmit={ handleSubmit } classes="login-form">
-                            <FormGroup error={touched.email && (errors.email)}>
+                        <Form onSubmit={handleSubmit} classes="login-form">
+                            <FormGroup error={touched.email && errors.email}>
                                 <FaUser/>
                                 <input 
                                     type="text" 
@@ -90,7 +101,7 @@ const Login = ({ setActive, setEmail }) => {
                                     placeholder="Email"
                                     />
                             </FormGroup>
-                            <FormGroup error={touched.password && (errors.password)}>
+                            <FormGroup error={touched.password && errors.password}>
                                 <FaLock/>
                                 <input 
                                     type="password" 
@@ -102,32 +113,26 @@ const Login = ({ setActive, setEmail }) => {
                             </FormGroup>
                             <div className="extras">
                                 <div className="keep-logged-in">
-                                    <Field 
-                                        type="checkbox" 
-                                        name="keepMeLoggedIn" 
-                                    />
+                                    <Field type="checkbox" name="keepMeLoggedIn" />
                                     <span>Remember Me</span>
                                 </div>
                                 <button 
                                     type='button' 
                                     className="forgot-password__switcher" 
-                                    onClick={() => {
-                                        setActive('forgot')
-                                        setEmail(values.email)
-                                    }}
+                                    onClick={() => forgetPassword(values.email)}
                                 >
                                     Forgot Password?
                                 </button>
                             </div>
-                            <ErrorMessage error={error} />
-                            <FormButton type="submit">Login</FormButton>
+                            <ErrorMessage errorMessage={loginError?.message || error} />
+                            <Button type="submit">Login</Button>
                         </Form>
                         {/* <span>OR</span>
                         <div className="social-media">
                             <FaFacebook onClick={()=>alert('Sign in with facebook')}/>
                             <FaGoogle onClick={signInWithGoogle}/>
                         </div> */}
-                        <p>Don't have an account? <a onClick={()=>setActive('signUp')}>Sign up</a></p>
+                        <p>Don't have an account? <a onClick={() => setActive('signUp')}>Sign up</a></p>
                     </>
                 )}
             </Formik>

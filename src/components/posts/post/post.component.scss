@@ -1,5 +1,4 @@
 // @use "assets/sass/style";
-
 .post {
     max-width: 40rem;
 
@@ -46,12 +45,6 @@
         }
     }
 
-    &__likes{
-        svg{
-            &:hover, &.liked{
-                color: #fd1d60;
-            }
-        }
-    }
+    &__likes{ svg { &:hover, &.liked{ color: #fd1d60; } } }
     
 }

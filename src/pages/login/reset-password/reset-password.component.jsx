@@ -1,16 +1,15 @@
 import './reset-password.component.scss'
-import { FaLock,} from 'react-icons/fa'
+import axiosInstance from 'api/axios-instance'
 import Form from 'components/display/form/form.component'
 import FormGroup from 'components/display/form/form-group/form-group.component'
-import FormButton from 'components/button/form-button/form-button.component'
-import { Formik } from 'formik'
-import * as yup from 'yup'
 import useAxiosFunction from 'hooks/useAxiosFunction'
 import WithStateHandler from 'utils/withStateHandler'
-import axiosInstance from 'api/axios-instance'
-import { useEffect } from 'react'
 import ErrorMessage from '../error-message'
 import SuccessMessage from '../success-message'
+import Button from 'components/button'
+import { FaLock} from 'react-icons/fa'
+import { Formik } from 'formik'
+import * as yup from 'yup'
 
 const initialState = {
     resetToken: '',
@@ -103,13 +102,13 @@ const ResetPassword = ({ setActive }) => {
                                 </FormGroup>
                                 <ErrorMessage error={error}/>
                                 <div className="controls">
-                                    <FormButton type="button" onClick={()=>setActive('login')}>Cancel</FormButton>
-                                    <FormButton type="submit" disabled={loading === 'pending'}>Change Password</FormButton>
+                                    <Button type="button" onClick={() => setActive('login')}>Cancel</Button>
+                                    <Button type="submit" disabled={loading === 'pending'}>Change Password</Button>
                                 </div>
                             </Form> : (
                                 <div className='reset-password'>
                                     <SuccessMessage message={'Password has been changed successfully.'} />
-                                    <FormButton type="button" onClick={()=>setActive('login')}>Please login</FormButton>
+                                    <Button type="button" onClick={() => setActive('login')}>Please login</Button>
                                 </div>
                             )
                         }

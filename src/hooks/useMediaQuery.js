@@ -2,17 +2,8 @@ import { useEffect, useState } from "react";
 import useEventListener from "./useEventListener";
 
 function useMediaQuery(mediaQuery) {
-    const [isMatch, setIsMatch] = useState(false)
-    const [mediaQueryList, setMediaQueryList] = useState(null)
-
-    useEffect(() => {
-        const list = window.matchMedia(mediaQuery)
-        setMediaQueryList(list)
-        setIsMatch(list.matches)
-    }, [mediaQuery])
-
-    useEventListener('change', e => setIsMatch(e.matches), mediaQueryList)
-
+    const [isMatch, setIsMatch] = useState(window.matchMedia(mediaQuery).matches)
+    useEventListener('change', e => setIsMatch(e.matches), window.matchMedia(mediaQuery))
     return isMatch
 }
 

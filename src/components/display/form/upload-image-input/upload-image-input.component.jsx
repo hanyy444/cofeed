@@ -7,7 +7,7 @@ const UploadImageInput = ({ image, imageError, handleChange}) => (
         <label htmlFor="image" className='upload-image-label'>
             <FaUpload/> { image ? image.name : 'Upload Image' }
         </label>
-        { image && <img src={image.url} className='upload-img'/> }
+        { image && <img src={image.url} alt="uploaded-profile-image" className='upload-img'/> }
         <input 
             id="image" 
             data-testid="image-input"

@@ -1,7 +1,7 @@
-import React from "react"
+import { useCallback, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
-import { selectAuth } from "redux/slices/auth.slice"
+import { selectAuthUser, selectAuthToken } from "redux/slices/auth.slice"
 import postApi from "api/post/post-api"
 
 
@@ -12,24 +12,22 @@ const usePost = ({ postId, postUserId, likes = {} }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { token, user: { _id: authUserId, savedPosts } } = useSelector(selectAuth, shallowEqual)
+    const token = useSelector(selectAuthToken)
+    const { _id: authUserId, savedPosts } = useSelector(selectAuthUser)
 
     // PROPS
     const isMine = authUserId === postUserId
-    const isLiked = Object.keys(likes).includes(authUserId)
-    const isSaved = React.useMemo(() => savedPosts.includes(postId), [postId])
+    const isLiked = Object.keys(likes || {}).includes(authUserId)
+    const isSaved = useMemo(() => savedPosts.includes(postId), [postId])
 
     // METHODS
-    const handleLike = React.useCallback(() => {
+    const handleLike = useCallback(() => {
         dispatch(postApi.likePost({ token, path: `${postId}/like` }))
     }, [postId])
-    const onClickUser = React.useCallback(() => navigate(`/profile/${postUserId}`), [postUserId])
-    const onClickSave = React.useCallback((event) => {
+    const onClickUser = useCallback(() => navigate(`/profile/${postUserId}`), [postUserId])
+    const onClickSave = useCallback((event) => {
         event.stopPropagation()
-        dispatch(postApi.savePost({
-            token,
-            path: `${postId}/save`
-        }))
+        dispatch(postApi.savePost({ token, path: `${postId}/save` }))
     }, [postId])
 
     return {

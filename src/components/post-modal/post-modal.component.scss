@@ -1,6 +1,14 @@
 .post-modal {
-    width: 80vw;
-    height: 70vh;
+    height: 50rem;
+    width: 75rem;
+    @include respond(phone){ 
+        width: 90%; 
+        &:has(.view-post-modal) {
+            height: 75%; 
+        }
+    }
+    
+    @include scroll;   
 
     position: fixed;
     top: 50%;

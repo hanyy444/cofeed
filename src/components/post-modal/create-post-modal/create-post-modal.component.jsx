@@ -1,22 +1,18 @@
 import './create-post-modal.component.scss'
-
-// REACT HOOKS
-import {  useState} from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { selectAuthToken } from 'redux/slices/auth.slice'
 
+import postApi from 'api/post/post-api'
 
-// COMPONENTS
-import FormButton from 'components/button/form-button/form-button.component'
 import UploadImageInput from 'components/display/form/upload-image-input/upload-image-input.component'
 import FormGroup from 'components/display/form/form-group/form-group.component'
 import Form from 'components/display/form/form.component'
-import HeadingFour from 'components/typography/heading/heading-4.component'
-
-// API
-import postApi from 'api/post/post-api'
-import { selectAuth } from 'redux/slices/auth.slice'
-import { FaEye } from 'react-icons/fa'
+import HeadingFour from 'components/typography/heading/heading-4/heading-4.component'
 import IconButton from 'components/post-modal/icon-button/icon-button.component'
+import Button from 'components/button'
+
+import { FaEye } from 'react-icons/fa'
 
 const initialState = {
     description: '',
@@ -49,16 +45,16 @@ const getTypeInfo = (type) => {
 
 const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) => {
     const dispatch = useDispatch()
-
-    const { token } = useSelector(selectAuth)
+    const token = useSelector(selectAuthToken)
     
     const [currentPost, setCurrentPost] = useState(
-        post 
-            ? { 
-                ...post, 
-                image: { name: post.image.originalName, url: post.image.url } 
+        post ? { 
+            ...post, 
+            image: { 
+                name: post.image.originalName, 
+                url: post.image.url 
             } 
-            : initialState
+        } : initialState
     )
     const [errors, setErrors] = useState({})
 
@@ -138,21 +134,20 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
         <div className= "create-post-modal" data-testid="create-post-modal" aria-label='create post modal'>
             {
                 type === 'edit' && 
-                <IconButton 
-                    title="View Post"
-                    onClick={onClickView}>
+                <IconButton title="View Post" onClick={onClickView}>
                     <FaEye/>
                 </IconButton>
             }
             <HeadingFour>{getTypeInfo(type).heading}</HeadingFour>
             <Form onSubmit={submitPost}>
                 <FormGroup>
-                    <input 
+                    <textarea 
                         type="text" 
                         value={currentPost.description} 
                         name="description" 
                         autoComplete='off'
                         placeholder='Description'
+                        rows={5}
                         onChange={handleChange}
                         className='description__input'
                     />
@@ -161,10 +156,10 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
                     image={currentPost.image}
                     imageError={errors.image}
                     handleChange={handleFileChange}
-                    />
-                <FormButton type="submit" classes='create-post-modal__form__btn'>
+                />
+                <Button type="submit">
                     {getTypeInfo(type).buttonText}
-                </FormButton>
+                </Button>
             </Form>
         </div>
     )

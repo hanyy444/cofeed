@@ -7,13 +7,16 @@ const callAxios = async (requestData) => {
 }
 
 const makeSendRequest = (base_url, requestConfig) => {
-    return async function sendRequest(params) {
+    return async function sendRequest(params, { signal }) {
         const { token, path = '', headers = {}, query = '', data = {} } = params
 
         const url = `${base_url}${path && `/${path}`}${query && `?${query}`}`
 
         if (!token) throw new Error('Authentication required.')
 
+        // console.log(signal)
+
+        // TODO: abort signal
         const response = await callAxios({
             url,
             data,
@@ -21,6 +24,7 @@ const makeSendRequest = (base_url, requestConfig) => {
                 'Authorization': `Bearer ${token}`,
                 ...headers
             },
+            signal,
             ...requestConfig
         })
 
@@ -29,15 +33,24 @@ const makeSendRequest = (base_url, requestConfig) => {
 }
 
 export const catchAsyncThunk = (sendRequest) => {
-    return async (params, thunkAPI) => { // CALLBACK to createAsyncThunk (redux-thunk)
-        return sendRequest(params)
+    return async (params, { signal, rejectWithValue }) => { // CALLBACK to createAsyncThunk (redux-thunk): action
+        const result = sendRequest(params, { signal }) // RUNS when an action is dispatched
             .then(response => response.data)
             .catch(error => {
-                return thunkAPI.rejectWithValue({
-                    message: error?.response?.data?.message || 'Something went wrong!',
-                    status: error?.response?.status
-                })
+                if (axios.isCancel(error)) {
+                    // Handle request cancellation
+                    console.log('Request canceled:', error.message);
+                } else {
+                    // Handle other errors
+                    console.error('Error:', error);
+
+                    return rejectWithValue({
+                        message: error?.response?.data?.message || 'Something went wrong!',
+                        status: error?.response?.status
+                    })
+                }
             })
+        return result
     }
 }
 

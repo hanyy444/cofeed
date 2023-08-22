@@ -37,6 +37,7 @@ userApi.getUserFriends = userApi.createThunk({
     actionType: 'getUserFriends',
     requestConfig: { method: 'GET' }
 })
+
 userApi.addRemoveFriend = userApi.createThunk({
     resource,
     actionType: 'addRemoveFriend',

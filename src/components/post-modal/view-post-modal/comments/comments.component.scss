@@ -2,22 +2,20 @@
     margin: 2rem 1rem;
 
     .comment {
-        max-width: fit-content;
         padding: 1rem;
         margin: 1rem;
 
         display: flex;
+        justify-content: flex-start;
         align-items: center;
-        gap:1rem;
+        gap: 1rem;
+
         border-radius: 5rem;
         
         background-color: rgba($secondary, .1);
 
         .user { flex: 0; padding: 0; }
 
-        &__text { 
-            flex:1; 
-            padding: 1rem;
-        }
+        &__text {  padding: 1rem; }
     }
 }

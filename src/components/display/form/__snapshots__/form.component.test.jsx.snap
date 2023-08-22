@@ -1,8 +1,0 @@
-// Vitest Snapshot v1
-
-exports[`Test form component > Should render without crashing 1`] = `
-<form
-  class="form "
-  data-testid="form"
-/>
-`;

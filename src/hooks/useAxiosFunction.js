@@ -1,45 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { selectAuth } from 'redux/slices/auth.slice'
+import { selectAuthToken } from 'redux/slices/auth.slice'
 
 const useAxiosFunction = () => {
-    const [response, setResponse] = useState(null)
+    const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [controller, setController] = useState(null)
+    const controller = useRef(new AbortController())
 
     //// AUTHENTICATION
-    const { token } = useSelector(selectAuth)
+    const token = useSelector(selectAuthToken)
     const isAuth = !!token
 
-    const axiosFetch = async (configObj) => {
+    const axiosFetch = useCallback(async (configObj) => {
         const { axiosInstance, method, url, headers, requestConfig } = configObj
         try {
             setLoading(true)
-            const ctrl = new AbortController()
-            setController(ctrl)
+            // setController(ctrl)
             const axiosConfig = {
                 url,
                 method: method.toUpperCase(),
-                signal: ctrl.signal,
+                signal: controller.signal,
                 headers: { "Authorization": isAuth ? `Bearer ${token}` : undefined, ...headers },
                 ...requestConfig
             }
             const res = await axiosInstance(axiosConfig)
             if (res.statusText !== 'OK') setError(res)
-            setResponse(res.data)
+            setData(res.data)
         } catch (err) {
             setError(err)
         } finally {
             setLoading(false)
         }
-    }
+    }, [token])
 
     useEffect(() => {
-        return () => controller && controller.abort()
+        return () => controller && controller.current.abort()
     }, [controller])
 
-    return [response, loading, error, axiosFetch]
+    return { data, loading, error, axiosFetch, controller: controller.current }
 }
 
 export default useAxiosFunction

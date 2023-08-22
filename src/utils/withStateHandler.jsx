@@ -2,6 +2,10 @@ import Spinner from "components/display/spinner/spinner.component"
 import { useErrorHandler } from "react-error-boundary"
 import React from "react"
 
+// Bugged!!
+// This component is a new function in react.
+// If called insided a component, it re-renders
+
 const WithStateHandler = ({children, data, loading, error, fallback = <></>}) => {
     // if (error?.message === 'Network Error') console.log(error)
     if (error) useErrorHandler()(error)

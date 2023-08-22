@@ -1,4 +1,3 @@
-import React from 'react';
 import './friends-list.component.scss'
 import User from '../user/user.component'
 

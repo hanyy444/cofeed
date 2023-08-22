@@ -1,5 +1,5 @@
-import React from 'react'
 import './signup.component.scss'
+import { useCallback } from 'react'
 
 import Form from 'components/display/form/form.component'
 import FormGroup from 'components/display/form/form-group/form-group.component'
@@ -8,10 +8,12 @@ import FormButton from 'components/button/form-button/form-button.component'
 
 import { Formik } from 'formik'
 import * as yup from 'yup'
+
 import axiosInstance from 'api/axios-instance'
 import useLogin from '../useLogin'
 import WithStateHandler from 'utils/withStateHandler'
 import ErrorMessage from '../error-message'
+import Button from 'components/button'
 
 
 const initialState = {
@@ -31,20 +33,20 @@ const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid Email').required('required'),
     password: yup.string().min(8).required('required'),
     confirmPassword: yup.string()
-    .min(8)
-    .required('required.')
-    .test('passwords-match', 'Passwords must match', 
-        function (value) {       
-            return this.parent.password === value     
-        }
-    ),
+        .min(8)
+        .required('required.')
+        .test('passwords-match', 'Passwords must match', 
+            function (value) {       
+                return this.parent.password === value     
+            }
+        ),
     location: yup.string().required('required'),
     occupation: yup.string().required('required'),
-    image: yup.object().required('required'),
+    // image: yup.object(),
 })
 
 const SignUp = ({ setActive }) => {
-    const {loading, error, submitAxios} = useLogin()
+    const { loading, error, submitAxios } = useLogin()
     
     const handleImageInput = (e, setFieldValue) => {
         setFieldValue('image', {
@@ -54,34 +56,15 @@ const SignUp = ({ setActive }) => {
         })
     }
 
-    const submit = async (values) => {
-        const { email, 
-            password, 
-            firstName, 
-            lastName,
-            location,
-            occupation,
-            image } = values
-
-        // SUBMIT
-        const formData = new FormData()
-        Object.entries({
-            email,
-            password,
-            firstName,
-            lastName,
-            location,
-            occupation,
-            image: image.file
-        }).forEach(([key, value]) => formData.append(key, value))
-        submitAxios({
+    const signUpUser = useCallback(async (values) => {
+        await submitAxios({
             axiosInstance,
             method: 'post',
             url: 'users/signup',
             headers: { "Content-Type": "multipart/form-data", "Accept": "application/json" },
-            requestConfig: { data: formData }
+            requestConfig: { data: { ...values, image: values.image?.file } }
         })
-    }
+    }, [submitAxios])
 
     return (
         <WithStateHandler
@@ -90,7 +73,7 @@ const SignUp = ({ setActive }) => {
             error={null}
         >
             <Formik 
-                onSubmit={submit}
+                onSubmit={signUpUser}
                 initialValues={initialState}
                 validationSchema={validationSchema}
             >
@@ -175,10 +158,10 @@ const SignUp = ({ setActive }) => {
                                 imageError={touched.image && (errors.image)}
                                 handleChange={(e) => handleImageInput(e, setFieldValue)}
                             />
-                            <FormButton type="submit">Sign up</FormButton>
+                            <Button type="submit">Sign up</Button>
                         </Form>
                         <ErrorMessage error={error}/>
-                        <p>Already have an account? <a onClick={()=>setActive('login')}>Login</a></p>
+                        <p>Already have an account? <a onClick={() => setActive('login')}>Login</a></p>
                     </>
                 )}
             </Formik>

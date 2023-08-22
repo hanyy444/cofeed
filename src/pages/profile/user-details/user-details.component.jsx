@@ -6,7 +6,7 @@ import {  useSelector } from 'react-redux'
 import { selectPostsCount } from 'redux/slices/posts.slice'
 
 const UserDetails = ({ occupation, impressions, 
-    friends, location, viewedProfile}) => {
+    friends, location, viewedProfile }) => {
 
     const postsCount = useSelector(selectPostsCount)
 

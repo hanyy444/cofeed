@@ -11,13 +11,12 @@ import Account from 'components/account/account.component'
 import useToggle from 'hooks/useToggle';
 import useMediaQuery from 'hooks/useMediaQuery';
 
-const bpPhone = '43.75em'
 
 function Sidebar(props) {
 
     const navigate = useNavigate()
     const [accountOpen, setAccountOpen] = useToggle(false)
-    const isPhone = useMediaQuery(`(max-width: ${bpPhone})`)
+    const isPhone = useMediaQuery(`(max-width: 43.75em)`)
 
     return (
         <aside className="sidebar" id="sidebar" data-testid="sidebar" >

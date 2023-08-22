@@ -1,38 +1,36 @@
+import './add-comment-form.component.scss'
+import { useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthToken } from 'redux/slices/auth.slice';
 import postApi from 'api/post/post-api';
-import FormButton from 'components/button/form-button/form-button.component';
 import FormGroup from 'components/display/form/form-group/form-group.component';
 import Form from 'components/display/form/form.component';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAuth } from 'redux/slices/auth.slice';
-import './add-comment-form.component.scss'
+import Button from 'components/button';
 
 const AddCommentForm = ({ postId }) => {
     const dispatch = useDispatch()
-    const { token } = useSelector(selectAuth)
-    const [text, setText] = React.useState('')
-    const changeText = React.useCallback((e)=>{
-        setText(e.target.value)
-    },[])
+    const token = useSelector(selectAuthToken)
+    const [text, setText] = useState('')
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (text.trim() === '') return
-        dispatch(postApi.addComment({ token, path: `${postId}/comment`, data: { text } }))
+        dispatch( postApi.addComment({ token, path: `${postId}/comment`, data: { text } }) )
         setText('')
     }
     return ( 
-        <Form classes="add-comment-form" data-testid="add-comment-form" onSubmit={onSubmit}>
+        <form className="add-comment-form" data-testid="add-comment-form" onSubmit={onSubmit}>
             <FormGroup>
                 <input 
                     name="text"
                     type="text"
                     value={text}
                     placeholder="Write a comment..."
-                    onChange={changeText}
+                    onChange={(e) => setText(e.target.value)}
                 />
-                <FormButton type="submit">+</FormButton>
+                <Button type="submit">+</Button>
             </FormGroup>
-        </Form>
+        </form>
     )
 }
 

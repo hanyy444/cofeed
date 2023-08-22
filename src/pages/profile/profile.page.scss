@@ -14,7 +14,7 @@
         flex: 4;
     }
     
-    .user{
+    .user {
         cursor: auto;
         text-decoration: none;
     }
@@ -30,9 +30,7 @@
             margin: 1rem;
             overflow: visible;
             flex: 1 0 200px;
-            .spinner {
-                margin-top: 5rem;
-            }
+            .spinner { margin-top: 5rem; }
             .post__info {
                 .user {
                     display: none;

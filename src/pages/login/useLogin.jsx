@@ -1,39 +1,29 @@
-import React from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setLogin } from "redux/slices/auth.slice"
-import { selectAuth } from "redux/slices/auth.slice"
+import { selectAuthToken, selectAuthUser, setLogin } from "redux/slices/auth.slice"
 import useAxiosFunction from "hooks/useAxiosFunction"
 
-const useLogin = () => {
+export default function useLogin() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { user } = useSelector(selectAuth)
-    const [userFromAxios, loading, error, submitAxios] = useAxiosFunction()
-    
-    let data = userFromAxios || user    
+    // const token = useSelector(selectAuthToken)
+    // const user = useSelector(selectAuthUser)
+    const { data, loading, error, axiosFetch: submitAxios, controller } = useAxiosFunction()
+    // console.log(data)
+    // let data = userFromAxios || user    
 
-    React.useEffect(()=>{
-        if ( data?.status === 'success' && data?.token ) { 
-            const { user, token } = data 
-            
+    useEffect(() => {
+        if (data?.status === 'success') { 
             //// SET GLOBAL AUTH
-            dispatch(setLogin({ user, token }))
+            dispatch(setLogin({ user: data.user, token: data.token }))
             
             //// NAVIGATE HOME
             navigate('/home')
         }
     }, [data])
     
-
-    return {
-        data,
-        loading,
-        error,
-        submitAxios
-    }
+    return { data, loading, error, submitAxios, controller }
 }
-
-export default useLogin

@@ -1,73 +1,69 @@
 import './messages.page.scss'
-import React, { lazy, useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectAuth } from 'redux/slices/auth.slice'
-import { selectFriends } from 'redux/slices/users.slice'
-import { clearChat, selectChat } from 'redux/slices/user-chats.slice'
-
-import useMediaQuery from 'hooks/useMediaQuery'
-
-import User from 'components/display/user/user.component'
-
-const MessagesList = lazy(()=>import('./messages-list/messages-list.component'))
-const MessagesForm = lazy(()=>import('./messages-form/messages-form.component'))
-
-import userApi from 'api/user/user-api'
-import UserChatsList from './user-chats/user-chats.component'
-import useToggle from 'hooks/useToggle'
-import { FaArrowLeft } from 'react-icons/fa'
-import WithStateHandler from 'utils/withStateHandler'
+import { lazy, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectAuthUser, selectAuthToken } from 'redux/slices/auth.slice'
+import { selectFriends, selectFriendsError, selectFriendsStatus } from 'redux/slices/users.slice'
+import { clearChat, selectChat } from 'redux/slices/user-chats.slice'
+import userApi from 'api/user/user-api'
+import User from 'components/display/user/user.component'
 import Paragraph from 'components/typography/paragraph/paragraph.component'
+import UserChatsList from './user-chats/user-chats.component'
+import { FaArrowLeft } from 'react-icons/fa'
+import useToggle from 'hooks/useToggle'
+import useMediaQuery from 'hooks/useMediaQuery'
+import WithStateHandler from 'utils/withStateHandler'
+import useQuery from 'hooks/useQuery'
 
-import { shallowEqual } from "react-redux"
+const MessagesList = lazy(() => import('./messages-list/messages-list.component'))
+const MessagesForm = lazy(() => import('./messages-form/messages-form.component'))
 
 
 const MessagesPage = (props) => {
     const navigate = useNavigate()
     const isPhone = useMediaQuery('(max-width: 43.75em)')
     const dispatch = useDispatch()
-    const { token, user: sender } = useSelector(selectAuth, shallowEqual)
+    const sender = useSelector(selectAuthUser)
 
-    const {data: friends, loading, error} = useSelector(selectFriends)
+    const friends = useQuery({
+        selector: selectFriends,
+        thunk: { action: userApi.getUserFriends, params: { path: `${sender?._id}/friends` }}
+    })
+    const friendsStatus = useSelector(selectFriendsStatus)
+    const friendsError = useSelector(selectFriendsError)
     
     const { data: chat } = useSelector(selectChat)
     const [isChat, toggleIsChat] = useToggle(chat?true:false)
-    const [receiver, setReceiever] = React.useState(chat?
+    const [receiver, setReceiever] = useState(chat?
         {
             _id: chat.recieverId,
             chatId: chat.chatId,
             receiverId: chat.receiverId,
             ...friends.find(({_id}) => _id === chat.recieverId)
-        }
-        :null
+        } 
+        : null
     )  
 
-    useEffect(()=>{
-        dispatch(userApi.getUserFriends({
-            token,
-            path: `${sender?._id}/friends`
-        }))
-    },[])
 
     const handleReturn = useCallback(()=>{
         toggleIsChat(false)
         setReceiever(null)
         dispatch(clearChat())
-    },[])
+    }, [])
 
     const onClickUser = useCallback(()=> {
         navigate(`/profile/${receiver?._id}`)
-    },[receiver?._id])
+    }, [receiver?._id])
+
 
     return ( 
         <div className="messages" data-testid="messages">
             <WithStateHandler 
                 data={friends} 
-                loading={loading} 
-                error={error} 
+                loading={friendsStatus} 
+                error={friendsError} 
                 fallback={
-                    <Paragraph cName='default_message'>
+                    <Paragraph style={{ alignSelf: 'center', justifySelf: 'center', gridColumn: '1/-1' }}>
                         Follow some friends and start chatting
                     </Paragraph>
                 }
