@@ -16,7 +16,7 @@ const SettingsPage = lazy(() => import('pages/settings/settings.page'))
 const AppState = lazy(() => import('stateJSON' ))
 
 function App(props) {
-  
+  const { height, width } = useWindowSize();
   return (
     <Suspense>
         <Routes>
@@ -32,7 +32,7 @@ function App(props) {
         }
         </Routes>
         <WithAuthentication>
-          <div className="app"> 
+          <div className="app" style={{ maxHeight: height, maxWidth: width }}> 
               <Sidebar/>
                 <Routes>
                   {
