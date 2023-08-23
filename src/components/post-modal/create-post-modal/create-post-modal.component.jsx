@@ -65,12 +65,7 @@ const CreatePostModal = ({ type, post = null, setModalType, toggleShowModal }) =
     }
 
     const handleChange = (e) => {
-        setCurrentPost(prev => {
-            return {
-                ...prev,
-                description: e.target.value
-            }
-        })
+        setCurrentPost(prev => ({ ...prev, description: e.target.value }))
         setErrors({})
     }
 

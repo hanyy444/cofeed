@@ -33,35 +33,31 @@ const MessagesPage = (props) => {
     const friendsError = useSelector(selectFriendsError)
     
     const { data: chat } = useSelector(selectChat)
-    const [isChat, toggleIsChat] = useToggle(chat?true:false)
-    const [receiver, setReceiever] = useState(chat?
-        {
+    const [isChat, toggleIsChat] = useToggle(!!chat)
+    const [receiver, setReceiever] = useState(
+        chat
+        ? {
             _id: chat.recieverId,
             chatId: chat.chatId,
             receiverId: chat.receiverId,
             ...friends.find(({_id}) => _id === chat.recieverId)
-        } 
+          } 
         : null
     )  
 
-
-    const handleReturn = useCallback(()=>{
+    const handleReturn = useCallback(() => {
         toggleIsChat(false)
         setReceiever(null)
         dispatch(clearChat())
     }, [])
 
-    const onClickUser = useCallback(()=> {
+    const onClickUser = useCallback(() => {
         navigate(`/profile/${receiver?._id}`)
     }, [receiver?._id])
 
-
     return ( 
         <div className="messages" data-testid="messages">
-            <WithStateHandler 
-                data={friends} 
-                loading={friendsStatus} 
-                error={friendsError} 
+            <WithStateHandler data={friends} loading={friendsStatus} error={friendsError} 
                 fallback={
                     <Paragraph style={{ alignSelf: 'center', justifySelf: 'center', gridColumn: '1/-1' }}>
                         Follow some friends and start chatting
@@ -78,35 +74,10 @@ const MessagesPage = (props) => {
                         friends={friends}
                     />
                 }
-                {
-                    isPhone && isChat &&
-                    <FaArrowLeft onClick={handleReturn}/>
-                }
-                {
-                    isPhone && receiver && isChat && 
-                    <User 
-                        imageHeight="35px"
-                        imageWidth="35px"
-                        imageUrl={receiver?.image?.url}
-                        onClick={onClickUser}
-                        {...receiver}
-                    />
-                }
-                {   
-                    receiver && isChat && 
-                    <MessagesList 
-                        sender={sender}
-                        receiver={receiver}
-                    />
-                }
-                {   
-                    isChat && 
-                    <MessagesForm 
-                        sender={sender} 
-                        receiverId={receiver?._id}
-                        chatId={receiver?.chatId}
-                    />
-                }
+                { isPhone && isChat && <FaArrowLeft onClick={handleReturn}/> }
+                { isPhone && receiver && isChat && <User imageUrl={receiver?.image?.url} onClick={onClickUser} {...receiver} /> }
+                { receiver && isChat && <MessagesList sender={sender} receiver={receiver} /> }
+                { isChat && <MessagesForm sender={sender} receiverId={receiver?._id} chatId={receiver?.chatId} /> }
             </WithStateHandler>
         </div>
 

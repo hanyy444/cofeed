@@ -2,12 +2,10 @@
     flex: 4;
     padding: 2rem 0;
     position: relative;
-    
-    @include scroll;
-
+    overflow: hidden;
     &__nav{
         @include flexBetween;
-        padding: 0 1.2rem;
+        padding: 0 2rem;
         margin-bottom: 3rem;
     }
 

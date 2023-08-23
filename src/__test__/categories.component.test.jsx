@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Categories from "./categories.component";
+import Categories from "../components/feeds/categories/categories.component";
 
 describe('Test categories component', () => { 
     expect.assertions(2)

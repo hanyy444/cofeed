@@ -1,13 +1,16 @@
 .button {
-    text-transform: uppercase;
-
-    border-radius: .5rem;
-    padding: 1.5rem;
     font-size: 1.5rem;
     font-weight: bold;
-
+    // min-width: 5rem;
+    padding: 2rem;
+    text-transform: uppercase;
+    border-radius: .5rem;
     color: $white;
     background: linear-gradient(to top, $secondary 0%, $primary 100%);
-
     &:hover { background: rgba($primary, .9) }
+    &.disabled {
+        cursor: auto;
+        padding: 0;
+        &.hover { background: linear-gradient(to top, $secondary 0%, $primary 100%); }
+    }
 }

@@ -6,9 +6,12 @@ import WithStateHandler from 'utils/withStateHandler'
 import useQuery from 'hooks/useQuery'
 import postApi from 'api/post/post-api'
 import { query } from 'firebase/firestore'
-import { selectPostsStatus, selectPosts } from 'redux/slices/posts.slice'
+import { selectPostsStatus, selectPosts, selectPostsError } from 'redux/slices/posts.slice'
 import { useSelector } from 'react-redux'
 import Spinner from 'components/display/spinner/spinner.component'
+
+// TODO: REFACTOR
+import ErrorMessage from 'pages/login/error-message'
 
 const Posts = ({ category, userId = '' }) => {
     const categoryHttpPath = useMemo(() => {
@@ -20,7 +23,7 @@ const Posts = ({ category, userId = '' }) => {
     }, [category]) 
 
     const postsStatus = useSelector(selectPostsStatus)
-    
+    const postsError = useSelector(selectPostsError)
     const posts = useQuery({
         selector: selectPosts,
         thunk: { action: postApi.getAll, params: { path: `${categoryHttpPath}` } },
@@ -30,12 +33,9 @@ const Posts = ({ category, userId = '' }) => {
     const renderedPosts = posts.map(post => <MemoizedPost key={post?._id} post={post} /> )
 
     let content; 
-
-    if (postsStatus === 'pending') {
-        content = <Spinner />
-    } else {
-        content = renderedPosts
-    }
+    if (postsStatus === 'failure') { content = <ErrorMessage errorMessage={postsError?.message} />}
+    else if (postsStatus === 'pending') { content = <Spinner radius='5rem' /> } 
+    else { content = renderedPosts }
 
     return (
         <ul className= "posts" data-testid="posts">

@@ -1,11 +1,13 @@
 import React from 'react';
 import './spinner.component.scss'
 
-const Spinner = (props) => {
-    return ( 
-        <div className= "spinner" data-testid="spinner" />
+export default function Spinner ({ radius = "1rem" }){
+    return (
+        <div 
+            className= "spinner" 
+            data-testid="spinner"
+            style={{'--radius': radius}}
+        />
     )
 }
-
-export default Spinner;
 

@@ -7,38 +7,36 @@
     display: grid;
     grid-template-columns: [friends-start] minmax(15rem, 20rem) [friends-end messages-start] 1fr [messages-end];
     grid-template-rows: 1fr min-content;
-    // align-items: center;
     justify-content: center;
 
     @include respond(phone) {
         grid-template-columns: 1fr;
         grid-template-rows: 6.5rem 1fr 8rem;
-        padding: 1rem 1rem 1.5rem 1rem;
-        &>.user {
+        padding: 1rem;
+
+        & > .user {
             grid-column: 1 / -1;
             grid-row: 1/2;
             border-bottom: 1px solid $grey-light-blue;
             justify-content: center;
             background-color: $white;
     
-            .user-info {
-                flex-direction: row;
-                gap: 1rem;
-            }
+            .user-info { flex-direction: row; gap: 1rem; }
         }
-        &>svg {
+        
+        & > svg {
             color: $secondary;
             grid-row: 1/2;
+
             cursor: pointer;
             width: 2.5rem;
             height: 2.5rem;
+
             position: absolute;
             top: 2.5rem;
             left: 3rem;
     
-            &:hover {
-                color: $grey;
-            }
+            &:hover { color: $grey; }
         }
     }
 }

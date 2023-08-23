@@ -2,7 +2,6 @@ import './messages-form.component.scss'
 import { useState, useCallback } from 'react';
 
 import FormButton from 'components/button/form-button/form-button.component';
-import Form from 'components/display/form/form.component';
 import Spinner from 'components/display/spinner/spinner.component';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -11,15 +10,16 @@ import { createNewChat } from 'api/user-chats/user-chats-api';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectChat } from 'redux/slices/user-chats.slice';
+import Button from 'components/button';
 
 const MessagesForm = ({ sender }) => {
     const dispatch = useDispatch()
 
     const [loading, setLoading] = useState(false)
     const [text, setText] = useState('')
-    const changeText = useCallback((e)=>{
+    const changeText = useCallback((e) => {
         setText(e.target.value)
-    },[])
+    }, [])
 
     const {data: currentChat} = useSelector(selectChat)
     
@@ -53,9 +53,9 @@ const MessagesForm = ({ sender }) => {
     return ( 
         <form onSubmit={sendMessage} className="messages__form" data-testid="messages-form">
             <input type="text" placeholder='Type something here...' value={text} onChange={changeText}/>
-            <FormButton type='submit' disabled={loading}>
+            <Button type='submit' disabled={loading}>
                 {!loading ? <FaPaperPlane/> : <Spinner />}
-            </FormButton>
+            </Button>
         </form> 
     )
 }

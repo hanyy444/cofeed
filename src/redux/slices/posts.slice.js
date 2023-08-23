@@ -53,8 +53,8 @@ const postsSlice = createSlice({
 
         // Application??
         createBuilderCases({ builder, thunk: getAll, stateProp: 'posts', payloadProp: 'posts' })
-        createBuilderCases({ builder, thunk: post, stateProp: 'post' })
 
+        createBuilderCases({ builder, thunk: post, stateProp: 'post' })
         builder.addCase(post.fulfilled, (state, { payload }) => {
             state.posts.data.unshift(payload.post)
             state.post.status = payload.status

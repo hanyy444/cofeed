@@ -7,5 +7,5 @@ export default {
         messageSenderId: import.meta.env.VITE_FIREBASE_MESSAGE_SENDER_ID,
         appId: import.meta.env.VITE_FIREBASE_APP_ID
     },
-    // baseApi: import.meta.env.VITE_BASE_API
+    baseApi: import.meta.env.VITE_BASE_API
 }

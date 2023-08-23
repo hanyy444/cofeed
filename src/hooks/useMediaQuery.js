@@ -3,7 +3,8 @@ import useEventListener from "./useEventListener";
 
 function useMediaQuery(mediaQuery) {
     const [isMatch, setIsMatch] = useState(window.matchMedia(mediaQuery).matches)
-    useEventListener('change', e => setIsMatch(e.matches), window.matchMedia(mediaQuery))
+    const [mediaQueryList] = useState(window.matchMedia(mediaQuery))
+    useEventListener('change', e => setIsMatch(e.matches), mediaQueryList)
     return isMatch
 }
 

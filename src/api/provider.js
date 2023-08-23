@@ -34,23 +34,17 @@ const makeSendRequest = (base_url, requestConfig) => {
 
 export const catchAsyncThunk = (sendRequest) => {
     return async (params, { signal, rejectWithValue }) => { // CALLBACK to createAsyncThunk (redux-thunk): action
-        const result = sendRequest(params, { signal }) // RUNS when an action is dispatched
-            .then(response => response.data)
-            .catch(error => {
-                if (axios.isCancel(error)) {
-                    // Handle request cancellation
-                    console.log('Request canceled:', error.message);
-                } else {
-                    // Handle other errors
-                    console.error('Error:', error);
-
-                    return rejectWithValue({
-                        message: error?.response?.data?.message || 'Something went wrong!',
-                        status: error?.response?.status
-                    })
-                }
+        try {
+            const result = await sendRequest(params, { signal });
+            return result.data
+        } catch (error) {
+            // TODO: handle different types of errors
+            console.error('Error:', error);
+            return rejectWithValue({
+                message: error?.response?.data?.message || 'Something went wrong!',
+                status: error?.response?.status || 'failure'
             })
-        return result
+        }
     }
 }
 

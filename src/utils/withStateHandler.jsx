@@ -10,7 +10,7 @@ const WithStateHandler = ({children, data, loading, error, fallback = <></>}) =>
     // if (error?.message === 'Network Error') console.log(error)
     if (error) useErrorHandler()(error)
 
-    if (loading === 'pending') return <Spinner/>
+    if (loading === 'pending') return <Spinner radius="5rem"/>
 
     // Handle Empty (Array | Object)
     if ((!data || data.length === 0 ) && (loading === 'success')) return fallback

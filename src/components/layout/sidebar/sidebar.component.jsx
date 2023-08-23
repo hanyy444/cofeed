@@ -17,7 +17,6 @@ function Sidebar(props) {
     const navigate = useNavigate()
     const [accountOpen, setAccountOpen] = useToggle(false)
     const isPhone = useMediaQuery(`(max-width: 43.75em)`)
-
     return (
         <aside className="sidebar" id="sidebar" data-testid="sidebar" >
             <Logo goHome={() => navigate('/home')}/>

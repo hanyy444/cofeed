@@ -4,32 +4,17 @@
     background-color: $primary-light;
     color: white;
     text-align: center;
-    padding: 1rem 4vw;
+    padding: 1rem 4rem;
     letter-spacing: .05rem;
-
     transition: all .1s;
-
     position: relative;
-    .spinner {
-        position: absolute;
-        width: 0;
-        height: 0;
-        &::before{
-            width: 1rem;
-            height: 1rem;
-        }
-    }
-
-    &:hover {
-        background-color: $primary;
-    }
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    &:hover { background-color: $primary; }
     &--friend {
         background-color: $grey-dark;
-
-        &:hover {
-            background-color: $grey;
-        }
+        &:hover { background-color: $grey; }
     }
-
 }

@@ -10,7 +10,7 @@ const initialState = {
         error: null
     },
     chat: {
-        data: {},
+        data: null,
         status: 'idle',
         error: null
     }

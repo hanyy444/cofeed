@@ -33,13 +33,9 @@ const appReducer = combineReducers({
 export const clearError = createAction('CLEAR_ERROR')
 
 const rootReducer = (state, action) => {
-    if (action.type === 'CLEAR_ERROR')
-        return appReducer({}, action)
-
-    if (action.type === 'LOGOUT') {
-        return appReducer({}, action)
-    }
-
+    // TODO: clear only the infered error
+    // if (action.type === 'CLEAR_ERROR') return appReducer({}, action)
+    if (action.type === 'LOGOUT') return appReducer({}, action)
     return appReducer(state, action)
 }
 
