@@ -15,12 +15,11 @@
         padding: 1rem;
 
         & > .user {
-            grid-column: 1 / -1;
+            width: fit-content;
+            justify-self: center;
             grid-row: 1/2;
             border-bottom: 1px solid $grey-light-blue;
-            justify-content: center;
-            background-color: $white;
-    
+            justify-content: center;    
             .user-info { flex-direction: row; gap: 1rem; }
         }
         

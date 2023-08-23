@@ -21,6 +21,8 @@
     @include scroll;
 }
 
+
+// Temp trick
 .spinner{
     grid-row: 1/2;
     grid-column: messages-start / messages-end;

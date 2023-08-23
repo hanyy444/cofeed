@@ -1,6 +1,7 @@
 // @use "assets/sass/style";
 
 .user-chats {
+    // height: 100%;
     grid-column: friends-start / friends-end;
     grid-row: 1 / -1;
     
