@@ -3,8 +3,7 @@ import './follow-button.component.scss'
 import { useCallback } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { selectAuthUser, selectAuthToken } from 'redux/slices/auth.slice'
-import { selectFriends, selectFriendsStatus, userApi} from 'redux/slices/users.slice'
-import WithStateHandler from 'utils/withStateHandler'
+import { userApi} from 'redux/slices/users.slice'
 import { useState } from 'react'
 
 const FollowButton = ({ userId, isFriend }) => {
