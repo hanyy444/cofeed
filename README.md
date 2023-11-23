@@ -4,6 +4,7 @@
 
 # DEMO
 - https://cofeed-d3470.web.app/
+- Test Account: test@g.com @Password123
 
 Built with:
 
@@ -20,9 +21,6 @@ A fully responsive social media web application that helps users post images, li
 
     This project was developed solely for the purpose of learning, practicing and demonstrating my frontend development skills.
     
-### Please! Note that if the app is taking too long to load data on first load. It's because the server is hosted on a free provider which shuts down the server when no requests are sent for a while. Please bare with it and refresh after some time. Thank you!
-
-
 # Features
 
 ### A registered user can
