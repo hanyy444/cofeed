@@ -14,9 +14,6 @@ const makeSendRequest = (base_url, requestConfig) => {
 
         if (!token) throw new Error('Authentication required.')
 
-        // console.log(signal)
-
-        // TODO: abort signal
         const response = await callAxios({
             url,
             data,

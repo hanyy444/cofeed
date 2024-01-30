@@ -13,7 +13,10 @@ export default function useQuery({ selector, thunk: { action, params = {} }, ext
     const dispatch = useDispatch()
     // const { data, loading, error, count, page } = useSelector(selector) // NOTE: 3 render cycles, 1 for each loading state
     const queryResult = useSelector(selector, isEqual)
-    const useQuery = useCallback(async () => action && await dispatch(action({ token, ...params }, { signal })), [token, ...Object.values(params)])
+    const useQuery = useCallback(
+        async () => action && await dispatch(action({ token, ...params }, { signal })),
+        [token, ...Object.values(params)]
+    )
     useEffect(() => {
         useQuery()
         return () => abortController.abort();
